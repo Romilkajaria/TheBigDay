@@ -8,18 +8,19 @@ namespace TheBigDay.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<EventTypes> Type { get; set; }
         public int MinGuestLimit { get; set; }
         public int MaxGuestLimit { get; set; }
-        public int VendorID { get; set; }
+        public Guid VendorID { get; set; }
+        public bool IsDeleted { get; set; }
 
         //dependancies
-        public List<EventPackages> EventPackages { get; set; }
-        public List<PackageProducts> PackageProducts { get; set; }
-        public List<PackageServices> PackageServices { get; set; }
+        public List<EventPackages>? EventPackages { get; set; }
+        public List<PackageProducts>? PackageProducts { get; set; }
+        public List<PackageServices>? PackageServices { get; set; }
 
     }
 }

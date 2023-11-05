@@ -8,7 +8,7 @@ namespace TheBigDay.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int OperatingRadius { get; set; }
@@ -22,11 +22,12 @@ namespace TheBigDay.Models
         public string AfterHoursMobile { get; set; }
         public string Email { get; set; }
         public string? PhotoPath { get; set; }
+        public bool IsDeleted { get; set; }
 
 
         //Dependacies
-        public List<Product> Products { get; set; }
-        public List<Service> Services { get; set; }
-        public List<Package> Packages { get; set; }
+        public List<Product>? Products { get; set; }
+        public List<Service>? Services { get; set; }
+        public List<Package>? Packages { get; set; }
     }
 }
