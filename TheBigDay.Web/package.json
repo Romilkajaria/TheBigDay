@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start vendor": "ng serve vendors --port 4201",
-    "start consumer": "ng serve consumer --port 4202",
+    "start vendor": "ng serve vendors --port 4202",
+    "start consumer": "ng serve consumer --port 4201",
     "build common": "ng build common",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -29,7 +29,16 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
-    "primeng": "^16.7.0"
+    "primeng": "^16.7.0",
+    "@angular/cdk": "^16.1.0",
+    "@fullcalendar/angular": "^6.0.3",
+    "@fullcalendar/core": "^6.0.3",
+    "@fullcalendar/daygrid": "^6.0.3",
+    "@fullcalendar/interaction": "^6.0.3",
+    "@fullcalendar/timegrid": "^6.0.3",
+    "chart.js": "^3.3.2",
+    "quill": "^1.3.7",
+    "prismjs": "^1.29.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.9",

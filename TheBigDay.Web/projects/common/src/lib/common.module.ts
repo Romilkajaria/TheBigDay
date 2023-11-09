@@ -5,23 +5,31 @@ import {CheckboxModule} from "primeng/checkbox";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
-
+import {CommonModule as AngularCommonModule} from "@angular/common";
+import { FormsModule } from '@angular/forms';
+import { MenuComponent } from './menu/menu.component';
+import {MenuModule} from "primeng/menu";
 
 
 @NgModule({
   declarations: [
     CommonComponent,
-    CommonLoginComponent
+    CommonLoginComponent,
+    MenuComponent
   ],
   imports: [
     CheckboxModule,
     ButtonModule,
     RippleModule,
-    InputTextModule
+    InputTextModule,
+    AngularCommonModule,
+    FormsModule,
+    MenuModule
   ],
   exports: [
     CommonComponent,
-    CommonLoginComponent
+    CommonLoginComponent,
+    MenuComponent,
   ]
 })
 export class CommonModule { }
