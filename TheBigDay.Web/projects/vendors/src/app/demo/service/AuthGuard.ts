@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, isDevMode} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs";
 
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
-    if(!this.isActiveUser) {
+    if(!this.isActiveUser && !isDevMode()) {
       this.router.navigate(['/landing']);
       this.isActiveUser = true;
       return false;
