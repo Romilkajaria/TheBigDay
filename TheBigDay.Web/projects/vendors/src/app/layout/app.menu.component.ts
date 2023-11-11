@@ -23,23 +23,23 @@ export class AppMenuComponent implements OnInit {
             {
               label: 'Manage',
               items: [
-                { label: 'Products', icon: 'pi pi-fw pi-shopping-bag', routerLink: ['/products'] },
-                { label: 'Services', icon: 'pi pi-fw pi-shopping-cart', routerLink: ['/services'] },
-                { label: 'Packages', icon: 'pi pi-fw pi-box', routerLink: ['/packages'] },
+                { label: 'Products', icon: 'pi pi-fw pi-shopping-bag', routerLink: ['/pages/products'] },
+                { label: 'Services', icon: 'pi pi-fw pi-shopping-cart', routerLink: ['/pages/services'] },
+                { label: 'Packages', icon: 'pi pi-fw pi-box', routerLink: ['/pages/packages'] },
               ]
             },
             {
               label: 'Comms',
               items: [
-                { label: 'Chat', icon: 'pi pi-fw pi-comments', routerLink: ['/chat'] },
-                { label: 'Feedback', icon: 'pi pi-fw pi-star', routerLink: ['/feedback'] },
+                { label: 'Chat', icon: 'pi pi-fw pi-comments', routerLink: ['/pages/chat'] },
+                { label: 'Feedback', icon: 'pi pi-fw pi-star', routerLink: ['/pages/feedback'] },
               ]
             },
             {
               label: 'Configuration',
               items: [
-                { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/settings'] },
-                { label: 'Sign out', icon: 'pi pi-fw pi-sign-out', routerLink: ['/feedback'] },
+                { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/settings'] },
+                { label: 'Sign out', icon: 'pi pi-fw pi-sign-out', routerLink: ['/landing'] },
               ]
             },
 
