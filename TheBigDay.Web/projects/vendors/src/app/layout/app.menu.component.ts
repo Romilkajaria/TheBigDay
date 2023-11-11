@@ -32,7 +32,7 @@ export class AppMenuComponent implements OnInit {
               label: 'Comms',
               items: [
                 { label: 'Chat', icon: 'pi pi-fw pi-comments', routerLink: ['/chat'] },
-                { label: 'Feedback', icon: 'pi pi-fw pi-comments', routerLink: ['/feedback'] },
+                { label: 'Feedback', icon: 'pi pi-fw pi-star', routerLink: ['/feedback'] },
               ]
             },
             {
