@@ -39,20 +39,20 @@ export class AppMenuComponent implements OnInit {
               label: 'Configuration',
               items: [
                 { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/settings'] },
-                { label: 'Sign out', icon: 'pi pi-fw pi-sign-out', routerLink: ['/landing'] },
+                { label: 'Sign out', icon: 'pi pi-fw pi-sign-out', routerLink: ['/auth/login'] },
               ]
             },
 
-            // {
-            //     label: 'UI Components',
-            //     items: [
+            {
+                label: 'UI Components',
+                items: [
             //         { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
             //         { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
             //         { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
             //         { label: 'Invalid State', icon: 'pi pi-fw pi-exclamation-circle', routerLink: ['/uikit/invalidstate'] },
             //         { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] },
-            //         { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
-            //         { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'] },
+                    { label: 'Table', icon: 'pi pi-fw pi-table', routerLink: ['/uikit/table'] },
+                    { label: 'List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/list'] },
             //         { label: 'Tree', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree'] },
             //         { label: 'Panel', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
             //         { label: 'Overlay', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
@@ -62,8 +62,8 @@ export class AppMenuComponent implements OnInit {
             //         { label: 'File', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/file'] },
             //         { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
             //         { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
-            //     ]
-            // },
+                ]
+            },
             // {
             //     label: 'Prime Blocks',
             //     items: [

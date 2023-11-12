@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products.component';
+import {ProductsRoutingModule} from "./products-routing.module";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {TableModule} from "primeng/table";
+import {MultiSelectModule} from "primeng/multiselect";
+import {DropdownModule} from "primeng/dropdown";
 
 
 
@@ -9,7 +15,13 @@ import { ProductsComponent } from './products.component';
     ProductsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ProductsRoutingModule,
+    ButtonModule,
+    InputTextModule,
+    TableModule,
+    MultiSelectModule,
+    DropdownModule
   ]
 })
 export class ProductsModule { }
