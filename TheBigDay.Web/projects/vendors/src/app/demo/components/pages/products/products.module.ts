@@ -7,6 +7,9 @@ import {InputTextModule} from "primeng/inputtext";
 import {TableModule} from "primeng/table";
 import {MultiSelectModule} from "primeng/multiselect";
 import {DropdownModule} from "primeng/dropdown";
+import {SliderModule} from "primeng/slider";
+import {ProgressBarModule} from "primeng/progressbar";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -21,7 +24,10 @@ import {DropdownModule} from "primeng/dropdown";
     InputTextModule,
     TableModule,
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    SliderModule,
+    ProgressBarModule,
+    FormsModule,
   ]
 })
 export class ProductsModule { }
