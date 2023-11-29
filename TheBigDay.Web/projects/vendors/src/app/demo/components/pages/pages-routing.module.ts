@@ -10,7 +10,7 @@ import {FeedbackModule} from "./feedback/feedback.module";
       { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) },
       { path: 'services', loadChildren: () => import('./services/services.module').then(m => m.ServicesModule) },
       { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
-      { path: 'packages', loadChildren: () => import('./packages/packages.module').then(m => m.PackagesModule) },
+      { path: 'packages', loadChildren: () => import('./vendor-packages/vendor-packages.module').then(m => m.VendorPackagesModule) },
       { path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule) },
       { path: 'feedback', loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule) },
 
