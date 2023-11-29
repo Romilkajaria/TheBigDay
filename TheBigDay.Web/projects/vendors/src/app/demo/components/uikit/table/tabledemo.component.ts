@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import {CustomerService} from "../../../service/customer.service";
-import {Customer, Representative} from "../../../api/customer";
+import {Customer, Representative} from "../../../../../../../common/src/lib/common-rest-models/customer";
 import {ProductService} from "../../../service/product.service";
-import {Product} from "../../../api/product";
+import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 
 interface expandedRows {
     [key: string]: boolean;

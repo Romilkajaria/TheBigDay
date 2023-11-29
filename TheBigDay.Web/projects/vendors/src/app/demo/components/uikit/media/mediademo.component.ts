@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductService} from "../../../service/product.service";
 import {PhotoService} from "../../../service/photo.service";
-import {Product} from "../../../api/product";
+import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 
 
 @Component({

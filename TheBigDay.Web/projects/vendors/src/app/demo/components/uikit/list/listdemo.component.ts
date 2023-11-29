@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { DataView } from 'primeng/dataview';
 import {ProductService} from "../../../service/product.service";
-import {Product} from "../../../api/product";
+import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 
 @Component({
     templateUrl: './listdemo.component.html'

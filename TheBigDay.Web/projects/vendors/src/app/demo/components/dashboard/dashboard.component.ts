@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Product } from '../../api/product';
+import { Product } from '../../../../../../common/src/lib/common-rest-models/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
 import {LayoutService} from "../../../layout/service/app.layout.service";

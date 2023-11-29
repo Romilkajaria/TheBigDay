@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import {ProductService} from "../../../service/product.service";
-import {Product} from "../../../api/product";
+import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 
 @Component({
     templateUrl: './crud.component.html',

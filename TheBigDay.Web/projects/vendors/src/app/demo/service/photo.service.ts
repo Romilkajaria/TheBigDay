@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Image } from '../api/image';
+import { Image } from '../../../../../common/src/lib/common-rest-models/image';
 
 @Injectable()
 export class PhotoService {
