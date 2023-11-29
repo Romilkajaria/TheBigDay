@@ -1,0 +1,7 @@
+/*
+ * Public API Surface of common
+ */
+export * from './lib/common.service';
+export * from './lib/common.component';
+export * from './lib/common.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL2NvbW1vbi9zcmMvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsc0JBQXNCLENBQUM7QUFDckMsY0FBYyx3QkFBd0IsQ0FBQztBQUN2QyxjQUFjLHFCQUFxQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIGNvbW1vblxyXG4gKi9cclxuXHJcbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbW1vbi5zZXJ2aWNlJztcclxuZXhwb3J0ICogZnJvbSAnLi9saWIvY29tbW9uLmNvbXBvbmVudCc7XHJcbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbW1vbi5tb2R1bGUnO1xyXG4iXX0=
