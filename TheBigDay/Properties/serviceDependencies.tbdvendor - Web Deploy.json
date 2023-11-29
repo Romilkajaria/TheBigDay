@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/TBDapi/apis/echo-api",
+      "type": "apis.azure"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "type": "mssql.onprem",
+      "connectionId": "TBDContext:TBDDatabaseConnectionString",
+      "dynamicId": null
+    },
+    "identityapp1": {
+      "type": "identityapp.default",
+      "dynamicId": null
+    }
+  }
+}
