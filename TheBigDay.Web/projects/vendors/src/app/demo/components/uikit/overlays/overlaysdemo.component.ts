@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import {ProductService} from "../../../service/product.service";
 import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 
 @Component({
@@ -15,7 +14,7 @@ export class OverlaysDemoComponent implements OnInit {
 
     products: Product[] = [];
 
-    selectedProduct: Product = {};
+    // selectedProduct: Product = {};
 
     visibleSidebar1: boolean = false;
 
@@ -27,10 +26,10 @@ export class OverlaysDemoComponent implements OnInit {
 
     visibleSidebar5: boolean = false;
 
-    constructor(private productService: ProductService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+    constructor(private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.productService.getProductsSmall().then(products => this.products = products);
+        // this.productService.getProductsSmall().then(products => this.products = products);
 
         this.images = [];
         this.images.push({

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {CountryService} from "../../../service/country.service";
 
 @Component({
     templateUrl: './invalidstatedemo.component.html'
@@ -32,7 +31,7 @@ export class InvalidStateDemoComponent implements OnInit {
 
     value10: any;
 
-    constructor(private countryService: CountryService) {
+    constructor() {
         this.cities = [
             { name: 'New York', code: 'NY' },
             { name: 'Rome', code: 'RM' },
@@ -43,9 +42,9 @@ export class InvalidStateDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.countryService.getCountries().then(countries => {
-            this.countries = countries;
-        });
+        // this.countryService.getCountries().then(countries => {
+        //     this.countries = countries;
+        // });
     }
 
     searchCountry(event: any) {

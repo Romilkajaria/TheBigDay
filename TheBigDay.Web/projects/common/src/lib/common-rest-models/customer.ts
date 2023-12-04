@@ -9,12 +9,21 @@ export interface Representative {
 }
 
 export interface Customer {
-    id?: number;
-    name?: string;
-    country?: Country;
-    company?: string;
-    date?: string;
-    status?: string;
-    activity?: number;
-    representative?: Representative;
+    id: string
+    photoPath: string;
+    firstNme: string;
+    lastName: string;
+    addressLine1: string;
+    addressLine2: string;
+    suburb: string;
+    state: string;
+    country: string;
+    postcode: string;
+    mobile: string;
+    email: string;
+    dob: Date;
+    isDeleted: boolean;
+
+//Dependacies
+    eventCustomers: any[];
 }

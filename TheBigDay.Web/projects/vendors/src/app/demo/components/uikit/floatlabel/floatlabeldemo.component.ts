@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {CountryService} from "../../../service/country.service";
 
 
 @Component({
@@ -37,7 +36,7 @@ export class FloatLabelDemoComponent implements OnInit {
 
     value12: any;
 
-    constructor(private countryService: CountryService) {
+    constructor() {
         this.cities = [
             {name: 'New York', code: 'NY'},
             {name: 'Rome', code: 'RM'},
@@ -48,9 +47,9 @@ export class FloatLabelDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.countryService.getCountries().then(countries => {
-            this.countries = countries;
-        });
+        // this.countryService.getCountries().then(countries => {
+        //     this.countries = countries;
+        // });
     }
 
     searchCountry(event: any) {

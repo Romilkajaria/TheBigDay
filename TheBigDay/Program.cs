@@ -4,56 +4,57 @@ using TheBigDay.DBContext;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using System.Reflection.Metadata.Ecma335;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore;
+using TheBigDay;
+using TheBigDay.Models;
 
-public static class Program
+
+public class Program
 {
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-
-        // Add services to the container.
-
+        // Configure services
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+
+        // Add CORS configuration
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowLocalhost4202", builder => builder
+                .WithOrigins("http://localhost:4202")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+        });
 
         builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
-
+        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication();
         //string connectionString = builder.Configuration.GetSection("TBDContext").Get<TBDContext>().TBDDatabaseConnectionString;
         builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=TheBigDay;Integrated Security=True"));
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         var app = builder.Build();
 
-        app.UseSwagger();
-        app.UseSwaggerUI();
-
-        // Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline
         if (app.Environment.IsDevelopment())
         {
-
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
-
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthentication();
-
-        app.UseAuthorization();
+        //Enable CORS
+        app.UseCors("AllowLocalhost4202");
 
         app.MapControllers();
 
         app.Run();
     }
-
-    public class TBDContext
-    {
-        public string? TBDDatabaseConnectionString { get; set; }
-    }
 }
-
 
 

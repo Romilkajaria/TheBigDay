@@ -10,7 +10,6 @@ namespace TheBigDay.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
     public class CustomerController : ControllerBase
     {
 

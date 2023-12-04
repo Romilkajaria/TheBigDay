@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 import {Table} from "primeng/table";
-import {ItemStatus, IVendorItem, ProductType} from "./product";
+import {
+  CommonProductsService
+} from "../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 
 @Component({
   selector: 'app-products',
@@ -11,26 +14,17 @@ export class ProductsComponent implements OnInit{
   representatives: any;
   statuses: any;
   activityValues: any;
-  products: IVendorItem<ProductType>[] = [];
+  products: Product[] = [];
   loading: any;
+  Object = Object;
+
+  constructor(private productsService: CommonProductsService) {
+  }
+  ngOnInit(): void {
+    this.productsService.getProducts().subscribe((p: Product[]) => this.products = p)
+  }
 
   onGlobalFilter(dt1: Table, $event: Event) {
 
-  }
-
-  clear(dt1: Table) {
-
-  }
-
-  ngOnInit(): void {
-    this.products = [{
-      id: 0,
-      name: "something",
-      description: "something Description",
-      type: ProductType.Catering,
-      minGuestLimit: 1,
-      maxGuestLimit: 10,
-      status: ItemStatus.Active
-    }]
   }
 }

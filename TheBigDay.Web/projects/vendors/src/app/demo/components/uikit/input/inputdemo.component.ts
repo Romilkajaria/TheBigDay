@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
-import {CountryService} from "../../../service/country.service";
 
 @Component({
     templateUrl: './inputdemo.component.html'
@@ -43,12 +42,12 @@ export class InputDemoComponent implements OnInit {
 
     valueKnob = 20;
 
-    constructor(private countryService: CountryService) { }
+    constructor() { }
 
     ngOnInit() {
-        this.countryService.getCountries().then(countries => {
-            this.countries = countries;
-        });
+        // this.countryService.getCountries().then(countries => {
+        //     this.countries = countries;
+        // });
 
         this.cities = [
             { label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } },

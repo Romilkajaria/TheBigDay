@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductService} from "../../../service/product.service";
-import {PhotoService} from "../../../service/photo.service";
 import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 
 
@@ -50,16 +48,16 @@ export class MediaDemoComponent implements OnInit {
         }
     ];
 
-    constructor(private productService: ProductService, private photoService: PhotoService) { }
+    constructor() { }
 
     ngOnInit() {
-        this.productService.getProductsSmall().then(products => {
-            this.products = products;
-        });
-
-        this.photoService.getImages().then(images => {
-            this.images = images;
-        });
+        // this.productService.getProductsSmall().then(products => {
+        //     this.products = products;
+        // });
+        //
+        // this.photoService.getImages().then(images => {
+        //     this.images = images;
+        // });
     }
 
 }
