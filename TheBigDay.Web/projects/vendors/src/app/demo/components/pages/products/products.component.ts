@@ -4,21 +4,23 @@ import {Table} from "primeng/table";
 import {
   CommonProductsService
 } from "../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {AddProductFormComponent} from "./add-product-form/add-product-form.component";
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
+  providers: [DialogService],
 })
-export class ProductsComponent implements OnInit{
-  representatives: any;
-  statuses: any;
-  activityValues: any;
-  products: Product[] = [];
+export class ProductsComponent implements OnInit {
+  products?: Product[];
   loading: any;
   Object = Object;
+  ref: DynamicDialogRef | undefined;
 
-  constructor(private productsService: CommonProductsService) {
+  constructor(private productsService: CommonProductsService,
+              private dialogService: DialogService) {
   }
   ngOnInit(): void {
     this.productsService.getProducts().subscribe((p: Product[]) => this.products = p)
@@ -26,5 +28,9 @@ export class ProductsComponent implements OnInit{
 
   onGlobalFilter(dt1: Table, $event: Event) {
 
+  }
+
+  createProduct() {
+    this.dialogService.open(AddProductFormComponent, {header: 'Add Product'});
   }
 }

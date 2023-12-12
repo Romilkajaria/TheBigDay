@@ -1,123 +1,24 @@
-<!--<div class="grid">-->
-<!--  <div class="col-12">-->
-<!--    <div class="card">-->
-<!--      <p-table #dt1 [value]="products" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="Object.keys(products[0])" responsiveLayout="scroll">-->
-<!--        <ng-template pTemplate="caption">-->
-<!--          <div class="flex justify-content-between flex-column sm:flex-row">-->
-<!--            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>-->
-<!--            <span class="p-input-icon-left mb-2">-->
-<!--							<i class="pi pi-search"></i>-->
-<!--							<input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>-->
-<!--						</span>-->
-<!--          </div>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="header">-->
-<!--          <tr>-->
-<!--            <th style="min-width: 12rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Id-->
-<!--                <p-columnFilter type="text" field="id" display="menu" placeholder="Search by Id"></p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--            <th style="min-width: 12rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Name-->
-<!--                <p-columnFilter type="text" field="name" display="menu" placeholder="Search by name"></p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--            <th style="min-width: 12rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Description-->
-<!--                <p-columnFilter type="text" field="description" display="menu" placeholder="Search by description"></p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--            <th style="min-width: 14rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Type-->
-<!--                <p-columnFilter field="type" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
-<!--                  <ng-template pTemplate="header">-->
-<!--                    <div class="px-3 pt-3 pb-0">-->
-<!--                      <span class="font-bold">Type Picker</span>-->
-<!--                    </div>-->
-<!--                  </ng-template>-->
-<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-<!--                    <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">-->
-<!--                      <ng-template let-option pTemplate="item">-->
-<!--                        <div class="p-multiselect-representative-option">-->
-<!--                          <img [alt]="option.label" src="assets/demo/images/avatar/{{option.image}}" width="32" style="vertical-align: middle" />-->
-<!--                          <span class="ml-2">{{option.name}}</span>-->
-<!--                        </div>-->
-<!--                      </ng-template>-->
-<!--                    </p-multiSelect>-->
-<!--                  </ng-template>-->
-<!--                </p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--            <th style="min-width: 10rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Min Guest Limit-->
-<!--                <p-columnFilter type="numeric" field="MinGuestLimit" display="menu" currency="USD"></p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--            <th style="min-width: 10rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Max Guest Limit-->
-<!--                <p-columnFilter type="numeric" field="MaxGuestLimit" display="menu" currency="USD"></p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--            <th style="min-width: 12rem">-->
-<!--              <div class="flex justify-content-between align-items-center">-->
-<!--                Status-->
-<!--                <p-columnFilter field="status" matchMode="equals" display="menu">-->
-<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-<!--                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [style]="{'min-width': '12rem'}" >-->
-<!--                      <ng-template let-option pTemplate="item">-->
-<!--                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>-->
-<!--                      </ng-template>-->
-<!--                    </p-dropdown>-->
-<!--                  </ng-template>-->
-<!--                </p-columnFilter>-->
-<!--              </div>-->
-<!--            </th>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="body" let-customer>-->
-<!--          <tr>-->
-<!--            <td>-->
-<!--              {{customer.id}}-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              {{customer.name}}-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              {{customer.description}}-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              {{customer.type}}-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              {{customer.minGuestLimit}}-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              {{customer.maxGuestLimit}}-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              {{customer.status}}-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="emptymessage">-->
-<!--          <tr>-->
-<!--            <td colspan="8">No customers found.</td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="loadingbody">-->
-<!--          <tr>-->
-<!--            <td colspan="8">Loading customers data. Please wait.</td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
+<div class="grid">
+  <div class="col-12">
+    <button pButton pRipple label="Add" icon="pi pi-plus" (click)="createProduct()"></button>
+    <div class="card" *ngIf="products && products.length > 0">
+      <p-table [columns]="Object.keys(products[0])" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              {{ rowData[col] }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
 
-<!--  </div>-->
-<!--</div>-->
+  </div>
+</div>

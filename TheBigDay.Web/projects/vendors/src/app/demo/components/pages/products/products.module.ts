@@ -10,12 +10,14 @@ import {DropdownModule} from "primeng/dropdown";
 import {SliderModule} from "primeng/slider";
 import {ProgressBarModule} from "primeng/progressbar";
 import {FormsModule} from "@angular/forms";
+import { AddProductFormComponent } from './add-product-form/add-product-form.component';
 
 
 
 @NgModule({
   declarations: [
-    ProductsComponent
+    ProductsComponent,
+    AddProductFormComponent
   ],
   imports: [
     CommonModule,

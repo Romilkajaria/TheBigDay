@@ -2,7 +2,6 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  type: EventTypes[];
   minGuestLimit: number;
   maxGuestLimit: number;
   vendorID: string;
