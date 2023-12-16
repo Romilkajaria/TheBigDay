@@ -31,10 +31,10 @@ export class ProductsComponent implements OnInit {
   }
 
   createProduct() {
-    this.dialogService.open(AddProductFormComponent, {header: 'Add Product', width: '50rem', resizable: true});
+    this.dialogService.open(AddProductFormComponent, {header: 'Add new product', width: '50rem', maximizable: true, });
   }
 
   onRowSelect($event: TableRowSelectEvent) {
-    this.dialogService.open(AddProductFormComponent, {header: 'edit ' + $event.data.name, data: $event.data as Product, width: '50rem', resizable: true})
+    this.dialogService.open(AddProductFormComponent, {header: 'Edit: ' + $event.data.name, data: $event.data as Product, width: '50rem', maximizable: true})
   }
 }
