@@ -11,6 +11,11 @@ import {SliderModule} from "primeng/slider";
 import {ProgressBarModule} from "primeng/progressbar";
 import {FormsModule} from "@angular/forms";
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
+import {EditorModule} from "primeng/editor";
+import {InputNumberModule} from "primeng/inputnumber";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {CheckboxModule} from "primeng/checkbox";
+import {InputSwitchModule} from "primeng/inputswitch";
 
 
 
@@ -30,6 +35,11 @@ import { AddProductFormComponent } from './add-product-form/add-product-form.com
     SliderModule,
     ProgressBarModule,
     FormsModule,
+    EditorModule,
+    InputNumberModule,
+    InputTextareaModule,
+    CheckboxModule,
+    InputSwitchModule,
   ]
 })
 export class ProductsModule { }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
-import {Table} from "primeng/table";
+import {Table, TableRowSelectEvent} from "primeng/table";
 import {
   CommonProductsService
 } from "../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
@@ -31,6 +31,10 @@ export class ProductsComponent implements OnInit {
   }
 
   createProduct() {
-    this.dialogService.open(AddProductFormComponent, {header: 'Add Product'});
+    this.dialogService.open(AddProductFormComponent, {header: 'Add Product', width: '50rem', resizable: true});
+  }
+
+  onRowSelect($event: TableRowSelectEvent) {
+    this.dialogService.open(AddProductFormComponent, {header: 'edit ' + $event.data.name, data: $event.data as Product, width: '50rem', resizable: true})
   }
 }
