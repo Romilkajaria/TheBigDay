@@ -16,6 +16,7 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {CheckboxModule} from "primeng/checkbox";
 import {InputSwitchModule} from "primeng/inputswitch";
+import {ToastModule} from "primeng/toast";
 
 
 
@@ -40,6 +41,7 @@ import {InputSwitchModule} from "primeng/inputswitch";
     InputTextareaModule,
     CheckboxModule,
     InputSwitchModule,
+    ToastModule,
   ]
 })
 export class ProductsModule { }

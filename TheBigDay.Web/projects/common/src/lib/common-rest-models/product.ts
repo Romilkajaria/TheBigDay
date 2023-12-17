@@ -1,5 +1,5 @@
 export interface Product {
-  id: string;
+  id: string | undefined;
   name: string;
   description: string;
   minGuestLimit: number;
@@ -8,8 +8,8 @@ export interface Product {
   isDeleted: boolean;
 
   //navigation
-  eventProducts?: EventProduct[];
-  packageProducts?: PackageProducts[];
+  eventProducts: EventProduct[] | undefined;
+  packageProducts: PackageProducts[] | undefined;
 }
 
 export enum EventTypes {

@@ -2,18 +2,18 @@
   <div class="col-12">
     <button pButton pRipple label="Add" icon="pi pi-plus" (click)="createProduct()"></button>
     <div class="card" *ngIf="products && products.length > 0">
-      <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="Object.keys(products[0])" [value]="products" [tableStyle]="{ 'min-width': '50rem' }" p-datatable-striped>
+      <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="productColumns" [value]="products" [tableStyle]="{ 'min-width': '50rem' }" p-datatable-striped>
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th *ngFor="let col of columns">
-              {{ col }}
+              {{ col.key }}
             </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns">
-              {{ rowData[col] }}
+              {{ rowData[col.value] }}
             </td>
           </tr>
         </ng-template>
@@ -21,3 +21,4 @@
     </div>
   </div>
 </div>
+<p-toast></p-toast>
