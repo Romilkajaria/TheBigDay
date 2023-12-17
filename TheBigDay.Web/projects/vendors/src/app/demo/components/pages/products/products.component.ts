@@ -17,13 +17,14 @@ export class ProductsComponent implements OnInit {
   products?: Product[];
   loading: any;
   Object = Object;
-  ref: DynamicDialogRef | undefined;
+  ref = new DynamicDialogRef();
 
   constructor(private productsService: CommonProductsService,
               private dialogService: DialogService) {
   }
   ngOnInit(): void {
-    this.productsService.getProducts().subscribe((p: Product[]) => this.products = p)
+    this.updateData();
+    this.ref.onClose.subscribe(() =>     this.updateData());
   }
 
   onGlobalFilter(dt1: Table, $event: Event) {
@@ -32,9 +33,14 @@ export class ProductsComponent implements OnInit {
 
   createProduct() {
     this.dialogService.open(AddProductFormComponent, {header: 'Add new product', width: '50rem', maximizable: true, });
+
   }
 
   onRowSelect($event: TableRowSelectEvent) {
     this.dialogService.open(AddProductFormComponent, {header: 'Edit: ' + $event.data.name, data: $event.data as Product, width: '50rem', maximizable: true})
+  }
+
+  private updateData() {
+    this.productsService.getProducts().subscribe((p: Product[]) => this.products = p)
   }
 }

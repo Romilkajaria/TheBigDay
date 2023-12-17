@@ -1,7 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Product} from "../../../../../../../../common/src/lib/common-rest-models/product";
 import {DialogConfig} from "@angular/cdk/dialog";
-import {DynamicDialogConfig} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {
+  CommonProductsService
+} from "../../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 
 @Component({
   selector: 'app-add-product-form',
@@ -10,7 +13,7 @@ import {DynamicDialogConfig} from "primeng/dynamicdialog";
   providers: [DialogConfig]
 })
 export class AddProductFormComponent {
-  @Input() product?: Product = {
+  product: Product = {
     description: "",
     id: "",
     isDeleted: false,
@@ -19,11 +22,31 @@ export class AddProductFormComponent {
     name: "",
     vendorID: ""
   };
+  @Output() onClose = new EventEmitter<void>();
 
-  constructor(private dialogConfig: DynamicDialogConfig<Product>) {
+  constructor(private dialogConfig: DynamicDialogConfig<Product>,
+              private productService: CommonProductsService,
+              private ref: DynamicDialogRef,
+              ) {
     if(dialogConfig && dialogConfig.data) {
       this.product = dialogConfig.data;
     }
   }
 
+  save() {
+    if(this.product.id) {
+      this.productService.updateProduct(this.product).subscribe(() => {
+        this.close();
+      });
+    } else {
+      this.productService.addProduct(this.product).subscribe(() => {
+        this.close();
+      });
+    }
+
+  }
+
+  close() {
+    this.ref.close()
+  }
 }

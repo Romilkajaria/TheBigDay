@@ -8,15 +8,20 @@ import {environment} from "../../../../../vendors/src/environments/environment";
 })
 export class CommonProductsService extends BaseCommonRestService {
 
+  private readonly productUrl = environment.apiUrl + "product";
   constructor(injector: Injector) {
     super(injector);
   }
 
   public getProducts() {
-    return this.get<Product[]>(environment.apiUrl + "product");
+    return this.get<Product[]>(this.productUrl);
   }
 
   public addProduct(product: Product) {
-    return this.post<Product>("/products", product);
+    return this.post<Product>(this.productUrl, product);
+  }
+
+  public updateProduct(product: Product) {
+    return this.put<Product>(this.productUrl, product);
   }
 }

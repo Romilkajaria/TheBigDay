@@ -11,15 +11,15 @@ export class BaseCommonRestService {
     this.http = injector.get(HttpClient);
   }
 
-  public get<T>(path: string) {
+  protected get<T>(path: string) {
     return this.http.get<T>(path);
   }
 
-  public post<T>(path: string, payload: T) {
+  protected post<T>(path: string, payload: T) {
     return this.http.post<T>(path, payload);
   }
 
-  public put<T>(path: string, payload: T) {
+  protected put<T>(path: string, payload: T) {
     return this.http.put<T>(path, payload)
   }
 }
