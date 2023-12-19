@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {Product} from "../../../../../../../../common/src/lib/common-rest-models/product";
+import {PriceType, priceTypeLabelMap, Product} from "../../../../../../../../common/src/lib/common-rest-models/product";
 import {DialogConfig} from "@angular/cdk/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 import {Message, MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../../../../../../common/src/lib/helpers/toastMessages";
+import {KeyValue} from "@angular/common";
 
 @Component({
   selector: 'app-add-product-form',
@@ -24,10 +25,17 @@ export class AddProductFormComponent {
     name: "",
     vendorID: "00000000-0000-0000-0000-000000000000",
     packageProducts: undefined,
-    eventProducts: undefined
+    eventProducts: undefined,
+    price: 0,
+    priceType: PriceType.FLAT
   };
   @Output() onClose = new EventEmitter<void>();
   private loading = false;
+  priceTypeOptions: KeyValue<PriceType, string>[] = [{
+    key: PriceType.PER_PERSON, value: priceTypeLabelMap[PriceType.PER_PERSON]
+  }, {
+    key: PriceType.FLAT, value: priceTypeLabelMap[PriceType.FLAT]
+  }]
 
   constructor(private dialogConfig: DynamicDialogConfig<Product>,
               private productService: CommonProductsService,
@@ -42,7 +50,7 @@ export class AddProductFormComponent {
   save() {
     this.loading = true;
     if (this.product.id) {
-      this.productService.addProduct(this.product).subscribe({
+      this.productService.updateProduct(this.product).subscribe({
         next: () => {
           this.confirmation("product updated");
         },
@@ -73,6 +81,10 @@ export class AddProductFormComponent {
 
   close(toastMessage?: Message) {
     this.ref.close(toastMessage);
+  }
+
+  onPriceTypeChanged($event: KeyValue<PriceType, string>) {
+    this.product.priceType = $event.key;
   }
 }
 

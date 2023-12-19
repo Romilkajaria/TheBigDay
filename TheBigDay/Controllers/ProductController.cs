@@ -60,7 +60,7 @@ namespace TheBigDay.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public void Post([FromBody] Product e)
+        public void Post([FromBody] Product product)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
-                    context.Product.Add(e);
+                    context.Product.Add(product);
                     context.SaveChanges();
                 }
             }
@@ -80,7 +80,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Product e)
+        public void Put(Guid id, [FromBody] Product product)
         {
             try
             {
@@ -88,13 +88,8 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.ID == id);
-
-                    if (sourceProduct != null)
-                    {
-                        sourceProduct = e;
-                        context.SaveChanges();
-                    }
+                    context.Product.Update(product);
+                    context.SaveChanges();
 
                 }
             }

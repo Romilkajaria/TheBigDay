@@ -13,7 +13,7 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns">
-              {{ rowData[col.value] }}
+                {{ col.key === ProductColumnNames.PRICE_TYPE ? getPriceTypeCellData(rowData[col.value]) : rowData[col.value] }}
             </td>
           </tr>
         </ng-template>
@@ -22,3 +22,7 @@
   </div>
 </div>
 <p-toast></p-toast>
+
+<ng-template #fieldData let-rowData let-col>
+  {{ rowData[col.value] }}
+</ng-template>

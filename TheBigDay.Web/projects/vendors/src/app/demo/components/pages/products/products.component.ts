@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
+import {PriceType, priceTypeLabelMap, Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 import {Table, TableRowSelectEvent} from "primeng/table";
 import {
   CommonProductsService
@@ -13,9 +13,11 @@ import {Message, MessageService} from "primeng/api";
 export enum ProductColumnNames {
   NAME = 'Name',
   DESCRIPTION = 'Description',
-  MINGUESTLIMIT = 'Min. Guest Limit',
-  MAXGUESTLIMIT = 'Max. Guest Limit',
-  ISDELETED = "Disabled"
+  MIN_GUEST_LIMIT = 'Min. Guest Limit',
+  MAX_GUEST_LIMIT = 'Max. Guest Limit',
+  IS_DELETED = "Disabled",
+  PRICE = "Price",
+  PRICE_TYPE = 'Price Type'
 }
 
 @Component({
@@ -27,15 +29,18 @@ export enum ProductColumnNames {
 export class ProductsComponent implements OnInit {
   products?: Product[];
   loading: any;
-  Object = Object;
   ref = new DynamicDialogRef();
+  ProductColumnNames = ProductColumnNames
   productColumns: KeyValue<ProductColumnNames, string>[] = [
     {key: ProductColumnNames.NAME, value: 'name'},
     {key: ProductColumnNames.DESCRIPTION, value: 'description'},
-    {key: ProductColumnNames.MINGUESTLIMIT, value: 'minGuestLimit'},
-    {key: ProductColumnNames.MAXGUESTLIMIT, value: 'maxGuestLimit'},
-    {key: ProductColumnNames.ISDELETED, value: 'isDeleted'},
+    {key: ProductColumnNames.MIN_GUEST_LIMIT, value: 'minGuestLimit'},
+    {key: ProductColumnNames.MAX_GUEST_LIMIT, value: 'maxGuestLimit'},
+    {key: ProductColumnNames.IS_DELETED, value: 'isDeleted'},
+    {key: ProductColumnNames.PRICE, value: 'price'},
+    {key: ProductColumnNames.PRICE_TYPE, value: 'priceType'}
   ];
+  priceTypeLabelMap = priceTypeLabelMap;
 
   constructor(private productsService: CommonProductsService,
               private dialogService: DialogService,
@@ -73,6 +78,10 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe((p: Product[]) => {
       this.products = p;
     })
+  }
+
+  getPriceTypeCellData(rowDatum: PriceType) {
+    return priceTypeLabelMap[rowDatum];
   }
 }
 

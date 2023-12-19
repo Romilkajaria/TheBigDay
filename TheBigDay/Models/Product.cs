@@ -14,10 +14,19 @@ namespace TheBigDay.Models
         public int MinGuestLimit { get; set; }
         public int MaxGuestLimit { get; set; }
         public Guid VendorID { get; set; }
+        public int Price { get; set; }
+        public PriceType PriceType { get; set; }
         public bool IsDeleted { get; set; }
 
         //dependancies
         public List<EventProduct>? EventProducts { get; set; }
         public List<PackageProducts>? PackageProducts { get; set; }
     }
+
+    public enum PriceType
+    {
+        PER_PERSON,
+        FLAT
+    }
+
 }

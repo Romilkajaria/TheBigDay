@@ -11,6 +11,12 @@
   <label class="block text-900 font-medium mb-2">Max Guest List</label>
   <p-inputNumber inputId="integeronly" [(ngModel)]="product.maxGuestLimit" class="w-full mb-3"> </p-inputNumber>
 
+  <label class="block text-900 font-medium mb-2">Price</label>
+  <p-inputNumber inputId="integeronly" [(ngModel)]="product.price" class="w-full mb-3"> </p-inputNumber>
+
+  <label class="block text-900 font-medium mb-2">Price Type</label>
+  <p-dropdown [options]="priceTypeOptions" optionLabel="value" [ngModel]="product.priceType" (ngModelChange)="onPriceTypeChanged($event)" class="w-full mb-3"> </p-dropdown>
+
   <label class="block text-900 font-medium mb-2">Disabled</label>
   <p-checkbox [(ngModel)]="product.isDeleted"></p-checkbox>
 
