@@ -8,6 +8,7 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AddProductFormComponent} from "./add-product-form/add-product-form.component";
 import {KeyValue} from "@angular/common";
 import {Message, MessageService} from "primeng/api";
+import {FormControl, NgControl} from "@angular/forms";
 
 
 export enum ProductColumnNames {
@@ -24,7 +25,7 @@ export enum ProductColumnNames {
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [DialogService, MessageService],
+  providers: [DialogService, MessageService, FormControl],
 })
 export class ProductsComponent implements OnInit {
   products?: Product[];
@@ -33,7 +34,6 @@ export class ProductsComponent implements OnInit {
   ProductColumnNames = ProductColumnNames
   productColumns: KeyValue<ProductColumnNames, string>[] = [
     {key: ProductColumnNames.NAME, value: 'name'},
-    {key: ProductColumnNames.DESCRIPTION, value: 'description'},
     {key: ProductColumnNames.MIN_GUEST_LIMIT, value: 'minGuestLimit'},
     {key: ProductColumnNames.MAX_GUEST_LIMIT, value: 'maxGuestLimit'},
     {key: ProductColumnNames.IS_DELETED, value: 'isDeleted'},
@@ -41,6 +41,7 @@ export class ProductsComponent implements OnInit {
     {key: ProductColumnNames.PRICE_TYPE, value: 'priceType'}
   ];
   priceTypeLabelMap = priceTypeLabelMap;
+  formGroup: any;
 
   constructor(private productsService: CommonProductsService,
               private dialogService: DialogService,
