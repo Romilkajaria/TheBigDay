@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://tbdvendors.azurewebsites.net/'
+  apiUrl: 'https://tbdvendors.azurewebsites.net/api/'
 };
 
 /*
