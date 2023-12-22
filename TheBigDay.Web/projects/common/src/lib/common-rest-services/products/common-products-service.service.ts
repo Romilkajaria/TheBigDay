@@ -24,4 +24,8 @@ export class CommonProductsService extends BaseCommonRestService {
   public updateProduct(product: Product) {
     return this.put<Product>(`${this.productUrl}/${product.id}`, product);
   }
+
+  public deleteProduct(id: string) {
+    return this.delete<Product>(`${this.productUrl}/${id}`)
+  }
 }

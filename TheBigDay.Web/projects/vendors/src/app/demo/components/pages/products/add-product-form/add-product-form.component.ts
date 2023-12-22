@@ -86,6 +86,17 @@ export class AddProductFormComponent {
   onPriceTypeChanged($event: KeyValue<PriceType, string>) {
     this.product.priceType = $event.key;
   }
+
+  delete() {
+    this.productService.deleteProduct(this.product.id!).subscribe({
+      next: () => {
+        this.confirmation("product deleted");
+      },
+      error: (er) => {
+        this.confirmation("failed to delete product" + er.error, true);
+      },
+    })
+  }
 }
 
 //

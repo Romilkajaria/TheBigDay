@@ -22,4 +22,8 @@ export class BaseCommonRestService {
   protected put<T>(path: string, payload: T) {
     return this.http.put<T>(path, payload)
   }
+
+  protected delete<T>(path: string) {
+    return this.http.delete(path);
+  }
 }
