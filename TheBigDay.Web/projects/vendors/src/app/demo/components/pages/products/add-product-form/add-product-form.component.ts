@@ -23,7 +23,7 @@ export class AddProductFormComponent {
     maxGuestLimit: 0,
     minGuestLimit: 0,
     name: "",
-    vendorID: "00000000-0000-0000-0000-000000000000",
+    vendorID: "ede035de-9173-48f4-2823-08dc0305740f",
     packageProducts: undefined,
     eventProducts: undefined,
     price: 0,
