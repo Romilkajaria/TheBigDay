@@ -55,7 +55,7 @@ export class AddProductFormComponent {
           this.confirmation("product updated");
         },
         error: (er) => {
-          this.confirmation("failed to add product" + er.error, true);
+          this.confirmation("failed to add product", er.error);
         }
       });
     } else {
@@ -64,16 +64,16 @@ export class AddProductFormComponent {
           this.confirmation("product added");
         },
         error: (er) => {
-          this.confirmation("failed to add product" + er.error, true);
+          this.confirmation("failed to add product", er.error);
         },
       })
     }
   }
 
-  confirmation(toastMessage: string, failed = false) {
+  confirmation(toastMessage: string, errorMessage?: string) {
     this.loading = false;
-    if(failed) {
-      this.messageService.add(getToastMessage(ToastMessageType.ERROR, toastMessage));
+    if(errorMessage) {
+      this.messageService.add(getToastMessage(ToastMessageType.ERROR, toastMessage + errorMessage));
     } else {
       this.close(getToastMessage(ToastMessageType.SUCCESS, toastMessage));
     }
@@ -93,7 +93,7 @@ export class AddProductFormComponent {
         this.confirmation("product deleted");
       },
       error: (er) => {
-        this.confirmation("failed to delete product" + er.error, true);
+        this.confirmation("failed to delete product", er.error);
       },
     })
   }

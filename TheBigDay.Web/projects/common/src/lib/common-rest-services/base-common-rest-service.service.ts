@@ -1,5 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs";
+import {MessageService} from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +9,10 @@ import {HttpClient} from "@angular/common/http";
 export class BaseCommonRestService {
 
   private http: HttpClient;
+  private messageService: MessageService;
   constructor(injector: Injector) {
     this.http = injector.get(HttpClient);
+    this.messageService = injector.get(MessageService)
   }
 
   protected get<T>(path: string) {
