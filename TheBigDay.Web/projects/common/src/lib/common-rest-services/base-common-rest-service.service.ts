@@ -9,10 +9,8 @@ import {MessageService} from "primeng/api";
 export class BaseCommonRestService {
 
   private http: HttpClient;
-  private messageService: MessageService;
   constructor(injector: Injector) {
     this.http = injector.get(HttpClient);
-    this.messageService = injector.get(MessageService)
   }
 
   protected get<T>(path: string) {

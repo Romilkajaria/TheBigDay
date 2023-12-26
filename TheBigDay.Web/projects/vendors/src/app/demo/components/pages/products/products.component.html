@@ -1,6 +1,6 @@
-<div class="grid">
+<div class="grid" *ngIf="!loading">
   <div class="col-12">
-    <button pButton pRipple label="Add" icon="pi pi-plus" (click)="createProduct()"></button>
+    <button pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createProduct()"></button>
     <div class="card" *ngIf="products && products.length > 0">
       <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="productColumns" [value]="products" [tableStyle]="{ 'min-width': '50rem' }" p-datatable-striped>
         <ng-template pTemplate="header" let-columns>
@@ -21,7 +21,12 @@
     </div>
   </div>
 </div>
+
 <p-toast></p-toast>
+<div *ngIf="loading" class="flex justify-content-center">
+  <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</div>
+
 
 <ng-template #fieldData let-rowData let-col>
   {{ rowData[col.value] }}

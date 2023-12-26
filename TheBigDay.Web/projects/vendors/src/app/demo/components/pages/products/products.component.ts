@@ -29,7 +29,7 @@ export enum ProductColumnNames {
 })
 export class ProductsComponent implements OnInit {
   products?: Product[];
-  loading: any;
+  loading: boolean = true;
   ref = new DynamicDialogRef();
   ProductColumnNames = ProductColumnNames
   productColumns: KeyValue<ProductColumnNames, string>[] = [
@@ -76,8 +76,13 @@ export class ProductsComponent implements OnInit {
   }
 
   private updateData() {
-    this.productsService.getProducts().subscribe((p: Product[]) => {
-      this.products = p;
+    this.loading = true;
+    this.productsService.getProducts().subscribe({
+      next: (p: Product[]) => {
+        this.loading = false
+        this.products = p;
+      },
+      error: (e) => this.messageService.add({data: e, sticky: true}),
     })
   }
 

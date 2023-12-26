@@ -33,9 +33,12 @@ public class Program
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication();
         //string connectionString = builder.Configuration.GetSection("TBDContext").Get<TBDContext>().TBDDatabaseConnectionString;
+#if DEBUG
+        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=TheBigDay;Integrated Security=True"));
+#else
 
         builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=tcp:thebigggdaydbserver.database.windows.net,1433;Initial Catalog=TheBigDay;Persist Security Info=False;User ID=tabadmin;Password=Romilk01.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-
+#endif
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
