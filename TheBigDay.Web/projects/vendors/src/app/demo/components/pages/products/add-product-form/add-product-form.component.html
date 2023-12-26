@@ -34,10 +34,11 @@
   <p-checkbox [(ngModel)]="product.isDeleted"></p-checkbox>
 
   <div class="flex justify-content-end gap-3 mt-2">
-    <p-button (click)="save()" icon="pi pi-check" label="Save"></p-button>
-    <p-button (click)="close()" icon="pi pi-times" label="cancel" styleClass="p-button-danger"></p-button>
-    <p-button *ngIf="product.id" icon="pi pi-trash" [text]="true" severity="danger" (onClick)="delete()"></p-button>
+    <p-button *ngIf="product.id" icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deleteConfirmation()"></p-button>
+    <p-button (click)="close()" icon="pi pi-times" label="cancel"></p-button>
+    <p-button (click)="save()" [icon]="loading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" label="Save" styleClass="p-button-success"></p-button>
   </div>
 </div>
 <p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
 

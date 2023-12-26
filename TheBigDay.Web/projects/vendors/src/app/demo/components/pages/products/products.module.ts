@@ -17,6 +17,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {CheckboxModule} from "primeng/checkbox";
 import {InputSwitchModule} from "primeng/inputswitch";
 import {ToastModule} from "primeng/toast";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 
@@ -25,23 +26,24 @@ import {ToastModule} from "primeng/toast";
     ProductsComponent,
     AddProductFormComponent
   ],
-  imports: [
-    CommonModule,
-    ProductsRoutingModule,
-    ButtonModule,
-    InputTextModule,
-    TableModule,
-    MultiSelectModule,
-    DropdownModule,
-    SliderModule,
-    ProgressBarModule,
-    FormsModule,
-    EditorModule,
-    InputNumberModule,
-    InputTextareaModule,
-    CheckboxModule,
-    InputSwitchModule,
-    ToastModule,
-  ]
+    imports: [
+        CommonModule,
+        ProductsRoutingModule,
+        ButtonModule,
+        InputTextModule,
+        TableModule,
+        MultiSelectModule,
+        DropdownModule,
+        SliderModule,
+        ProgressBarModule,
+        FormsModule,
+        EditorModule,
+        InputNumberModule,
+        InputTextareaModule,
+        CheckboxModule,
+        InputSwitchModule,
+        ToastModule,
+        ConfirmDialogModule,
+    ]
 })
 export class ProductsModule { }

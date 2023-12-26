@@ -57,7 +57,7 @@ export class ProductsComponent implements OnInit {
   }
 
   createProduct() {
-    this.ref = this.dialogService.open(AddProductFormComponent, {header: 'Add new product', width: '50rem', maximizable: true, });
+    this.ref = this.dialogService.open(AddProductFormComponent, {header: 'New product', width: '50rem', maximizable: true, });
     this.onCloseSubscribe();
   }
 

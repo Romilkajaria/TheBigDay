@@ -5,7 +5,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {
   CommonProductsService
 } from "../../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
-import {Message, MessageService} from "primeng/api";
+import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../../../../../../common/src/lib/helpers/toastMessages";
 import {KeyValue} from "@angular/common";
 
@@ -13,7 +13,7 @@ import {KeyValue} from "@angular/common";
   selector: 'app-add-product-form',
   templateUrl: './add-product-form.component.html',
   styleUrls: ['./add-product-form.component.scss'],
-  providers: [DialogConfig, MessageService]
+  providers: [DialogConfig, MessageService, ConfirmationService]
 })
 export class AddProductFormComponent {
   product: Product = {
@@ -30,7 +30,7 @@ export class AddProductFormComponent {
     priceType: PriceType.FLAT
   };
   @Output() onClose = new EventEmitter<void>();
-  private loading = false;
+  loading = false;
   priceTypeOptions: KeyValue<PriceType, string>[] = [{
     key: PriceType.PER_PERSON, value: priceTypeLabelMap[PriceType.PER_PERSON]
   }, {
@@ -41,6 +41,7 @@ export class AddProductFormComponent {
               private productService: CommonProductsService,
               private ref: DynamicDialogRef,
               private messageService: MessageService,
+              private confirmationService: ConfirmationService
               ) {
     if(dialogConfig && dialogConfig.data) {
       this.product = dialogConfig.data;
@@ -88,6 +89,7 @@ export class AddProductFormComponent {
   }
 
   delete() {
+    this.loading = true;
     this.productService.deleteProduct(this.product.id!).subscribe({
       next: () => {
         this.confirmation("product deleted");
@@ -97,12 +99,16 @@ export class AddProductFormComponent {
       },
     })
   }
-}
 
-//
-// .subscribe(next: () => {
-//   this.loading = false;
-//   this.close();
-// },
-//   error: (er) =>);
-// }
+  deleteConfirmation() {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this product?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon:"pi pi-times",
+      rejectIcon:"none",
+      acceptLabel: 'Delete',
+      rejectLabel: 'Cancel',
+      accept: () => this.delete(),
+    })
+  }
+}
