@@ -29,6 +29,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     imports: [
         CommonModule,
         ProductsRoutingModule,
+      //prime modules
         ButtonModule,
         InputTextModule,
         TableModule,

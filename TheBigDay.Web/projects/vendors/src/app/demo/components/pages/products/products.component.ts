@@ -1,47 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {PriceType, priceTypeLabelMap, Product} from "../../../../../../../common/src/lib/common-rest-models/product";
+import {Product} from "../../../../../../../common/src/lib/common-rest-models/product";
 import {Table, TableRowSelectEvent} from "primeng/table";
 import {
   CommonProductsService
 } from "../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AddProductFormComponent} from "./add-product-form/add-product-form.component";
-import {KeyValue} from "@angular/common";
 import {Message, MessageService} from "primeng/api";
-import {FormControl, NgControl} from "@angular/forms";
+import {FormControl} from "@angular/forms";
+import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../../../common/src/lib/helpers/tbd-item-table-column";
+import {GetPriceTypeCellData} from "../page-helpers";
+import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 
-
-export enum ProductColumnNames {
-  NAME = 'Name',
-  DESCRIPTION = 'Description',
-  MIN_GUEST_LIMIT = 'Min. Guest Limit',
-  MAX_GUEST_LIMIT = 'Max. Guest Limit',
-  IS_DELETED = "Disabled",
-  PRICE = "Price",
-  PRICE_TYPE = 'Price Type'
-}
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [DialogService, MessageService, FormControl],
+  providers: [DialogService, MessageService],
 })
 export class ProductsComponent implements OnInit {
   products?: Product[];
   loading: boolean = true;
   ref = new DynamicDialogRef();
-  ProductColumnNames = ProductColumnNames
-  productColumns: KeyValue<ProductColumnNames, string>[] = [
-    {key: ProductColumnNames.NAME, value: 'name'},
-    {key: ProductColumnNames.MIN_GUEST_LIMIT, value: 'minGuestLimit'},
-    {key: ProductColumnNames.MAX_GUEST_LIMIT, value: 'maxGuestLimit'},
-    {key: ProductColumnNames.IS_DELETED, value: 'isDeleted'},
-    {key: ProductColumnNames.PRICE, value: 'price'},
-    {key: ProductColumnNames.PRICE_TYPE, value: 'priceType'}
-  ];
-  priceTypeLabelMap = priceTypeLabelMap;
-  formGroup: any;
+  ProductColumnNames = TBDItemColumnNames
+  productColumns = TBDItemColumnMap
+  getPriceTypeCellData = GetPriceTypeCellData;
 
   constructor(private productsService: CommonProductsService,
               private dialogService: DialogService,
@@ -49,10 +33,6 @@ export class ProductsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.updateData();
-
-  }
-
-  onGlobalFilter(dt1: Table, $event: Event) {
 
   }
 
@@ -82,12 +62,8 @@ export class ProductsComponent implements OnInit {
         this.loading = false
         this.products = p;
       },
-      error: (e) => this.messageService.add({data: e, sticky: true}),
+      error: (e) => this.messageService.add(getToastMessage(ToastMessageType.ERROR, e.message)),
     })
-  }
-
-  getPriceTypeCellData(rowDatum: PriceType) {
-    return priceTypeLabelMap[rowDatum];
   }
 }
 

@@ -20,14 +20,25 @@ public class Program
         // Configure services
         builder.Services.AddControllers();
 
+#if DEBUG
         // Add CORS configuration
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost4202", builder => builder
-                .WithOrigins("http://localhost:4202", "https://jolly-coast-0dc81a210.4.azurestaticapps.net")
+                .WithOrigins("http://localhost:4202")
                 .AllowAnyHeader()
                 .AllowAnyMethod());
         });
+#else
+        // Add CORS configuration
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowLocalhost4202", builder => builder
+                .WithOrigins("https://jolly-coast-0dc81a210.4.azurestaticapps.net")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+        });
+#endif
 
         builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
         builder.Services.AddAuthorization();

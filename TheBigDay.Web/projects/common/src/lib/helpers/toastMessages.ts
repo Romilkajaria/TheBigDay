@@ -1,39 +1,39 @@
 import {Message} from "primeng/api";
 
 const errorMessage: Message = {
-  severity: "Error",
-  summary: "",
+  severity: "error",
+  summary: "Error",
   closable: true
 }
 
 const warnMessage: Message = {
-  severity: "Warn",
-  summary: "",
+  severity: "warn",
+  summary: "Warning",
   closable: true
 }
 
 const infoMessage: Message = {
-  severity: "Info",
-  summary: "",
+  severity: "info",
+  summary: "Info",
   closable: true
 }
 
 const successMessage: Message = {
-  severity: "Error",
-  summary: "",
-  closable: true
+  severity: "success",
+  summary: "Success",
+  closable: true,
 }
 
 export function getToastMessage(type: ToastMessageType, text: string): Message {
   switch (type) {
     case ToastMessageType.ERROR:
-      return {...errorMessage, summary: text};
+      return {...errorMessage, detail: text};
     case ToastMessageType.INFO:
-      return {...infoMessage, summary: text};
+      return {...infoMessage, detail: text};
     case ToastMessageType.SUCCESS:
-      return {...successMessage, summary: text};
+      return {...successMessage, detail: text};
     case ToastMessageType.WARN:
-      return {...warnMessage, summary: text};
+      return {...warnMessage, detail: text};
   }
 }
 

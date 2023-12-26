@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {PriceType, priceTypeLabelMap, Product} from "../../../../../../../../common/src/lib/common-rest-models/product";
+import {Product} from "../../../../../../../../common/src/lib/common-rest-models/product";
 import {DialogConfig} from "@angular/cdk/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {
@@ -8,6 +8,8 @@ import {
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../../../../../../common/src/lib/helpers/toastMessages";
 import {KeyValue} from "@angular/common";
+import {PriceType, priceTypeLabelMap} from "../../../../../../../../common/src/lib/common-rest-models/item";
+import {DialogPriceTypeOptions} from "../../page-helpers";
 
 @Component({
   selector: 'app-add-product-form',
@@ -31,11 +33,7 @@ export class AddProductFormComponent {
   };
   @Output() onClose = new EventEmitter<void>();
   loading = false;
-  priceTypeOptions: KeyValue<PriceType, string>[] = [{
-    key: PriceType.PER_PERSON, value: priceTypeLabelMap[PriceType.PER_PERSON]
-  }, {
-    key: PriceType.FLAT, value: priceTypeLabelMap[PriceType.FLAT]
-  }]
+  priceTypeOptions = DialogPriceTypeOptions
 
   constructor(private dialogConfig: DynamicDialogConfig<Product>,
               private productService: CommonProductsService,
@@ -53,19 +51,19 @@ export class AddProductFormComponent {
     if (this.product.id) {
       this.productService.updateProduct(this.product).subscribe({
         next: () => {
-          this.confirmation("product updated");
+          this.confirmation("Product updated");
         },
         error: (er) => {
-          this.confirmation("failed to add product", er.error);
+          this.confirmation("Failed to update product", er.message);
         }
       });
     } else {
       this.productService.addProduct(this.product).subscribe({
         next: () => {
-          this.confirmation("product added");
+          this.confirmation("Product added");
         },
         error: (er) => {
-          this.confirmation("failed to add product", er.error);
+          this.confirmation("Failed to add product", er.message);
         },
       })
     }
@@ -95,7 +93,7 @@ export class AddProductFormComponent {
         this.confirmation("product deleted");
       },
       error: (er) => {
-        this.confirmation("failed to delete product", er.error);
+        this.confirmation("failed to delete product", er.message);
       },
     })
   }
