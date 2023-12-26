@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'https://tbdvendor.azurewebsites.net/api/'
-   apiUrl: 'https://localhost:44320/api/'
+  apiUrl: 'https://tbdvendor.azurewebsites.net/api/'
+   // apiUrl: 'https://localhost:44320/api/'
 };
 
 /*
