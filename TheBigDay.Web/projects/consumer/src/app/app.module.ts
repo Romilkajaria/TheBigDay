@@ -7,6 +7,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import {LoginModule} from "../../../common/src/lib/components/auth/login/login.module";
 import {AppLayoutModule} from "../../../common/src/lib/layout/app.layout.module";
 import {NotfoundComponent} from "../../../common/src/lib/components/notfound/notfound.component";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import {NotfoundComponent} from "../../../common/src/lib/components/notfound/not
         // RippleModule,
         LoginModule,
     ],
-  providers: [],
+    providers: [
+      { provide: LocationStrategy, useClass: HashLocationStrategy },
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
