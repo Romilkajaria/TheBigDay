@@ -1,5 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
-import {environment} from "../../../../../vendors/src/environments/environment";
+import {environment} from "../../environments/environment";
 import {BaseCommonRestService} from "../base-common-rest-service.service";
 import {Service} from "../../common-rest-models/service";
 
