@@ -9,21 +9,27 @@ import {CheckboxModule} from "primeng/checkbox";
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
+import {LoginModule} from "../../../common/src/lib/components/auth/login/login.module";
+import {AppLayoutModule} from "../../../common/src/lib/layout/app.layout.module";
+import {NotfoundComponent} from "../../../common/src/lib/components/notfound/notfound.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    NotfoundComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CommonModule,
-    CheckboxModule,
-    InputTextModule,
-    ButtonModule,
-    RippleModule,
-  ],
+    imports: [
+      BrowserModule,
+      AppRoutingModule,
+      AppLayoutModule,
+        // CommonModule,
+        // CheckboxModule,
+        // InputTextModule,
+        // ButtonModule,
+        // RippleModule,
+        LoginModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

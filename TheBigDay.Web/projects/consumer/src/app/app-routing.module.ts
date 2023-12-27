@@ -1,20 +1,30 @@
 import { NgModule } from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {PageNotFoundComponent} from "../../../common/src/lib/page-not-found/page-not-found.component";
-import {LoginPageComponent} from "./login-page/login-page.component";
-
-export const baseRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
-  { path: 'login', component: LoginPageComponent },
-  // { path: 'login/guidelines', component: GuidelinesComponent},
-  // { path: 'dashboard', component: DashboardComponent},
-  // { path: 'calendar', component: CalendarComponent},
-  { path: '**', component: PageNotFoundComponent},
-
-];
+import {RouterModule} from '@angular/router';
+import {AppLayoutComponent} from "../../../common/src/lib/layout/app.layout.component";
+import {AuthGuard} from "../../../common/src/lib/components/auth/AuthGuard";
+import {LoginComponent} from "../../../common/src/lib/components/auth/login/login.component";
+import {NotfoundComponent} from "../../../common/src/lib/components/notfound/notfound.component";
 
 @NgModule({
-  imports: [RouterModule.forRoot(baseRoutes)],
+  imports: [
+    RouterModule.forRoot([
+      {
+        path: '', component: AppLayoutComponent, canActivate: [AuthGuard],
+        children: [
+          { path: '', loadChildren: () => import('../../../common/src/lib/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
+          { path: 'utilities', loadChildren: () => import('../../../common/src/lib/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
+          { path: 'documentation', loadChildren: () => import('../../../common/src/lib/components/documentation/documentation.module').then(m => m.DocumentationModule) },
+          { path: 'blocks', loadChildren: () => import('../../../common/src/lib/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
+          // { path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) }
+        ]
+      },
+      { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/auth.module').then(m => m.AuthModule), component: LoginComponent },
+      { path: 'landing', loadChildren: () => import('../../../common/src/lib/components/landing/landing.module').then(m => m.LandingModule) },
+      { path: 'notfound', component: NotfoundComponent },
+      { path: '**', redirectTo: '/notfound' },
+    ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
