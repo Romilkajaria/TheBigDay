@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {AppLayoutComponent} from "../../../common/src/lib/layout/app.layout.component";
 import {LoginComponent} from "../../../common/src/lib/components/auth/login/login.component";
 import {NotfoundComponent} from "../../../common/src/lib/components/notfound/notfound.component";
 import {ConsumerAuthGuard} from "./ConsumerAuthGuard";
+import {ConsumerPageShellComponent} from "./consumer-page-shell/consumer-page-shell.component";
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       {
-        path: '', component: AppLayoutComponent, canActivate: [ConsumerAuthGuard],
+        path: '', component: ConsumerPageShellComponent, canActivate: [ConsumerAuthGuard],
         children: [
-          { path: '', loadChildren: () => import('../../../common/src/lib/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: '', loadChildren: () => import('../../../common/src/lib/components/landing/landing.module').then(m => m.LandingModule) },
           { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
           { path: 'utilities', loadChildren: () => import('../../../common/src/lib/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
           { path: 'documentation', loadChildren: () => import('../../../common/src/lib/components/documentation/documentation.module').then(m => m.DocumentationModule) },

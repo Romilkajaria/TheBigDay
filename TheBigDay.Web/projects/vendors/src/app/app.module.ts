@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from '../../../common/src/lib/layout/app.layout.module';
 import { NotfoundComponent } from '../../../common/src/lib/components/notfound/notfound.component';
 import {LoginModule} from "../../../common/src/lib/components/auth/login/login.module";
+import { VendorPageShellComponent } from './vendor-page-shell/vendor-page-shell.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent
+        AppComponent, NotfoundComponent, VendorPageShellComponent
     ],
   imports: [
     AppRoutingModule,

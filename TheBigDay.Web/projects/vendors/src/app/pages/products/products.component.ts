@@ -9,7 +9,7 @@ import {AddProductFormComponent} from "./add-product-form/add-product-form.compo
 import {Message, MessageService} from "primeng/api";
 import {FormControl} from "@angular/forms";
 import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/lib/helpers/tbd-item-table-column";
-import {GetPriceTypeCellData} from "../page-helpers";
+import {GetPriceTypeCellData} from "../../../../../common/src/lib/helpers/page-helpers";
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
 
 

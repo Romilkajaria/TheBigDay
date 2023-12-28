@@ -8,12 +8,14 @@ import {LoginModule} from "../../../common/src/lib/components/auth/login/login.m
 import {AppLayoutModule} from "../../../common/src/lib/layout/app.layout.module";
 import {NotfoundComponent} from "../../../common/src/lib/components/notfound/notfound.component";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { ConsumerPageShellComponent } from './consumer-page-shell/consumer-page-shell.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    ConsumerPageShellComponent
   ],
     imports: [
       BrowserModule,

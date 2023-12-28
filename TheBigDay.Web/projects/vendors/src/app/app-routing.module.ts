@@ -1,15 +1,15 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from '../../../common/src/lib/components/notfound/notfound.component';
-import { AppLayoutComponent } from "../../../common/src/lib/layout/app.layout.component";
 import { LoginComponent } from "../../../common/src/lib/components/auth/login/login.component";
 import {AuthGuard} from "../../../common/src/lib/components/auth/AuthGuard";
+import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppLayoutComponent, canActivate: [AuthGuard],
+                path: '', component: VendorPageShellComponent, canActivate: [AuthGuard],
                 children: [
                     { path: '', loadChildren: () => import('../../../common/src/lib/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
@@ -20,7 +20,6 @@ import {AuthGuard} from "../../../common/src/lib/components/auth/AuthGuard";
                 ]
             },
             { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/auth.module').then(m => m.AuthModule), component: LoginComponent },
-            { path: 'landing', loadChildren: () => import('../../../common/src/lib/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })

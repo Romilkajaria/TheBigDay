@@ -9,7 +9,7 @@ import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
 import {KeyValue} from "@angular/common";
 import {PriceType, priceTypeLabelMap} from "../../../../../../common/src/lib/common-rest-models/item";
-import {DialogPriceTypeOptions} from "../../page-helpers";
+import {DialogPriceTypeOptions} from "../../../../../../common/src/lib/helpers/page-helpers";
 
 @Component({
   selector: 'app-add-product-form',

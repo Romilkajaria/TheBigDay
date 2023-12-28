@@ -9,7 +9,7 @@ import {Product} from "../../../../../common/src/lib/common-rest-models/product"
 import {TableRowSelectEvent} from "primeng/table";
 import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/lib/helpers/tbd-item-table-column";
 import {AddServicesFormComponent} from "./add-services-form/add-services-form.component";
-import {GetPriceTypeCellData} from "../page-helpers";
+import {GetPriceTypeCellData} from "../../../../../common/src/lib/helpers/page-helpers";
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
 
 @Component({
