@@ -16,7 +16,7 @@ export class ConsumerAuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
     if(!this.isActiveUser && !isDevMode()) {
-      this.router.navigate(['/landing']);
+      this.router.navigate(['/dashboard']);
       this.isActiveUser = true;
       return false;
     }

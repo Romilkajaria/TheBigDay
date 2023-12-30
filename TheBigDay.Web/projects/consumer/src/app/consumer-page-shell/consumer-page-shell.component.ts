@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-consumer-page-shell',
@@ -104,7 +104,7 @@ export const consumerMenu = [
     //         {
     //             label: 'Landing',
     //             icon: 'pi pi-fw pi-globe',
-    //             routerLink: ['/landing']
+    //             routerLink: ['/dashboard']
     //         },
     //         {
     //             label: 'Auth',

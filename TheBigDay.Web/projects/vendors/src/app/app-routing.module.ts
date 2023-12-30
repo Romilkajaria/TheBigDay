@@ -1,7 +1,7 @@
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { NotfoundComponent } from '../../../common/src/lib/components/notfound/notfound.component';
-import { LoginComponent } from "../../../common/src/lib/components/auth/login/login.component";
+import {RouterModule} from '@angular/router';
+import {NgModule} from '@angular/core';
+import {NotfoundComponent} from '../../../common/src/lib/components/notfound/notfound.component';
+import {LoginComponent} from "../../../common/src/lib/components/auth/login/login.component";
 import {AuthGuard} from "../../../common/src/lib/components/auth/AuthGuard";
 import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
 
@@ -11,7 +11,7 @@ import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.co
             {
                 path: '', component: VendorPageShellComponent, canActivate: [AuthGuard],
                 children: [
-                    { path: '', loadChildren: () => import('../../../common/src/lib/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: '', loadChildren: () => import('../app/pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('../../../common/src/lib/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('../../../common/src/lib/components/documentation/documentation.module').then(m => m.DocumentationModule) },
