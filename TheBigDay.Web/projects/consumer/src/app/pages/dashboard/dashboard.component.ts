@@ -2,7 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {Subscription} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
-import {Product} from "../../../../../common/src/lib/common-rest-models/product";
+import {
+    CommonProductsService
+} from "../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
+import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -11,21 +14,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     items!: MenuItem[];
 
-    products!: Product[];
+    dashboardCards!: IDashboardCard[];
 
     chartData: any;
 
     chartOptions: any;
 
     subscription!: Subscription;
+    loading = true;
 
-    constructor( public layoutService: LayoutService) {
+    constructor( public layoutService: LayoutService, private productsService: CommonProductsService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
     }
 
     ngOnInit() {
+        this.loading = true
+        this.productsService.getProducts().subscribe((products) => {
+            this.dashboardCards = products.map((p) => ({
+                heading: p.name,
+                description: p.description,
+                maxWidth: '360px',
+                subheading: 'popular'
+            } as IDashboardCard));
+            this.loading = false;
+        })
         this.initChart();
         // this.productService.getProductsSmall().then(data => this.products = data);
 

@@ -9,6 +9,8 @@ import {ButtonModule} from 'primeng/button';
 import {StyleClassModule} from 'primeng/styleclass';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {DashboardsRoutingModule} from './dashboard-routing.module';
+import {UIkitModule} from "../../../../../common/src/lib/components/uikit/uikit.module";
+import {LoadingModule} from "../../../../../common/src/lib/components/loading/loading/loading.module";
 
 @NgModule({
     imports: [
@@ -20,7 +22,9 @@ import {DashboardsRoutingModule} from './dashboard-routing.module';
         StyleClassModule,
         PanelMenuModule,
         ButtonModule,
-        DashboardsRoutingModule
+        DashboardsRoutingModule,
+        UIkitModule,
+        LoadingModule
     ],
     declarations: [DashboardComponent]
 })

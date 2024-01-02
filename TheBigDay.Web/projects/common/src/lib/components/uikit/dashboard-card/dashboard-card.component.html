@@ -1,0 +1,8 @@
+<p-card [header]="cardConfig.heading" [subheader]="cardConfig.subheading" [style]="{ 'max-width': cardConfig.maxWidth }">
+    <ng-template pTemplate="header">
+        <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
+    </ng-template>
+    <div [innerHTML]="cardConfig.description"></div>
+    <ng-template pTemplate="footer" *ngTemplateOutlet="cardConfig.footerTemplate">
+    </ng-template>
+</p-card>
