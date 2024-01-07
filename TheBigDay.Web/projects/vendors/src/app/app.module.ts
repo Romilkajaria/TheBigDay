@@ -1,20 +1,19 @@
-import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AppLayoutModule } from '../../../common/src/lib/layout/app.layout.module';
-import { NotfoundComponent } from '../../../common/src/lib/components/notfound/notfound.component';
+import {NgModule} from '@angular/core';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppLayoutModule} from '../../../common/src/lib/layout/app.layout.module';
 import {LoginModule} from "../../../common/src/lib/components/auth/login/login.module";
-import { VendorPageShellComponent } from './vendor-page-shell/vendor-page-shell.component';
+import {VendorPageShellComponent} from './vendor-page-shell/vendor-page-shell.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, VendorPageShellComponent
+        AppComponent, VendorPageShellComponent
     ],
   imports: [
     AppRoutingModule,
     AppLayoutModule,
-    LoginModule
+    LoginModule,
   ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

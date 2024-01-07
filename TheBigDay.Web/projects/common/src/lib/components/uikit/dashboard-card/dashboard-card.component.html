@@ -1,8 +1,7 @@
-<p-card [header]="cardConfig.heading" [subheader]="cardConfig.subheading" [style]="{ 'max-width': cardConfig.maxWidth, 'height': '300px', 'overflow': 'hidden' }">
+<p-card [header]="cardConfig.heading" [subheader]="cardConfig.subheading" (click)="onSelect.emit()" [style]="{ 'max-width': cardConfig.maxWidth, 'height': '200px', 'overflow': 'hidden' }">
     <ng-template pTemplate="header">
         <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
     </ng-template>
-    <div [innerHTML]="cardConfig.description"></div>
     <ng-template pTemplate="footer" *ngTemplateOutlet="cardConfig.footerTemplate">
     </ng-template>
 </p-card>

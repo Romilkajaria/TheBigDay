@@ -17,6 +17,7 @@ export const consumerMenu = [
             { label: 'My Celebrations', routerLink: ['/pages/events'] },
             { label: 'My Registry', routerLink: ['/pages/registry'] },
             { label: 'Wallet', routerLink: ['/pages/wallet'] },
+            { label: 'Wallet', routerLink: ['/store'] },
         ]
     },
     {

@@ -8,10 +8,7 @@ import {Observable} from "rxjs";
 export class ConsumerAuthGuard implements CanActivate {
   public isActiveUser = false;
 
-  constructor(protected router: Router)
-  {
-
-  }
+  constructor(protected router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 

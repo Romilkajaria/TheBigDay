@@ -6,6 +6,8 @@ import {
     CommonProductsService
 } from "../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Product} from "../../../../../common/src/lib/common-rest-models/product";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -14,7 +16,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     items!: MenuItem[];
 
-    dashboardCards!: IDashboardCard[];
+    dashboardCards!: IDashboardCard<Product>[];
 
     chartData: any;
 
@@ -23,7 +25,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     subscription!: Subscription;
     loading = true;
 
-    constructor( public layoutService: LayoutService, private productsService: CommonProductsService) {
+    constructor( public layoutService: LayoutService,
+                 private productsService: CommonProductsService,
+                 private router: Router,
+                 private route: ActivatedRoute) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
@@ -36,8 +41,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 heading: p.name,
                 description: p.description,
                 maxWidth: '360px',
-                subheading: 'popular'
-            } as IDashboardCard));
+                subheading: 'popular',
+                metadata: p
+            } as IDashboardCard<Product>));
             this.loading = false;
         })
         this.initChart();
@@ -112,5 +118,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    async onDashboardCardSelected(dashboardCard: IDashboardCard<Product>) {
+        await this.router.navigate(['/store', this.route],)
     }
 }
