@@ -26,6 +26,6 @@ import {LoadingModule} from "../../../../../common/src/lib/components/loading/lo
         UIkitModule,
         LoadingModule
     ],
-    declarations: [DashboardComponent]
+    declarations: [DashboardComponent],
 })
 export class DashboardModule { }

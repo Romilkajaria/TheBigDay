@@ -6,7 +6,7 @@ import {
     CommonProductsService
 } from "../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {Product} from "../../../../../common/src/lib/common-rest-models/product";
 
 @Component({
@@ -27,8 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     constructor( public layoutService: LayoutService,
                  private productsService: CommonProductsService,
-                 private router: Router,
-                 private route: ActivatedRoute) {
+                 private router: Router) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
@@ -121,6 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     async onDashboardCardSelected(dashboardCard: IDashboardCard<Product>) {
-        await this.router.navigate(['/store', this.route],)
+        console.log(dashboardCard);
+        await this.router.navigate(['/app'])
     }
 }

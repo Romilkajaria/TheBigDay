@@ -1,6 +1,6 @@
 <div class="grid" *ngIf="!loading">
         <div *ngFor="let dashboardCard of dashboardCards" class="col-12 lg:col-6 xl:col-3">
-            <lib-dashboard-card [cardConfig]="dashboardCard" routerLink="/pages/store"></lib-dashboard-card>
+            <lib-dashboard-card [cardConfig]="dashboardCard" (onSelect)="onDashboardCardSelected(dashboardCard)"></lib-dashboard-card>
         </div>
 
 <!--        <div class="col-12 xl:col-6">-->

@@ -12,7 +12,8 @@ import {RouterModule} from '@angular/router';
         // { path: 'packages', loadChildren: () => import('./vendor-packages/vendor-packages.module').then(m => m.VendorPackagesModule) },
         // { path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule) },
         // { path: 'feedback', loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule) },
-        { path: '', loadChildren: () => import('./vendor-store/vendor-store.module').then(m => m.VendorStoreModule) },
+        { path: 'store', loadChildren: () => import('./vendor-store/vendor-store.module').then(m => m.VendorStoreModule) },
+        { path: 'notfound', loadChildren: () => import('../../../../common/src/lib/components/notfound/notfound.module').then(m => m.NotfoundModule) },
     ])],
     exports: [RouterModule]
 })

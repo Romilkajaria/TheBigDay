@@ -10,7 +10,7 @@ import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.co
             {
                 path: '', component: VendorPageShellComponent, canActivate: [AuthGuard],
                 children: [
-                    { path: '', loadChildren: () => import('../app/pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('../../../common/src/lib/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('../../../common/src/lib/components/documentation/documentation.module').then(m => m.DocumentationModule) },
