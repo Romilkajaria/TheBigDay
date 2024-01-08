@@ -24,7 +24,7 @@ import {LoadingModule} from "../../../../../common/src/lib/components/loading/lo
         ButtonModule,
         DashboardsRoutingModule,
         UIkitModule,
-        LoadingModule
+        LoadingModule,
     ],
     declarations: [DashboardComponent],
 })

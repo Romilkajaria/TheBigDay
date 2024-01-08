@@ -11,7 +11,6 @@ import {ConsumerPageShellComponent} from "./consumer-page-shell/consumer-page-sh
                 path: '', component: ConsumerPageShellComponent, canActivate: [ConsumerAuthGuard],
                 children: [
                     { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    { path: 'app', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) },
                 ]
             },
             { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/auth.module').then(m => m.AuthModule), component: LoginComponent },
