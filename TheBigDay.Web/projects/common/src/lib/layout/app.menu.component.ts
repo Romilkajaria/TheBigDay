@@ -7,7 +7,7 @@ import { LayoutService } from './service/app.layout.service';
     templateUrl: './app.menu.component.html'
 })
 export class AppMenuComponent implements OnInit {
-    @Input() menuItems: any[] = [];
+    @Input() public menuItems: any[] = [];
 
     constructor(public layoutService: LayoutService) { }
 

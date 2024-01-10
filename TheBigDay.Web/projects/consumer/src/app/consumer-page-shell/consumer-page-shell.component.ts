@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LayoutService} from "../../../../common/src/lib/layout/service/app.layout.service";
 
 @Component({
   selector: 'app-consumer-page-shell',
@@ -6,8 +7,8 @@ import {Component} from '@angular/core';
   styleUrls: ['./consumer-page-shell.component.scss']
 })
 export class ConsumerPageShellComponent {
-    menuItems = consumerMenu;
 
+    protected readonly consumerMenu = consumerMenu;
 }
 
 export const consumerMenu = [

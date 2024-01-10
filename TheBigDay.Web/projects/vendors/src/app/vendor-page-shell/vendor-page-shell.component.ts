@@ -6,8 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./vendor-page-shell.component.scss']
 })
 export class VendorPageShellComponent {
-    menuItems = vendorMenu;
-
+    protected readonly vendorMenu = vendorMenu;
 }
 
 export const vendorMenu = [
