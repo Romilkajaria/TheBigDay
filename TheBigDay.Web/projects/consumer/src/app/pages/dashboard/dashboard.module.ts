@@ -11,6 +11,7 @@ import {PanelMenuModule} from 'primeng/panelmenu';
 import {DashboardsRoutingModule} from './dashboard-routing.module';
 import {UIkitModule} from "../../../../../common/src/lib/components/uikit/uikit.module";
 import {LoadingModule} from "../../../../../common/src/lib/components/loading/loading/loading.module";
+import {CarouselModule} from "primeng/carousel";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {LoadingModule} from "../../../../../common/src/lib/components/loading/lo
         DashboardsRoutingModule,
         UIkitModule,
         LoadingModule,
+        CarouselModule,
     ],
     declarations: [DashboardComponent],
 })

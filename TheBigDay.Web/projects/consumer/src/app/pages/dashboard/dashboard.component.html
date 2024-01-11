@@ -1,8 +1,34 @@
-<div class="flex" *ngIf="!loading">
-        <div *ngFor="let dashboardCard of dashboardCards" class="mx-4">
-            <lib-dashboard-card [cardConfig]="dashboardCard" (onSelect)="onDashboardCardSelected(dashboardCard)"></lib-dashboard-card>
-        </div>
+<div *ngIf="!loading">
+    <h2>Popular products</h2>
+    <p-carousel [value]="products" [numVisible]="4" [numScroll]="3" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
+        <ng-template let-product pTemplate="item">
+            <div class="m-2">
+                <lib-dashboard-card [cardConfig]="product" class="mx-2" (onSelect)="onDashboardCardSelected(product)"></lib-dashboard-card>
+            </div>
+        </ng-template>
+    </p-carousel>
+
+    <h2>Popular services</h2>
+    <p-carousel [value]="services" [numVisible]="4" [numScroll]="3" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
+        <ng-template let-product pTemplate="item">
+            <div class="m-2">
+                <lib-dashboard-card [cardConfig]="product" class="mx-2" (onSelect)="onDashboardCardSelected(product)"></lib-dashboard-card>
+            </div>
+        </ng-template>
+    </p-carousel>
+
+    <h2>Popular vendors</h2>
+    <p-carousel [value]="vendors" [numVisible]="4" [numScroll]="3" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
+        <ng-template let-product pTemplate="item">
+            <div class="m-2">
+                <lib-dashboard-card [cardConfig]="product" class="mx-2" (onSelect)="onDashboardCardSelected(product)"></lib-dashboard-card>
+            </div>
+        </ng-template>
+    </p-carousel>
 </div>
+
+
+
 <div *ngIf="loading" class="flex justify-content-center">
     <app-loading [showLoading]="loading"></app-loading>
 </div>

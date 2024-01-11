@@ -13,8 +13,6 @@ export class AppLayoutComponent {
     @Input() contentTemplate!: TemplateRef<any>;
 
     isSidebarVisible = false;
-
-
     constructor(public layoutService: LayoutService) {
         this.layoutService.overlayOpen$.subscribe(() => this.isSidebarVisible = !this.isSidebarVisible);
     }

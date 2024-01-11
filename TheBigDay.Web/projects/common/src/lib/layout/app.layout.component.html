@@ -1,14 +1,10 @@
 <div class="layout-wrapper">
     <app-topbar></app-topbar>
     <p-sidebar [(visible)]="isSidebarVisible">
-        <ng-template  pTemplate="header">
-                <span >
+        <ng-template pTemplate="header">
+                <span>
                     <img class="ms-3" src="favicon.ico" width="40%">
                 </span>
-<!--        <span>-->
-<!--            <p-button type="button" (click)="closeCallback()" icon="pi pi-times" [rounded]="true"  styleClass="h-2rem w-2rem"></p-button>-->
-<!--        </span>-->
-
         </ng-template>
 
         <ng-template *ngTemplateOutlet="contentTemplate" pTemplate="content">

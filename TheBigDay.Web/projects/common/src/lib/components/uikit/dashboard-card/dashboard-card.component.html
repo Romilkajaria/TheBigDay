@@ -1,4 +1,4 @@
-<p-card [header]="cardConfig.heading" [subheader]="cardConfig.subheading" (click)="onSelect.emit()" [style]="{ 'max-width': cardConfig.maxWidth, 'height': '200px', 'overflow': 'hidden' }">
+<p-card *ngIf="cardConfig" [header]="cardConfig.heading" [subheader]="cardConfig.subheading" (click)="onSelect.emit()" [style]="{ 'max-width': cardConfig.maxWidth, 'height': '200px', 'overflow': 'hidden' }">
     <ng-template pTemplate="header">
         <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
     </ng-template>
