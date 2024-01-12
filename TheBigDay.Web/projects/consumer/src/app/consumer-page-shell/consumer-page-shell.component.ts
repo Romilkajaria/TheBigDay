@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {LayoutService} from "../../../../common/src/lib/layout/service/app.layout.service";
 
 @Component({
   selector: 'app-consumer-page-shell',
