@@ -7,6 +7,7 @@ import {LoginModule} from "../../../common/src/lib/components/auth/login/login.m
 import {VendorPageShellComponent} from './vendor-page-shell/vendor-page-shell.component';
 import {RippleModule} from "primeng/ripple";
 import {SharedModule} from "primeng/api";
+import {StyleClassModule} from "primeng/styleclass";
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import {SharedModule} from "primeng/api";
         NgForOf,
         RippleModule,
         SharedModule,
+        StyleClassModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

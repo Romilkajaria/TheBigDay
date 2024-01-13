@@ -1,5 +1,6 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" (click)="layoutService.onMenuToggle()">
+    <div class="pi-bars cursor-pointer" (click)="layoutService.onMenuToggle()"></div>
+    <a class="layout-topbar-logo" [routerLink]="''">
         <img src="favicon.ico" alt="logo">
     </a>
 

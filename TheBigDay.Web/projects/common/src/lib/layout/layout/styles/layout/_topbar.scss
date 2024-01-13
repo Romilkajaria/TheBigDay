@@ -26,9 +26,9 @@
             margin-right: .5rem;
         }
 
-        &:focus {
-            @include focused();
-        }
+        //&:focus {
+        //    @include focused();
+        //}
     }
 
     .layout-topbar-button {
