@@ -12,11 +12,18 @@ import {AvatarModule} from "primeng/avatar";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {SharedModule} from "primeng/api";
+import {LandingComponent} from "./pages/landing/landing.component";
+import {InputTextModule} from "primeng/inputtext";
+import {CalendarModule} from "primeng/calendar";
+import {FormsModule} from "@angular/forms";
+import { LoginSignupDialogComponent } from './pages/landing/login-signup-dialog/login-signup-dialog.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        LandingComponent,
         ConsumerPageShellComponent,
+        LoginSignupDialogComponent
     ],
     imports: [
         CommonModule,
@@ -29,6 +36,9 @@ import {SharedModule} from "primeng/api";
         ButtonModule,
         RippleModule,
         SharedModule,
+        InputTextModule,
+        CalendarModule,
+        FormsModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

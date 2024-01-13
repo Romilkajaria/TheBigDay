@@ -18,12 +18,45 @@ import {
     CommonVendorService
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
 import {TBDItem} from "../../../../../common/src/lib/common-rest-models/item";
+import {KeyValue} from "@angular/common";
+
+export interface Category {
+    url: string;
+}
 
 @Component({
     templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+    mockCategoryList: Category[] = [
 
+        {url: '../../../assets/categories/DJ.png'},
+        {url: './assets/categories/TBD_Caravan.png'},
+        {url: './assets/categories/Artists.png'},
+        {url: './assets/categories/Florist.png'},
+        {url: './assets/categories/Event_Agency.png'},
+        {url: './assets/categories/Makeup_Artist.png'},
+        {url: './assets/categories/Priest.png'},
+        {url: './assets/categories/Photographer.png'},
+        {url: './assets/categories/Baraat.png'},
+        {url: './assets/categories/TBD_Spot.png'},
+        {url: './assets/categories/Caterer.png'},
+        {url: './assets/categories/Security.png'},
+        {url: './assets/categories/Henna_Artist.png'},
+        {url: './assets/categories/Balloon_Decor.png'},
+        {url: './assets/categories/Pet_Friendly_Products.png'},
+        {url: './assets/categories/Gifting_Solutions.png'},
+        {url: './assets/categories/Party_Supplies.png'},
+        {url: './assets/categories/Bakers.png'},
+        {url: './assets/categories/Invites.png'},
+        {url: './assets/categories/Rentals.png'},
+        {url: './assets/categories/Idols.png'},
+        {url: './assets/categories/Tech_Solutions.png'},
+        {url: './assets/categories/Alcohol.png'},
+        {url: './assets/categories/Decorators.png'},
+        {url: './assets/categories/Fashion.png'},
+    ]
     items!: MenuItem[];
 
     products!: IDashboardCard<Product>[];
@@ -47,6 +80,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
             breakpoint: '767px',
             numVisible: 1,
             numScroll: 1
+        }
+    ];
+    categoryResponsiveOptions: CarouselResponsiveOptions[] = [
+        {
+            breakpoint: '1199px',
+            numVisible: 4,
+            numScroll: 4
+        },
+        {
+            breakpoint: '991px',
+            numVisible: 4,
+            numScroll: 4
+        },
+        {
+            breakpoint: '767px',
+            numVisible: 3,
+            numScroll: 3
         }
     ];
 

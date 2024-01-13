@@ -1,4 +1,13 @@
 <div *ngIf="!loading">
+    <div class="category-container">
+        <p-carousel [value]="mockCategoryList" contentClass="content-class" [circular]="true" [autoplayInterval]="2000" [numVisible]="15" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="categoryResponsiveOptions" >>
+            <ng-template let-mockCategory pTemplate="item">
+                <div class="m-1">
+                    <img class="text-center" [src]="mockCategory.url" alt=""/>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
     <h2>Popular products</h2>
     <p-carousel [value]="products" [numVisible]="4" [numScroll]="3" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
         <ng-template let-product pTemplate="item">

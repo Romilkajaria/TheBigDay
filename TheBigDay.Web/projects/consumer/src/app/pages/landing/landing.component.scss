@@ -1,0 +1,35 @@
+.landing {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.create-event {
+    height: 100%;
+}
+
+.continue-with-address {
+    height: 100%
+}
+
+.landing-background {
+    background-image: linear-gradient(rgba(165, 43, 235), rgba(129, 45, 240), rgba(65, 95, 243));
+}
+
+.container {
+    width:60%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);;
+}
+
+.create-event-form {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 50% 50%;
+}
