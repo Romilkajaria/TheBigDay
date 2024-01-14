@@ -26,7 +26,7 @@ export class ConsumerPageShellComponent {
     ];
     selectedCountry: any;
 
-    constructor(private eventService: CommonEventService) {
+    constructor() {
     }
 }
 

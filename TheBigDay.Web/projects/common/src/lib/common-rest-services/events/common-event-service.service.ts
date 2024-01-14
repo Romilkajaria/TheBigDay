@@ -1,6 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
 import {BaseCommonRestService} from "../base-common-rest-service.service";
-import {Vendor} from "../../common-rest-models/vendor";
 import {TBDEvent} from "../../common-rest-models/event";
 import {environment} from "../../environments/environment";
 
