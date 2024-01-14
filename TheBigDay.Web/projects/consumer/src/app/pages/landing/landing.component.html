@@ -17,25 +17,36 @@
                 <label for="username">Enter event address</label>
                 <input pInputText id="username"/>
             </span>
-            <p-button [routerLink]="'/app/dashboard'" label="Get started" icon="pi pi-arrow-right" iconPos="right"></p-button>
+            <p-button [routerLink]="'/app/dashboard'" label="Browse" icon="pi pi-arrow-right" iconPos="right"></p-button>
         </div>
     </div>
 
     <div class="continue-with-address flex align-items-center justify-content-center">
         <div class="container p-4 landing-background">
             <h2 style="color: white">Get started by creating an event</h2>
-            <div class="create-event-form">
+            <div class="w-full">
                 <span class="flex flex-column gap-2 text-color-white mb-2">
                     <label>Event name</label>
                     <input pInputText/>
                 </span>
-                <span class="flex flex-column gap-2 text-color-white mb-2">
-                    <label>Event date</label>
-                    <p-calendar [showIcon]="true" icondisplay="true" [showTime]="true" [hourFormat]="'12'" [(ngModel)]="eventDate"></p-calendar>
+                <div class="date-fields">
+                    <span class="flex flex-column gap-2 text-color-white mb-2">
+                        <label>Event start date</label>
+                        <p-calendar [showIcon]="true" icondisplay="true" [showTime]="true" [hourFormat]="'12'" [(ngModel)]="event.startDateTime"></p-calendar>
+                    </span>
+                    <span class="flex flex-column gap-2 text-color-white mb-2">
+                        <label>Event end date</label>
+                        <p-calendar [showIcon]="true" icondisplay="true" [showTime]="true" [hourFormat]="'12'" [(ngModel)]="event.endDateTime"></p-calendar>
+                    </span>
+                </div>
+
+                <span class="flex flex-column gap-2 text-color-white w-full">
+                    <label>Event address</label>
+                    <input pInputText />
                 </span>
             </div>
 
-            <p-button [routerLink]="'/app/dashboard'" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Create event" icon="pi pi-arrow-right" iconPos="right"></p-button>
+            <p-button [routerLink]="'/app/dashboard'" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Get Started" icon="pi pi-arrow-right" iconPos="right"></p-button>
         </div>
     </div>
 </div>

@@ -1,4 +1,19 @@
-<app-layout [contentTemplate]="contentTemplate"></app-layout>
+<app-layout [contentTemplate]="contentTemplate">
+    <p-dropdown [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [dropdownIcon]="'pi pi-map-marker'" placeholder="Select a Country" class="p-input-icon-left">
+        <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + selectedCountry.code.toLowerCase()" style="width: 18px"/>
+                <div>{{ selectedCountry.name }}</div>
+            </div>
+        </ng-template>
+        <ng-template let-country pTemplate="item">
+            <div class="flex align-items-center gap-2">
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width: 18px"/>
+                <div>{{ country.name }}</div>
+            </div>
+        </ng-template>
+    </p-dropdown>
+</app-layout>
 
 <ng-template #contentTemplate pTemplate="content">
     <div class="flex flex-column h-full">

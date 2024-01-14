@@ -1,5 +1,7 @@
 <div class="layout-wrapper">
-    <app-topbar></app-topbar>
+    <app-topbar>
+        <ng-content></ng-content>
+    </app-topbar>
     <p-sidebar [(visible)]="isSidebarVisible">
         <ng-template pTemplate="header">
                 <span>

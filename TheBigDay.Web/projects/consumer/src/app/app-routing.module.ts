@@ -12,6 +12,7 @@ import {LandingComponent} from "./pages/landing/landing.component";
             { path: 'app', component: ConsumerPageShellComponent,  canActivate: [ConsumerAuthGuard],
                 children:[
                     { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    {path: 'store', loadChildren: () => import('./pages/vendor-store/vendor-store.module').then(m => m.VendorStoreModule)},
                 ]
             },
             { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/auth.module').then(m => m.AuthModule), component: LoginComponent },

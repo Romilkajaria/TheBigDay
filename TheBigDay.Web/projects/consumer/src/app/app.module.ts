@@ -17,6 +17,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import { LoginSignupDialogComponent } from './pages/landing/login-signup-dialog/login-signup-dialog.component';
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { LoginSignupDialogComponent } from './pages/landing/login-signup-dialog/
         InputTextModule,
         CalendarModule,
         FormsModule,
+        DropdownModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
