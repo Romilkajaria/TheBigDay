@@ -15,9 +15,9 @@
             <h2>Browse by entering your address</h2>
             <span class="flex flex-column gap-2 text-color-primary w-full">
                 <label for="username">Enter event address</label>
-                <input pInputText id="username"/>
+                <input pInputText id="username" [(ngModel)]="browsingAddress"/>
             </span>
-            <p-button [routerLink]="'/app/dashboard'" label="Browse" icon="pi pi-arrow-right" iconPos="right"></p-button>
+            <p-button (click)="startBrowsing()" [disabled]="!browsingAddress" label="Browse" icon="pi pi-arrow-right" iconPos="right"></p-button>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
             <div class="w-full">
                 <span class="flex flex-column gap-2 text-color-white mb-2">
                     <label>Event name</label>
-                    <input pInputText/>
+                    <input pInputText [(ngModel)]="event.name"/>
                 </span>
                 <div class="date-fields">
                     <span class="flex flex-column gap-2 text-color-white mb-2">
@@ -42,11 +42,11 @@
 
                 <span class="flex flex-column gap-2 text-color-white w-full">
                     <label>Event address</label>
-                    <input pInputText />
+                    <input pInputText [(ngModel)]="event.addressLine1"/>
                 </span>
             </div>
 
-            <p-button [routerLink]="'/app/dashboard'" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Get Started" icon="pi pi-arrow-right" iconPos="right"></p-button>
+            <p-button (click)="startEvent()" [disabled]="isEventButtonDisabled()" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Get Started" icon="pi pi-arrow-right" iconPos="right"></p-button>
         </div>
     </div>
 </div>
