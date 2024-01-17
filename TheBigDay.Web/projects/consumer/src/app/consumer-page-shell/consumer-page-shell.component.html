@@ -1,19 +1,52 @@
 <app-layout [contentTemplate]="contentTemplate">
-    <div class="flex">
-        <span class="mx-2">Selected event: </span>
+    <div class="flex align-items-center" *ngIf="selectedEvent">
+        <div>
+            <div>{{selectedEvent.name}}</div>
+            <div class="font-italic text-color"> {{selectedEvent.addressLine1}}</div>
+        </div>
+
+        <button class="p-link layout-topbar-button"
+                (click)="editEventOverlay.toggle($event)">
+            <i class="pi pi-pencil"></i>
+            <span>Edit event</span>
+        </button>
+
+
     </div>
-    <p-dropdown [options]="events" [(ngModel)]="selectedEvent" optionLabel="name" [dropdownIcon]="'pi pi-map-marker'" placeholder="Select a Country" class="p-input-icon-left">
-        <ng-template pTemplate="selectedEvent">
-            <div class="flex align-items-center gap-2" *ngIf="selectedEvent">
-                <div>{{ selectedEvent.name }}</div>
+
+    <p-overlayPanel #editEventOverlay [style]="{ width: '450px' }" [showCloseIcon]="true">
+        <div class="flex justify-content-between align-content-center my-2">
+            <div>Edit event</div>
+            <div class="flex">
+                <button pTooltip="New event" tooltipPosition="bottom"
+                    class="p-link layout-topbar-button mx-4">
+                    <i class="pi pi-plus"></i>
+                </button>
+                <button pTooltip="Switch event" tooltipPosition="bottom"
+                    class="p-link layout-topbar-button">
+                    <i class="pi pi-sort-alt"></i>
+                </button>
             </div>
+        </div>
+    </p-overlayPanel>
+
+    <p-overlayPanel #switchEventOverlay >
+        <div class="flex justify-content-between align-items-center my-2">
+            <h4>Events</h4>
+            <button pButton pRipple class="p-link layout-topbar-button">
+                <i class="pi pi-plus-circle"></i>
+                <span>Add event</span>
+            </button>
+        </div>
+
+        <ng-template pTemplate="content">
+            <p-listbox [options]="events" [(ngModel)]="selectedEvent" optionLabel="name">
+                <ng-template let-event pTemplate="item">
+                    <div>{{event.name}} at {{event.addressLine1}}</div>
+                </ng-template>
+            </p-listbox>
         </ng-template>
-        <ng-template let-event pTemplate="event">
-            <div class="flex align-items-center gap-2">
-                <div>{{ event.name }}</div>
-            </div>
-        </ng-template>
-    </p-dropdown>
+    </p-overlayPanel>
 </app-layout>
 
 <ng-template #contentTemplate pTemplate="content">

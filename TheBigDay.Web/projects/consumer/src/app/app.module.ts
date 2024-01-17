@@ -18,6 +18,9 @@ import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import { LoginSignupDialogComponent } from './pages/landing/login-signup-dialog/login-signup-dialog.component';
 import {DropdownModule} from "primeng/dropdown";
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import {ListboxModule} from "primeng/listbox";
+import {TooltipModule} from "primeng/tooltip";
 
 @NgModule({
     declarations: [
@@ -41,6 +44,9 @@ import {DropdownModule} from "primeng/dropdown";
         CalendarModule,
         FormsModule,
         DropdownModule,
+        OverlayPanelModule,
+        ListboxModule,
+        TooltipModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
