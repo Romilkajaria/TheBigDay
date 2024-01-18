@@ -152,8 +152,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
-    async onDashboardCardSelected(dashboardCard: IDashboardCard<Product>) {
-        console.log(dashboardCard);
-        await this.router.navigate(['app/store'])
+    async navigateToVendorPage(vendorId: string, product?: Product, service?: Service) {
+        const route = `app/store`;
+
+        if(product) {
+            await this.router.navigate([route], {queryParams: {product: product.id, vendor: vendorId}})
+        } else if(service) {
+            await this.router.navigate([route], {queryParams: {product: service.id,  vendor: vendorId}})
+        }
     }
 }

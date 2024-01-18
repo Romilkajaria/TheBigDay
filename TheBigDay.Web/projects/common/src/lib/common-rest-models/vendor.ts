@@ -1,3 +1,6 @@
+import {Product} from "./product";
+import {Service} from "./service";
+
 export interface Vendor {
     id: string;
     name: string;
@@ -14,4 +17,7 @@ export interface Vendor {
     email: string;
     photoPath?: string;
     isDeleted: boolean;
+    products: Product[];
+    services: Service[];
+    // packages: Packages[];
 }

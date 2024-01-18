@@ -47,7 +47,11 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Vendor.FirstOrDefault((c) => c.ID == id);
+                    return context.Vendor
+                        .Include("Products")
+                        .Include("Services")
+                        .Include("Packages")
+                        .FirstOrDefault((c) => c.ID == id);
                 }
             }
             catch (Exception ex)

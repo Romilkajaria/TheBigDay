@@ -17,6 +17,10 @@ export class CommonVendorService extends BaseCommonRestService {
         return this.get<Vendor[]>(this.vendorUrl);
     }
 
+    public getVendor(vendorId: string) {
+        return this.get<Vendor>(`${this.vendorUrl}/${vendorId}`)
+    }
+
     public addVendor(service: Vendor) {
         return this.post<Vendor>(this.vendorUrl, service);
     }
