@@ -43,16 +43,20 @@ namespace TheBigDay.Controllers
         {
             try
             {
-                using (var context = new DatabaseContext(
+                using var context = new DatabaseContext(
                     _serviceProvider.GetRequiredService<
-                        DbContextOptions<DatabaseContext>>()))
+                        DbContextOptions<DatabaseContext>>());
+                var vendor = context.Vendor
+                    .FirstOrDefault((c) => c.ID == id);
+
+                if (vendor != null)
                 {
-                    return context.Vendor
-                        .Include("Products")
-                        .Include("Services")
-                        .Include("Packages")
-                        .FirstOrDefault((c) => c.ID == id);
+                    vendor.Products = context.Product.Where((p) => p.VendorID == id && p.IsDeleted == false).ToList();
+                    vendor.Packages = context.Package.Where((p) => p.VendorID == id && p.IsDeleted == false).ToList();
+                    vendor.Services = context.Service.Where((s) => s.VendorID == id && s.IsDeleted == false).ToList();
                 }
+
+                return vendor;
             }
             catch (Exception ex)
             {

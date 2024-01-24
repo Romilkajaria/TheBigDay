@@ -1,21 +1,31 @@
-<div class="overflow-hidden flex" *ngIf="vendor">
-    <div class="col-4 position-sticky top-0">
+<div *ngIf="!loading">
+    <div class="w-full overflow-hidden position-sticky top-0 h-3rem" *ngIf="vendor">
+
+        <img width="100%" [src]="'https://primefaces.org/cdn/primeng/images/usercard.png'"/>
         <h2>{{vendor.name}}</h2>
+        <div [innerHTML]="vendor.description"></div>
     </div>
-    <div class="col-8">
-        <h3>Products</h3>
-        <div class=" grid">
-            <div class="col-4" *ngFor="let product of vendor.products">
-                <lib-dashboard-card class="mx-2" [cardConfig]="addCardWrapperProduct(product)"></lib-dashboard-card>
+    <div class="overflow-hidden flex" *ngIf="vendor">
+        <div class="col-12">
+            <h3>Products</h3>
+            <div class=" grid">
+                <div class="col-2" *ngFor="let product of vendor.products">
+                    <lib-dashboard-card class="mx-2" [cardConfig]="addCardWrapperProduct(product)"></lib-dashboard-card>
+                </div>
             </div>
-        </div>
-        <h3>Services</h3>
-        <div class="grid">
-            <div class="col-4" *ngFor="let service of vendor.services">
-                <lib-dashboard-card class="mx-2" [cardConfig]="addCardWrapperService(service)"></lib-dashboard-card>
+            <h3>Services</h3>
+            <div class="grid">
+                <div class="col-2" *ngFor="let service of vendor.services">
+                    <lib-dashboard-card class="mx-2" [cardConfig]="addCardWrapperService(service)"></lib-dashboard-card>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<app-loading class="flex justify-content-center" [showLoading]="loading"></app-loading>
+
+
 
 

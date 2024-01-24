@@ -1,18 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {
-    CommonProductsService
-} from "../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
-import {
-    CommonServicesService
-} from "../../../../../common/src/lib/common-rest-services/services/common-services-service.service";
-import {
     CommonVendorService
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
 import {Product} from "../../../../../common/src/lib/common-rest-models/product";
 import {Service} from "../../../../../common/src/lib/common-rest-models/service";
 import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
-import {TBDItem} from "../../../../../common/src/lib/common-rest-models/item";
 import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
 
 @Component({
@@ -25,6 +18,7 @@ export class VendorStoreComponent implements OnInit {
     public productId?: string | null;
     public serviceId?: string | null;
     public vendorId?: string | null
+    loading = true;
 
     constructor(private route: ActivatedRoute,
                 private vendorService: CommonVendorService) {
@@ -41,7 +35,8 @@ export class VendorStoreComponent implements OnInit {
 
             if(this.vendorId) {
                 this.vendorService.getVendor(this.vendorId).subscribe((v) => {
-                    this.vendor = v
+                    this.vendor = v;
+                    this.loading = false;
                 })
             }
         })
