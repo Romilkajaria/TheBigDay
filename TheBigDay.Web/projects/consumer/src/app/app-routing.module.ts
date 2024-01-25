@@ -15,7 +15,7 @@ import {LandingComponent} from "./pages/landing/landing.component";
                     {path: 'store', loadChildren: () => import('./pages/vendor-store/vendor-store.module').then(m => m.VendorStoreModule)},
                 ]
             },
-            { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/auth.module').then(m => m.AuthModule), component: LoginComponent },
+            { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/login/login.module').then(m => m.LoginModule)},
             { path: 'notfound', loadChildren: () => import('../../../common/src/lib/components/notfound/notfound.module').then(m => m.NotfoundModule) },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
