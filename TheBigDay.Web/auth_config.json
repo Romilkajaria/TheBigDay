@@ -1,0 +1,11 @@
+"auth0": {
+  "domain": "dev-trnzolr3zks0yejt.au.auth0.com",
+  "clientId": "TSD8Tv41eutaRopTMJmUPjRbGbc0FlJo",
+    "redirectUri": "http://localhost:4202/auth",
+  "authorizationParams": {
+    "audience": "window.location.origin"
+  },
+  "apiUri": "http://localhost:3001",
+  "appUri": "http://localhost:4202",
+  "errorPath": "/error"
+}

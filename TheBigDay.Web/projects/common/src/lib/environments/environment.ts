@@ -3,8 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'https://tbdvendor.azurewebsites.net/api/'
+    production: false,
+    apiUrl: 'https://tbdvendor.azurewebsites.net/api/',
+    auth0: {
+        domain: 'dev-trnzolr3zks0yejt.au.auth0.com',
+        clientId: 'TSD8Tv41eutaRopTMJmUPjRbGbc0FlJo',
+        redirectUri: 'http://localhost:4202/auth',
+    },
    // apiUrl: 'https://localhost:44320/api/'
 };
 

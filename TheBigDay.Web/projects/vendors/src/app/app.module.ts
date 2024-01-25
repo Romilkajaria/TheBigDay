@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {HashLocationStrategy, LocationStrategy, NgForOf} from '@angular/common';
+import {LocationStrategy, NgForOf, PathLocationStrategy} from '@angular/common';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AppLayoutModule} from '../../../common/src/lib/layout/app.layout.module';
@@ -23,7 +23,7 @@ import {StyleClassModule} from "primeng/styleclass";
         StyleClassModule,
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
     ],
     bootstrap: [AppComponent]
 })

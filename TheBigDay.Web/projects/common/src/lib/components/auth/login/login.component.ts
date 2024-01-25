@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {LayoutService} from "../../../layout/service/app.layout.service";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
     selector: 'app-login',
@@ -20,5 +21,8 @@ export class LoginComponent {
     password?: string;
     email?: string;
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService,
+                authService: AuthService) {
+        authService.loginWithRedirect();
+    }
 }
