@@ -12,7 +12,7 @@ export const environment = {
         clientId: 'QwIuX9PpTzkEnYzJtflOq4HHopN7Fzkk',
         authorizationParams: {
             redirect_uri: "http://localhost:4202",
-        }
+        },
     } as AuthConfig,
    // apiUrl: 'https://localhost:44320/api/'
 };
