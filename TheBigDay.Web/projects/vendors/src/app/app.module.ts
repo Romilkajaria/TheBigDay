@@ -10,7 +10,7 @@ import {SharedModule} from "primeng/api";
 import {StyleClassModule} from "primeng/styleclass";
 import {LoginPageComponent} from "./login-page/login-page.component";
 import {AuthModule} from "@auth0/auth0-angular";
-import {environment} from "../../../common/src/lib/environments/environment";
+import {environment} from "../environments/environment";
 
 @NgModule({
     declarations: [

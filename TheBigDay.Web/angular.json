@@ -153,6 +153,10 @@
             "polyfills": [
               "zone.js"
             ],
+              "fileReplacements": [{
+                      "replace": "projects/vendors/src/environments/environment.ts",
+                      "with": "projects/vendors/src/environments/environment.prod.ts"
+                  }],
             "tsConfig": "projects/vendors/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
