@@ -3,6 +3,7 @@ import {MenuItem} from 'primeng/api';
 import {Subscription} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
 import {Product} from "../../../../../common/src/lib/common-rest-models/product";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -19,10 +20,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor( public layoutService: LayoutService) {
+    constructor( public layoutService: LayoutService, auth: AuthService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
+
+        auth.user$.subscribe((user) => {
+            console.log(user?.name);
+            console.log(user?.email);
+            console.log(user?.birthdate);
+        })
     }
 
     ngOnInit() {

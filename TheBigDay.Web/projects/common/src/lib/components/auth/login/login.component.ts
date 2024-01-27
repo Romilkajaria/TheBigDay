@@ -23,6 +23,6 @@ export class LoginComponent {
 
     constructor(public layoutService: LayoutService,
                 authService: AuthService) {
-        authService.loginWithRedirect();
+        authService.loginWithPopup();
     }
 }

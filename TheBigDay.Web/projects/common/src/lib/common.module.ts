@@ -7,11 +7,13 @@ import {InputTextModule} from "primeng/inputtext";
 import {CommonModule as AngularCommonModule} from "@angular/common";
 import { FormsModule } from '@angular/forms';
 import {MenuModule} from "primeng/menu";
+import { LogoutComponent } from './components/auth/logout/logout.component';
 
 
 @NgModule({
   declarations: [
     CommonComponent,
+    LogoutComponent,
   ],
   imports: [
     CheckboxModule,

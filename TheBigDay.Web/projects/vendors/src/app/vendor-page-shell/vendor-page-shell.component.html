@@ -1,4 +1,4 @@
-<app-layout [contentTemplate]="contentTemplate"></app-layout>
+<app-layout [contentTemplate]="contentTemplate" [user]="auth.user$ | async"></app-layout>
 
 <ng-template #contentTemplate pTemplate="content">
     <div class="flex flex-column h-full">

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-vendor-page-shell',
@@ -7,6 +8,10 @@ import {Component} from '@angular/core';
 })
 export class VendorPageShellComponent {
     protected readonly vendorMenu = vendorMenu;
+
+    constructor(public auth: AuthService) {
+
+    }
 }
 
 export const vendorMenu = [
@@ -35,7 +40,7 @@ export const vendorMenu = [
         label: 'Configuration',
         items: [
             { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/pages/settings'] },
-            { label: 'Sign out', icon: 'pi pi-fw pi-sign-out', routerLink: ['/auth'] },
+            { label: 'Sign out', icon: 'pi pi-fw pi-sign-out', routerLink: ['/logout'] },
         ]
     },
 

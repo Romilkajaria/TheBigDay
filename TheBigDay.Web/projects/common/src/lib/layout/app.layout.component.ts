@@ -4,6 +4,7 @@ import { filter, Subscription } from 'rxjs';
 import { LayoutService } from "./service/app.layout.service";
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppTopBarComponent } from './app.topbar.component';
+import {User} from "@auth0/auth0-angular";
 
 @Component({
     selector: 'app-layout',
@@ -11,6 +12,7 @@ import { AppTopBarComponent } from './app.topbar.component';
 })
 export class AppLayoutComponent {
     @Input() contentTemplate!: TemplateRef<any>;
+    @Input() user?: User | null;
 
     isSidebarVisible = false;
     constructor(public layoutService: LayoutService) {

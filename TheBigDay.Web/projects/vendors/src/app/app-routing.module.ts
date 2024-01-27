@@ -1,8 +1,8 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {LoginComponent} from "../../../common/src/lib/components/auth/login/login.component";
-import {AuthGuard} from "../../../common/src/lib/components/auth/AuthGuard";
 import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
+import {AuthGuard} from "@auth0/auth0-angular";
+import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/logout.component";
 
 @NgModule({
     imports: [
@@ -19,6 +19,7 @@ import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.co
             },
             { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/login/login.module').then(m => m.LoginModule)},
             { path: 'notfound', loadChildren: () => import('../../../common/src/lib/components/notfound/notfound.module').then(m => m.NotfoundModule) },
+            { path: 'logout', component: LogoutComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],

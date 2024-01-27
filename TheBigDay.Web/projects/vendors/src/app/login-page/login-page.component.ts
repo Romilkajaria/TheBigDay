@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-login-page',
@@ -8,10 +8,6 @@ import {Router} from "@angular/router";
 })
 export class LoginPageComponent {
 
-  public constructor(private router: Router) {
-  }
-
-  async navigateToDashboard() {
-    await this.router.navigate(["/dashboard"])
+  public constructor(public auth: AuthService) {
   }
 }
