@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
 import {AuthGuard} from "@auth0/auth0-angular";
 import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/logout.component";
+import {SignupFormComponent} from "./pages/signup-form/signup-form.component";
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/lo
             },
             { path: 'auth', loadChildren: () => import('../../../common/src/lib/components/auth/login/login.module').then(m => m.LoginModule)},
             { path: 'notfound', loadChildren: () => import('../../../common/src/lib/components/notfound/notfound.module').then(m => m.NotfoundModule) },
+            { path: 'finish-signup', component: SignupFormComponent },
             { path: 'logout', component: LogoutComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })

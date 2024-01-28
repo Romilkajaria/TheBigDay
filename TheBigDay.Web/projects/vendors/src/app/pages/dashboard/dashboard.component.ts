@@ -1,9 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
-import {Subscription} from 'rxjs';
+import {exhaustMap, forkJoin, lastValueFrom, map, of, Subscription, switchMap, tap} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
 import {Product} from "../../../../../common/src/lib/common-rest-models/product";
-import {AuthService} from "@auth0/auth0-angular";
+import {AuthService, User} from "@auth0/auth0-angular";
+import {
+    CommonVendorService
+} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+import {Router} from "@angular/router";
+import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -20,22 +25,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor( public layoutService: LayoutService, auth: AuthService) {
+    user?: User | null;
+
+    vendor?: Vendor;
+
+    constructor( public layoutService: LayoutService,
+                 private vendorService: CommonVendorService,
+                 router: Router,
+                 auth: AuthService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
 
-        auth.user$.subscribe((user) => {
-            console.log(user?.name);
-            console.log(user?.email);
-            console.log(user?.birthdate);
+        auth.user$.pipe(
+            tap((user) => this.user = user),
+            switchMap(() => vendorService.getVendors()),
+        ).subscribe((vendors) => {
+            const targetVendor = vendors.find((v) => v.email === this.user?.email);
+            if (!targetVendor) {
+                router.navigate(['/finish-signup']);
+            }
+            else {
+                this.vendor = targetVendor;
+            }
         })
     }
 
     ngOnInit() {
-        this.initChart();
-        // this.productService.getProductsSmall().then(data => this.products = data);
-
+        this.vendorService.getVendors()
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
