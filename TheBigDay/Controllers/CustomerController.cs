@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Web.Resource;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
 using static Program;
@@ -10,6 +11,7 @@ namespace TheBigDay.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     [Authorize]
     public class CustomerController : ControllerBase
     {
