@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     user?: User | null;
 
+    loading = true
+
     vendor?: Vendor;
 
     constructor( public layoutService: LayoutService,
@@ -52,7 +54,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.vendorService.getVendors()
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }

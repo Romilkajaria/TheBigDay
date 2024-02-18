@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start vendor": "ng serve vendors --port 4202",
-        "start consumer": "ng serve consumer --port 4201",
+        "start vendor": "ng serve vendors --port 4202 --configuration development",
+        "start consumer": "ng serve consumer --port 4201 --configuration development",
         "build clients prod": "ng build vendors && ng build consumer",
         "build common": "ng build common",
         "watch": "ng build --watch --configuration development",

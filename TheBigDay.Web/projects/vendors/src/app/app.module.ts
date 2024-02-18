@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {AsyncPipe, LocationStrategy, NgForOf, PathLocationStrategy} from '@angular/common';
+import {AsyncPipe, CommonModule, LocationStrategy, NgForOf, PathLocationStrategy} from '@angular/common';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AppLayoutModule} from '../../../common/src/lib/layout/app.layout.module';
@@ -22,12 +22,11 @@ import {environment} from "../environments/environment";
         AppRoutingModule,
         AppLayoutModule,
         LoginModule,
-        NgForOf,
         RippleModule,
         SharedModule,
         StyleClassModule,
         AuthModule.forRoot(environment.auth0),
-        AsyncPipe,
+        CommonModule,
     ],
     bootstrap: [AppComponent]
 })
