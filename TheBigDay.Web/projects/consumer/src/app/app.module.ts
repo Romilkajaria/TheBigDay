@@ -21,6 +21,9 @@ import {DropdownModule} from "primeng/dropdown";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {ListboxModule} from "primeng/listbox";
 import {TooltipModule} from "primeng/tooltip";
+import {StyleClassModule} from "primeng/styleclass";
+import {AuthModule} from "@auth0/auth0-angular";
+import {environment} from "../environments/environment";
 
 @NgModule({
     declarations: [
@@ -47,6 +50,8 @@ import {TooltipModule} from "primeng/tooltip";
         OverlayPanelModule,
         ListboxModule,
         TooltipModule,
+        StyleClassModule,
+        AuthModule.forRoot(environment.auth0),
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

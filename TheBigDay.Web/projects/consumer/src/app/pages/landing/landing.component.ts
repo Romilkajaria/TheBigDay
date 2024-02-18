@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {
     LocalStorageService
 } from "../../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
+import {AuthService} from "@auth0/auth0-angular";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'consumer-landing',
@@ -19,7 +21,13 @@ export class LandingComponent {
 
     constructor(private dialogService: DialogService,
                 private router: Router,
-                private localStorageService: LocalStorageService) {
+                private localStorageService: LocalStorageService,
+                public auth: AuthService) {
+    this.auth.isAuthenticated$.subscribe((a) => {
+        if(a) {
+            this.router.navigate(['app/dashboard'])
+        }
+    });
     }
 
     public async startEvent() {

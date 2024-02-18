@@ -6,11 +6,12 @@ import {AuthConfig} from "@auth0/auth0-angular";
 
 export const environment = {
     production: false,
+    //apiUrl: 'https://tbdvendor.azurewebsites.net/api/',
     auth0: {
-        domain: 'dev-trnzolr3zks0yejt.au.auth0.com',
-        clientId: 'QwIuX9PpTzkEnYzJtflOq4HHopN7Fzkk',
+        domain: 'tbdcustdev.au.auth0.com',
+        clientId: 'xfSD5zkXeaawSbjuFcH1Pew7KggPDSAE',
         authorizationParams: {
-            redirect_uri: "http://localhost:4202",
+            redirect_uri: "http://localhost:4201",
         },
     } as AuthConfig,
     apiUrl: 'https://localhost:44320/api/'

@@ -7,8 +7,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-import {AuthModule} from "@auth0/auth0-angular";
-import {environment} from "../../../environments/environment";
 
 @NgModule({
     imports: [
@@ -19,7 +17,6 @@ import {environment} from "../../../environments/environment";
         InputTextModule,
         FormsModule,
         PasswordModule,
-        AuthModule.forRoot(environment.auth0),
     ],
     exports: [
         LoginComponent

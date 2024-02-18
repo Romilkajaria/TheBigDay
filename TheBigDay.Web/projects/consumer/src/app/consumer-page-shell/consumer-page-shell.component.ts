@@ -4,6 +4,8 @@ import {
     LocalStorageService
 } from "../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
 import {Router} from "@angular/router";
+import {AuthService, User} from "@auth0/auth0-angular";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-consumer-page-shell',
@@ -12,15 +14,21 @@ import {Router} from "@angular/router";
 })
 export class ConsumerPageShellComponent implements OnInit {
 
-    protected readonly consumerMenu = consumerMenu;
+    public readonly consumerMenu = consumerMenu;
     events: TBDEvent[] = []
     selectedEvent?: TBDEvent;
+    user?: User | null;
 
     constructor(private localStorageService: LocalStorageService,
-                private router: Router) {
+                private router: Router,
+                public auth: AuthService) {
+
     }
 
     public async ngOnInit() {
+        this.auth.user$.subscribe((a) => {
+            this.user = a;
+        });
         this.selectedEvent = this.localStorageService.getItem<TBDEvent>("event");
         if (!this.selectedEvent) {
             await this.router.navigate([""])
@@ -49,6 +57,8 @@ export const consumerMenu = [
             { label: 'Rewards', routerLink: ['/pages/rewards'] },
             { label: 'FAQs', routerLink: ['/pages/faqs'] },
             { label: 'Privacy Policy', routerLink: ['/pages/privacy-policy'] },
+            { label: 'Sign out', routerLink: ['/logout'] },
+
 
         ]
     },
