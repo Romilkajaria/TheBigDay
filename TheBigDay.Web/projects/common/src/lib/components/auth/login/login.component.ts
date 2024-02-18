@@ -21,8 +21,6 @@ export class LoginComponent {
     password?: string;
     email?: string;
 
-    constructor(public layoutService: LayoutService,
-                authService: AuthService) {
-        authService.loginWithPopup();
+    constructor(public layoutService: LayoutService) {
     }
 }
