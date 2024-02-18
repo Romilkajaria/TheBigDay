@@ -9,6 +9,6 @@ import {AuthService} from "@auth0/auth0-angular";
 export class LoginPageComponent {
 
   public constructor(public auth: AuthService) {
-      auth.loginWithRedirect();
+      // auth.loginWithRedirect();
   }
 }

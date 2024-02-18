@@ -10,6 +10,7 @@ namespace TheBigDay.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
 
@@ -23,6 +24,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IEnumerable<Customer> Get()
         {
             try
@@ -41,6 +43,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public Customer? Get(Guid id)
         {
             try
@@ -60,6 +63,7 @@ namespace TheBigDay.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] Customer customer)
         {
             try
@@ -81,6 +85,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(Guid id, [FromBody] Customer customer)
         {
             try
@@ -107,6 +112,7 @@ namespace TheBigDay.Controllers
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(Guid id)
         {
             try

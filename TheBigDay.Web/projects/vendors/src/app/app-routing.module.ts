@@ -1,9 +1,9 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
-import {AuthGuard} from "@auth0/auth0-angular";
 import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/logout.component";
 import {SignupFormComponent} from "./pages/signup-form/signup-form.component";
+import { AuthGuard } from 'projects/common/src/lib/components/auth/AuthGuard';
 
 @NgModule({
     imports: [

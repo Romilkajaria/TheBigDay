@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
@@ -9,6 +10,7 @@ namespace TheBigDay.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ServiceController : ControllerBase
     {
         private readonly ILogger<ServiceController> _logger;
@@ -21,6 +23,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IEnumerable<Service> Get()
         {
             try
@@ -39,6 +42,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ServiceController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public Service? Get(Guid id)
         {
             try
@@ -59,6 +63,7 @@ namespace TheBigDay.Controllers
 
         // POST api/<ServiceController>
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] Service e)
         {
             try
@@ -79,6 +84,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<ServiceController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(Guid id, [FromBody] Service e)
         {
             try
@@ -105,6 +111,7 @@ namespace TheBigDay.Controllers
 
         // DELETE api/<ServiceController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(Guid id)
         {
             try

@@ -1,15 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TheBigDay.DBContext;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
-using System.Reflection.Metadata.Ecma335;
-using static System.Net.WebRequestMethods;
-using Microsoft.AspNetCore;
-using TheBigDay;
 using TheBigDay.Models;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 public class Program
 {
@@ -19,6 +15,30 @@ public class Program
 
         // Configure services
         builder.Services.AddControllers();
+
+        builder.Services.AddIdentityCore<Vendor>()
+                .AddUserStore<DatabaseContext>()
+                .AddDefaultTokenProviders();
+
+        // Adding Authentication
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+            };
+        });
 
 #if DEBUG
         // Add CORS configuration
@@ -52,6 +72,8 @@ public class Program
 #endif
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddAuthentication();
+        builder.Services.AddAuthorization();
 
         var app = builder.Build();
 
@@ -67,6 +89,8 @@ public class Program
         app.UseCors("AllowLocalhost4202");
 
         app.MapControllers();
+        app.UseAuthentication();
+        //app.MapIdentityApi<IdentityUser>()
 
         app.Run();
     }

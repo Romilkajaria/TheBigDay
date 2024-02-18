@@ -26,7 +26,6 @@ import {environment} from "../environments/environment";
         RippleModule,
         SharedModule,
         StyleClassModule,
-        AuthModule.forRoot(environment.auth0),
         AsyncPipe,
     ],
     bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
@@ -9,6 +10,7 @@ namespace TheBigDay.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VendorController : ControllerBase
     {
         private readonly ILogger<VendorController> _logger;
@@ -21,6 +23,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IEnumerable<Vendor> Get()
         {
             try
@@ -39,6 +42,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<VendorController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public Vendor? Get(Guid id)
         {
             try
@@ -67,6 +71,7 @@ namespace TheBigDay.Controllers
 
         // POST api/<VendorController>
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] Vendor e)
         {
             try
@@ -87,6 +92,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<VendorController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(Guid id, [FromBody] Vendor e)
         {
             try
@@ -113,6 +119,7 @@ namespace TheBigDay.Controllers
 
         // DELETE api/<VendorController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(Guid id)
         {
             try
