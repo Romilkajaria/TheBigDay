@@ -32,7 +32,11 @@
                         "styles": [
                             "projects/consumer/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "fileReplacements": [{
+                            "replace": "projects/consumer/src/environments/environment.ts",
+                            "with": "projects/consumer/src/environments/environment.prod.ts"
+                        }]
                     },
                     "configurations": {
                         "production": {
@@ -48,11 +52,7 @@
                                     "maximumError": "4kb"
                                 }
                             ],
-                            "outputHashing": "all",
-                            "fileReplacements": [{
-                                "replace": "projects/consumer/src/environments/environment.ts",
-                                "with": "projects/consumer/src/environments/environment.prod.ts"
-                            }]
+                            "outputHashing": "all"
                         },
                         "development": {
                             "buildOptimizer": false,
