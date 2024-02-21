@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {BaseCommonRestService} from "../base-common-rest-service.service";
 import {TBDEvent} from "../../common-rest-models/event";
-import {environment} from "../../environments/environment";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
