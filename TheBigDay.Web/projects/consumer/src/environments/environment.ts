@@ -6,7 +6,6 @@ import {AuthConfig} from "@auth0/auth0-angular";
 
 export const environment = {
     production: false,
-    //apiUrl: 'https://tbdvendor.azurewebsites.net/api/',
     auth0: {
         domain: 'tbdcustdev.au.auth0.com',
         clientId: 'xfSD5zkXeaawSbjuFcH1Pew7KggPDSAE',
