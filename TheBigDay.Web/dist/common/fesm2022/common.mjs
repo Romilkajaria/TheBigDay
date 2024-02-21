@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule as CommonModule$1 } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuModule } from 'primeng/menu';
+import * as i1 from '@auth0/auth0-angular';
 
 class CommonService {
     constructor() { }
@@ -37,9 +38,22 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImpo
   ` }]
         }] });
 
+class LogoutComponent {
+    constructor(auth) {
+        auth.logout();
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: LogoutComponent, deps: [{ token: i1.AuthService }], target: i0.ɵɵFactoryTarget.Component }); }
+    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "16.2.12", type: LogoutComponent, selector: "lib-logout", ngImport: i0, template: "\n", styles: [""] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: LogoutComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'lib-logout', template: "\n" }]
+        }], ctorParameters: function () { return [{ type: i1.AuthService }]; } });
+
 class CommonModule {
     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.12", ngImport: i0, type: CommonModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.2.12", ngImport: i0, type: CommonModule, declarations: [CommonComponent], imports: [CheckboxModule,
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.2.12", ngImport: i0, type: CommonModule, declarations: [CommonComponent,
+            LogoutComponent], imports: [CheckboxModule,
             ButtonModule,
             RippleModule,
             InputTextModule,
@@ -59,6 +73,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.12", ngImpo
             args: [{
                     declarations: [
                         CommonComponent,
+                        LogoutComponent,
                     ],
                     imports: [
                         CheckboxModule,
