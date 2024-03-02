@@ -8,9 +8,9 @@ namespace TheBigDay.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ID { get; set; }
-        public Guid ServiceID { get; set; }
-        public Guid PackageID { get; set; }
+        public Guid Id { get; set; }
+        public Guid ServiceId { get; set; }
+        public Guid PackageId { get; set; }
         public int MinGuestLimit { get; set; }
         public int MaxGuestLimit { get; set; }
     }

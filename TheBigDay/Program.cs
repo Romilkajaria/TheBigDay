@@ -15,30 +15,10 @@ public class Program
 
         // Configure services
         builder.Services.AddControllers();
+        builder.Services.AddAuthorization();
 
-        builder.Services.AddIdentityCore<Vendor>()
-                .AddUserStore<DatabaseContext>()
-                .AddDefaultTokenProviders();
-
-        // Adding Authentication
-        builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.SaveToken = true;
-            options.RequireHttpsMetadata = false;
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidAudience = builder.Configuration["JWT:ValidAudience"],
-                ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-            };
-        });
+        builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+            .AddEntityFrameworkStores<DatabaseContext>();
 
 #if DEBUG
         // Add CORS configuration
@@ -62,18 +42,15 @@ public class Program
 
 
         builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
-        builder.Services.AddAuthorization();
         //string connectionString = builder.Configuration.GetSection("TBDContext").Get<TBDContext>().TBDDatabaseConnectionString;
 #if DEBUG
         builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=TheBigDay;Integrated Security=True"));
 #else
 
-        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=tcp:thebigggdaydbserver.database.windows.net,1433;Initial Catalog=TheBigDay;Persist Security Info=False;User ID=tabadmin;Password=Romilk01.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=tcp:thebigggdaydbserver.database.windows.net,1433;Initial Catalog=TheBigDay-dev;Persist Security Info=False;User ID=tabadmin;Password=Romilk01.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 #endif
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddAuthentication();
-        builder.Services.AddAuthorization();
 
         var app = builder.Build();
 
@@ -89,8 +66,7 @@ public class Program
         app.UseCors("AllowLocalhost4202");
 
         app.MapControllers();
-        app.UseAuthentication();
-        //app.MapIdentityApi<IdentityUser>()
+        app.MapIdentityApi<IdentityUser>();
 
         app.Run();
     }

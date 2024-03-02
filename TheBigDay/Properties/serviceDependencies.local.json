@@ -1,7 +1,15 @@
 {
   "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/westus/connectors/TBDContextTBDDatabaseConnectionString_CF032A71D4",
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/thebigggdaydbserver/databases/TheBigDay-dev",
+      "type": "mssql.azure",
+      "connectionId": "TBDContext:TBDDatabaseConnectionString",
+      "dynamicId": null
+    },
     "apis1": {
-      "ignored": "true",
+      "ignored": "True",
       "type": "apis"
     }
   }

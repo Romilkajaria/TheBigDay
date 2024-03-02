@@ -46,7 +46,7 @@ namespace TheBigDay.Controllers
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         [Authorize]
-        public Customer? Get(Guid id)
+        public Customer? Get(string id)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Customer.FirstOrDefault((c) => c.ID == id);
+                    return context.Customer.FirstOrDefault((c) => c.Id == id);
                 }
             }
             catch (Exception ex)
@@ -88,7 +88,7 @@ namespace TheBigDay.Controllers
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
         [Authorize]
-        public void Put(Guid id, [FromBody] Customer customer)
+        public void Put(string id, [FromBody] Customer customer)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceCustomer = context.Customer.FirstOrDefault((c) => c.ID == id);
+                    var sourceCustomer = context.Customer.FirstOrDefault((c) => c.Id == id);
 
                     if (sourceCustomer != null)
                     {
@@ -115,7 +115,7 @@ namespace TheBigDay.Controllers
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         [Authorize]
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceCustomer = context.Customer.FirstOrDefault((c) => c.ID == id);
+                    var sourceCustomer = context.Customer.FirstOrDefault((c) => c.Id == id);
 
                     if (sourceCustomer != null)
                     {

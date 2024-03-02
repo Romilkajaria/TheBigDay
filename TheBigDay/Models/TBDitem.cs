@@ -7,12 +7,12 @@ namespace TheBigDay.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid? ID { get; set; }
+        public Guid? Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int MinGuestLimit { get; set; }
         public int MaxGuestLimit { get; set; }
-        public Guid VendorID { get; set; }
+        public string VendorId { get; set; }
         public int Price { get; set; }
         public PriceType PriceType { get; set; }
         public bool IsDeleted { get; set; }
