@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheBigDay.DBContext;
 
@@ -11,9 +12,10 @@ using TheBigDay.DBContext;
 namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231226171057_0001-0002")]
+    partial class _00010002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -434,6 +436,9 @@ namespace TheBigDay.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("EventTypesID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -457,6 +462,8 @@ namespace TheBigDay.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("EventTypesID");
 
                     b.HasIndex("VendorID");
 
@@ -663,6 +670,10 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.Service", b =>
                 {
+                    b.HasOne("TheBigDay.Models.EventTypes", null)
+                        .WithMany("Services")
+                        .HasForeignKey("EventTypesID");
+
                     b.HasOne("TheBigDay.Models.Vendor", null)
                         .WithMany("Services")
                         .HasForeignKey("VendorID")
@@ -689,6 +700,8 @@ namespace TheBigDay.Migrations
             modelBuilder.Entity("TheBigDay.Models.EventTypes", b =>
                 {
                     b.Navigation("Events");
+
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Package", b =>

@@ -53,7 +53,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.FirstOrDefault((c) => c.Id == id);
+                    return context.Product.FirstOrDefault((c) => c.ID == id);
                 }
             }
             catch (Exception ex)
@@ -117,7 +117,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id);
+                    var sourceProduct = context.Product.FirstOrDefault((c) => c.ID == id);
 
                     if (sourceProduct != null)
                     {

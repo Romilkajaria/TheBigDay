@@ -7,6 +7,9 @@ namespace TheBigDay.Models
     [Table("Vendor")]
     public class Vendor : IdentityUser
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int OperatingRadius { get; set; }

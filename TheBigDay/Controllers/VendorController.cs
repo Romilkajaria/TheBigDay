@@ -45,7 +45,7 @@ namespace TheBigDay.Controllers
         // GET api/<VendorController>/5
         [HttpGet("{id}")]
         [Authorize]
-        public Vendor? Get(string id)
+        public Vendor? Get(Guid id)
         {
             try
             {
@@ -53,13 +53,13 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>());
                 var vendor = context.Vendor
-                    .FirstOrDefault((c) => c.Id == id);
+                    .FirstOrDefault((c) => c.ID == id);
 
                 if (vendor != null)
                 {
-                    vendor.Products = context.Product.Where((p) => p.VendorId == id && p.IsDeleted == false).ToList();
-                    vendor.Packages = context.Package.Where((p) => p.VendorId == id && p.IsDeleted == false).ToList();
-                    vendor.Services = context.Service.Where((s) => s.VendorId == id && s.IsDeleted == false).ToList();
+                    vendor.Products = context.Product.Where((p) => p.VendorID == id && p.IsDeleted == false).ToList();
+                    vendor.Packages = context.Package.Where((p) => p.VendorID == id && p.IsDeleted == false).ToList();
+                    vendor.Services = context.Service.Where((s) => s.VendorID == id && s.IsDeleted == false).ToList();
                 }
 
                 return vendor;
@@ -95,7 +95,7 @@ namespace TheBigDay.Controllers
         // PUT api/<VendorController>/5
         [HttpPut("{id}")]
         [Authorize]
-        public void Put(string id, [FromBody] Vendor e)
+        public void Put(Guid id, [FromBody] Vendor e)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceVendor = context.Vendor.FirstOrDefault((c) => c.Id == id);
+                    var sourceVendor = context.Vendor.FirstOrDefault((c) => c.ID == id);
 
                     if (sourceVendor != null)
                     {
@@ -122,7 +122,7 @@ namespace TheBigDay.Controllers
         // DELETE api/<VendorController>/5
         [HttpDelete("{id}")]
         [Authorize]
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceVendor = context.Customer.FirstOrDefault((c) => c.Id == id);
+                    var sourceVendor = context.Customer.FirstOrDefault((c) => c.ID == id);
 
                     if (sourceVendor != null)
                     {

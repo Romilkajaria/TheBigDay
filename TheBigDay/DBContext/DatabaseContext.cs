@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TheBigDay.Models;
 
 namespace TheBigDay.DBContext
 {
-    public class DatabaseContext: IdentityDbContext<IdentityUser>
+    public class DatabaseContext: DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+        public DatabaseContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Event> Event { get; set; }

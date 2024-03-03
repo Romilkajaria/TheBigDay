@@ -31,8 +31,7 @@
   <ItemGroup>
     <None Remove="Authentication\" />
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Authentication\" />
   </ItemGroup>
 </Project>

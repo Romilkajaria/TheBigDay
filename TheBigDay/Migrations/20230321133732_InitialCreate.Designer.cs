@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheBigDay.DBContext;
 
@@ -11,9 +12,10 @@ using TheBigDay.DBContext;
 namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230321133732_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +37,36 @@ namespace TheBigDay.Migrations
                     b.HasIndex("TypeID");
 
                     b.ToTable("EventTypesPackage");
+                });
+
+            modelBuilder.Entity("EventTypesProduct", b =>
+                {
+                    b.Property<Guid>("ProductsID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TypeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductsID", "TypeID");
+
+                    b.HasIndex("TypeID");
+
+                    b.ToTable("EventTypesProduct");
+                });
+
+            modelBuilder.Entity("EventTypesService", b =>
+                {
+                    b.Property<Guid>("ServicesID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TypeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ServicesID", "TypeID");
+
+                    b.HasIndex("TypeID");
+
+                    b.ToTable("EventTypesService");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Customer", b =>
@@ -387,7 +419,7 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.Product", b =>
                 {
-                    b.Property<Guid?>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -407,12 +439,6 @@ namespace TheBigDay.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PriceType")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("VendorID")
                         .HasColumnType("uniqueidentifier");
@@ -426,7 +452,7 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.Service", b =>
                 {
-                    b.Property<Guid?>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -446,12 +472,6 @@ namespace TheBigDay.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PriceType")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("VendorID")
                         .HasColumnType("uniqueidentifier");
@@ -532,6 +552,36 @@ namespace TheBigDay.Migrations
                     b.HasOne("TheBigDay.Models.Package", null)
                         .WithMany()
                         .HasForeignKey("PackagesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TheBigDay.Models.EventTypes", null)
+                        .WithMany()
+                        .HasForeignKey("TypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EventTypesProduct", b =>
+                {
+                    b.HasOne("TheBigDay.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TheBigDay.Models.EventTypes", null)
+                        .WithMany()
+                        .HasForeignKey("TypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EventTypesService", b =>
+                {
+                    b.HasOne("TheBigDay.Models.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

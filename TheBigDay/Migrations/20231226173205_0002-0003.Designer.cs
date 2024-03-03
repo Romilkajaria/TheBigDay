@@ -12,237 +12,95 @@ using TheBigDay.DBContext;
 namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240302185625_initial")]
-    partial class initial
+    [Migration("20231226173205_0002-0003")]
+    partial class _00020003
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("EventTypesPackage", b =>
                 {
-                    b.Property<Guid>("PackagesId")
+                    b.Property<Guid>("PackagesID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TypeId")
+                    b.Property<Guid>("TypeID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PackagesId", "TypeId");
+                    b.HasKey("PackagesID", "TypeID");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("TypeID");
 
                     b.ToTable("EventTypesPackage");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("TheBigDay.Models.Customer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
+                    b.Property<string>("AddressLine1")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("FirstNme")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Suburb")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Event", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -295,30 +153,29 @@ namespace TheBigDay.Migrations
                     b.Property<string>("TicketLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TypeId")
+                    b.Property<Guid>("TypeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("allDay")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("TypeID");
 
                     b.ToTable("Event");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.EventCustomers", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid?>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CustomerID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("EventID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsAdmin")
@@ -327,22 +184,22 @@ namespace TheBigDay.Migrations
                     b.Property<bool>("IsCreator")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
                     b.ToTable("EventCustomers");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.EventPackages", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("EventID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsFinalisedByCustomer")
@@ -351,28 +208,28 @@ namespace TheBigDay.Migrations
                     b.Property<bool>("IsFinalisedByVendor")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("PackageId")
+                    b.Property<Guid>("PackageID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
-                    b.HasIndex("PackageId");
+                    b.HasIndex("PackageID");
 
                     b.ToTable("EventPackages");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.EventProduct", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("EventID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsFinalisedByCustomer")
@@ -384,25 +241,25 @@ namespace TheBigDay.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid>("ProductID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("EventProduct");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.EventService", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid>("EventID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsFinalisedByCustomer")
@@ -414,21 +271,21 @@ namespace TheBigDay.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("ServiceId")
+                    b.Property<Guid>("ServiceID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventID");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ServiceID");
 
                     b.ToTable("EventService");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.EventTypes", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -436,14 +293,14 @@ namespace TheBigDay.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("EventTypes");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Package", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -464,24 +321,23 @@ namespace TheBigDay.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VendorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("VendorID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("VendorId");
+                    b.HasIndex("VendorID");
 
                     b.ToTable("Package");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.PackageProducts", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("MaxGuestLimit")
                         .HasColumnType("int");
@@ -489,24 +345,24 @@ namespace TheBigDay.Migrations
                     b.Property<int>("MinGuestLimit")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("PackageId")
+                    b.Property<Guid>("PackageID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid>("ProductID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("PackageId");
+                    b.HasIndex("PackageID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("PackageProducts");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.PackageServices", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -516,24 +372,24 @@ namespace TheBigDay.Migrations
                     b.Property<int>("MinGuestLimit")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("PackageId")
+                    b.Property<Guid>("PackageID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ServiceId")
+                    b.Property<Guid>("ServiceID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("PackageId");
+                    b.HasIndex("PackageID");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ServiceID");
 
                     b.ToTable("PackageServices");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Product", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid?>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -560,20 +416,19 @@ namespace TheBigDay.Migrations
                     b.Property<int>("PriceType")
                         .HasColumnType("int");
 
-                    b.Property<string>("VendorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("VendorID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("VendorId");
+                    b.HasIndex("VendorID");
 
                     b.ToTable("Product");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Service", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid?>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -600,71 +455,21 @@ namespace TheBigDay.Migrations
                     b.Property<int>("PriceType")
                         .HasColumnType("int");
 
-                    b.Property<string>("VendorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("VendorID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("VendorId");
+                    b.HasIndex("VendorID");
 
                     b.ToTable("Service");
                 });
 
-            modelBuilder.Entity("TheBigDay.Models.Customer", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstNme")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mobile")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Postcode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Suburb")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("Customer");
-                });
-
             modelBuilder.Entity("TheBigDay.Models.Vendor", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AddressLine1")
                         .IsRequired()
@@ -687,6 +492,10 @@ namespace TheBigDay.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -715,6 +524,8 @@ namespace TheBigDay.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasKey("ID");
+
                     b.ToTable("Vendor");
                 });
 
@@ -722,64 +533,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Package", null)
                         .WithMany()
-                        .HasForeignKey("PackagesId")
+                        .HasForeignKey("PackagesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.EventTypes", null)
                         .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("TypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -788,7 +548,7 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.EventTypes", "Type")
                         .WithMany("Events")
-                        .HasForeignKey("TypeId")
+                        .HasForeignKey("TypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -799,13 +559,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Customer", null)
                         .WithMany("EventCustomers")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.Event", null)
                         .WithMany("EventCustomers")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("EventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -814,13 +574,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Event", null)
                         .WithMany("EventPackages")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("EventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.Package", null)
                         .WithMany("EventPackages")
-                        .HasForeignKey("PackageId")
+                        .HasForeignKey("PackageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -829,13 +589,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Event", null)
                         .WithMany("EventProducts")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("EventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.Product", null)
                         .WithMany("EventProducts")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -844,13 +604,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Event", null)
                         .WithMany("EventServices")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("EventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.Service", null)
                         .WithMany("EventServices")
-                        .HasForeignKey("ServiceId")
+                        .HasForeignKey("ServiceID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -859,7 +619,7 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Vendor", null)
                         .WithMany("Packages")
-                        .HasForeignKey("VendorId")
+                        .HasForeignKey("VendorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -868,13 +628,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Package", null)
                         .WithMany("PackageProducts")
-                        .HasForeignKey("PackageId")
+                        .HasForeignKey("PackageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.Product", null)
                         .WithMany("PackageProducts")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -883,13 +643,13 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Package", null)
                         .WithMany("PackageServices")
-                        .HasForeignKey("PackageId")
+                        .HasForeignKey("PackageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TheBigDay.Models.Service", null)
                         .WithMany("PackageServices")
-                        .HasForeignKey("ServiceId")
+                        .HasForeignKey("ServiceID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -898,7 +658,7 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Vendor", null)
                         .WithMany("Products")
-                        .HasForeignKey("VendorId")
+                        .HasForeignKey("VendorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -907,27 +667,14 @@ namespace TheBigDay.Migrations
                 {
                     b.HasOne("TheBigDay.Models.Vendor", null)
                         .WithMany("Services")
-                        .HasForeignKey("VendorId")
+                        .HasForeignKey("VendorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Customer", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithOne()
-                        .HasForeignKey("TheBigDay.Models.Customer", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TheBigDay.Models.Vendor", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithOne()
-                        .HasForeignKey("TheBigDay.Models.Vendor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("EventCustomers");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Event", b =>
@@ -967,11 +714,6 @@ namespace TheBigDay.Migrations
                     b.Navigation("EventServices");
 
                     b.Navigation("PackageServices");
-                });
-
-            modelBuilder.Entity("TheBigDay.Models.Customer", b =>
-                {
-                    b.Navigation("EventCustomers");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Vendor", b =>
