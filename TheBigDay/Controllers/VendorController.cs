@@ -44,7 +44,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<VendorController>/5
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public Vendor? Get(string id)
         {
             try

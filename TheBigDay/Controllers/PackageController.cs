@@ -44,7 +44,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<PackageController>/5
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public Package? Get(Guid id)
         {
             try

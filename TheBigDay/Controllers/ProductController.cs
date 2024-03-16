@@ -44,7 +44,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public Product? Get(Guid id)
         {
             try

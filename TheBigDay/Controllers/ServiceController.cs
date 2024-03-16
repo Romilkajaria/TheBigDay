@@ -44,7 +44,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ServiceController>/5
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public Service? Get(Guid id)
         {
             try
