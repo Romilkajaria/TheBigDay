@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {LayoutService} from "../../../layout/service/app.layout.service";
-import {AuthService} from "@auth0/auth0-angular";
+import {Vendor} from "../../../common-rest-models/vendor";
+import {AuthService} from "./auth.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-login',
@@ -16,11 +18,24 @@ import {AuthService} from "@auth0/auth0-angular";
 })
 export class LoginComponent {
 
-    valCheck: string[] = ['remember'];
-
     password?: string;
+    confirmPassword?: string;
     email?: string;
+    isSigningUp = false
+    vendor?: Vendor;
 
-    constructor(public layoutService: LayoutService) {
+    constructor(public layoutService: LayoutService,
+                private authService: AuthService,
+                private router: Router) {
+    }
+
+    toggleSignup() {
+        this.isSigningUp = !this.isSigningUp
+    }
+
+    login() {
+        this.authService.login(this.email!, this.password!).subscribe(() => {
+            this.router.navigate([''])
+        })
     }
 }

@@ -3,13 +3,13 @@ import {NgModule} from '@angular/core';
 import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
 import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/logout.component";
 import {SignupFormComponent} from "./pages/signup-form/signup-form.component";
-import {AuthGuard} from "@auth0/auth0-angular";
+import {VendorAuthGuard} from "./VendorAuthGuard";
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: VendorPageShellComponent, canActivate: [AuthGuard],
+                path: '', component: VendorPageShellComponent, canActivate: [VendorAuthGuard],
                 children: [
                     { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
@@ -26,7 +26,6 @@ import {AuthGuard} from "@auth0/auth0-angular";
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],
     exports: [RouterModule],
-  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }

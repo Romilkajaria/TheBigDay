@@ -5,17 +5,14 @@ import {Observable} from "rxjs";
 @Injectable(
   { providedIn: "root" }
 )
-export class AuthGuard implements CanActivate {
+export class VendorAuthGuard implements CanActivate {
   public isActiveUser = false;
 
-  constructor(protected router: Router)
-  {
-
-  }
+  constructor(protected router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
-    if(!this.isActiveUser && !isDevMode()) {
+    if(!this.isActiveUser) {
       this.router.navigate(['/auth']);
       this.isActiveUser = true;
       return false;

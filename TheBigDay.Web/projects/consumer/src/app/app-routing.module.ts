@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {ConsumerAuthGuard} from "./ConsumerAuthGuard";
+import {VendorAuthGuard} from "../../../vendors/src/app/VendorAuthGuard";
 import {ConsumerPageShellComponent} from "./consumer-page-shell/consumer-page-shell.component";
 import {LandingComponent} from "./pages/landing/landing.component";
 import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/logout.component";
-import {AuthGuard} from "@auth0/auth0-angular";
 
 @NgModule({
     imports: [
@@ -23,6 +22,6 @@ import {AuthGuard} from "@auth0/auth0-angular";
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],
     exports: [RouterModule],
-    providers: [ConsumerAuthGuard]
+    providers: [VendorAuthGuard]
 })
 export class AppRoutingModule { }

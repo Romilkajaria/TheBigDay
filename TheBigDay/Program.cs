@@ -67,6 +67,10 @@ public class Program
 
         app.MapControllers();
         app.MapIdentityApi<IdentityUser>();
+        app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager) =>
+        {
+            await signInManager.SignOutAsync().ConfigureAwait(false);
+        });
 
         app.Run();
     }
