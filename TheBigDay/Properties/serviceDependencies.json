@@ -3,13 +3,13 @@
     "apis1": {
       "type": "apis"
     },
+    "identityapp1": {
+      "type": "identityapp",
+      "dynamicId": null
+    },
     "mssql1": {
       "type": "mssql",
       "connectionId": "TBDContext:TBDDatabaseConnectionString",
-      "dynamicId": null
-    },
-    "identityapp1": {
-      "type": "identityapp",
       "dynamicId": null
     }
   }

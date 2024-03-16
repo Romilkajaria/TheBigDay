@@ -54,7 +54,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Event.FirstOrDefault((c) => c.ID == id);
+                    return context.Event.FirstOrDefault((c) => c.Id == id);
                 }
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceEvent = context.Event.FirstOrDefault((c) => c.ID == id);
+                    var sourceEvent = context.Event.FirstOrDefault((c) => c.Id == id);
 
                     if (sourceEvent != null)
                     {
@@ -115,7 +115,7 @@ namespace TheBigDay.Controllers
         // DELETE api/<EventController>/5
         [HttpDelete("{id}")]
         [Authorize]
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceEvent = context.Customer.FirstOrDefault((c) => c.ID == id);
+                    var sourceEvent = context.Customer.FirstOrDefault((c) => c.Id == id);
 
                     if (sourceEvent != null)
                     {

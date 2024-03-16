@@ -1,14 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheBigDay.Models
 {
     [Table("Customer")]
-    public class Customer
+    public class Customer: IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ID { get; set; }
         public string? PhotoPath { get; set; }
         public string FirstNme { get; set; }
         public string LastName { get; set; }
