@@ -1,20 +1,19 @@
-import {Injectable, isDevMode} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import { AuthService } from "projects/common/src/lib/components/auth/login/auth.service";
 import {Observable} from "rxjs";
 
 @Injectable(
   { providedIn: "root" }
 )
 export class VendorAuthGuard implements CanActivate {
-  public isActiveUser = false;
 
-  constructor(protected router: Router) {}
+  constructor(protected router: Router, private authService: AuthService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
-    if(!this.isActiveUser) {
+    if(!this.authService.isSignedIn) {
       this.router.navigate(['/auth']);
-      this.isActiveUser = true;
       return false;
     }
     return true;

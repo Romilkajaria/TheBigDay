@@ -34,7 +34,8 @@ export class LoginComponent {
     }
 
     login() {
-        this.authService.login(this.email!, this.password!).subscribe(() => {
+        this.authService.login(this.email!, this.password!).subscribe((x) => {
+            this.authService.setSignIn(true);
             this.router.navigate([''])
         })
     }

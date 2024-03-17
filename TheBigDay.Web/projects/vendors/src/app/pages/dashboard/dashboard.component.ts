@@ -39,10 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.initChart();
         });
 
-        auth.user$.pipe(
-            tap((user) => this.user = user),
-            switchMap(() => vendorService.getVendors()),
-        ).subscribe((vendors) => {
+        vendorService.getVendors().subscribe((vendors) => {
             const targetVendor = vendors.find((v) => v.email === this.user?.email);
             if (!targetVendor) {
                 router.navigate(['/finish-signup']);
