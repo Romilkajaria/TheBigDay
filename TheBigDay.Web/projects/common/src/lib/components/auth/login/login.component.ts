@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {LayoutService} from "../../../layout/service/app.layout.service";
 import {Vendor} from "../../../common-rest-models/vendor";
-import {AuthService} from "./auth.service";
+import {AuthorizeService} from "./authorize.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -25,7 +25,7 @@ export class LoginComponent {
     vendor?: Vendor;
 
     constructor(public layoutService: LayoutService,
-                private authService: AuthService,
+                private authService: AuthorizeService,
                 private router: Router) {
     }
 
@@ -34,9 +34,7 @@ export class LoginComponent {
     }
 
     login() {
-        this.authService.login(this.email!, this.password!).subscribe((x) => {
-            this.authService.setSignIn(true);
-            this.router.navigate([''])
+        this.authService.signIn(this.email!, this.password!).subscribe((x) => {
         })
     }
 }

@@ -1,6 +1,6 @@
 import {Injectable, Injector} from '@angular/core';
 import {BaseCommonRestService} from "../base-common-rest-service.service";
-import {environment} from "../../environments/environment.prod";
+import {environment} from "../../environments/environment";
 import {Vendor} from "../../common-rest-models/vendor";
 
 @Injectable({

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import {AuthService} from "@auth0/auth0-angular";
 import {DOCUMENT} from "@angular/common";
+import { AuthorizeService } from "projects/common/src/lib/components/auth/login/authorize.service";
 
 @Component({
     selector: 'app-root',
@@ -9,18 +9,17 @@ import {DOCUMENT} from "@angular/common";
 })
 export class AppComponent implements OnInit {
 
-    isAuthenticated: boolean;
+    public isSignedIn: boolean = false;
 
     constructor(@Inject(DOCUMENT) private document: Document,
-                private authService: AuthService,
+                private authService: AuthorizeService,
                 private primengConfig: PrimeNGConfig) {
-        this.isAuthenticated = false;
         this.primengConfig.ripple = true;
     }
 
     public ngOnInit(): void {
-        this.authService.isAuthenticated$.subscribe((success: boolean) => {
-            this.isAuthenticated = success;
+        this.authService.onStateChanged().forEach((state: any) => {
+            this.authService.isSignedIn().forEach((signedIn: boolean) => this.isSignedIn = signedIn);
         });
     }
 }

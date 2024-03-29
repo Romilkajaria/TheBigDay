@@ -117,7 +117,7 @@
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/common/tsconfig.lib.prod.json"
+                            "tsConfig": "projects/common/tsconfig.lib.prod.json",
                         },
                         "development": {
                             "tsConfig": "projects/common/tsconfig.lib.json"
@@ -203,10 +203,12 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "vendors:build:production"
+                            "browserTarget": "vendors:build:production",
+                            "ssl": true
                         },
                         "development": {
-                            "browserTarget": "vendors:build:development"
+                            "browserTarget": "vendors:build:development",
+                            "ssl": true
                         }
                     },
                     "defaultConfiguration": "development"

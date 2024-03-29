@@ -1,21 +1,30 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
-import { AuthService } from "projects/common/src/lib/components/auth/login/auth.service";
-import {Observable} from "rxjs";
+import { AuthorizeService } from "projects/common/src/lib/components/auth/login/authorize.service";
+import {catchError, map, Observable, of, switchMap} from "rxjs";
+import {CommonVendorService} from "../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+import {error} from "ng-packagr/lib/utils/log";
 
 @Injectable(
   { providedIn: "root" }
 )
 export class VendorAuthGuard implements CanActivate {
 
-  constructor(protected router: Router, private authService: AuthService) {}
+    constructor(private authService: AuthorizeService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-
-    if(!this.authService.isSignedIn) {
-      this.router.navigate(['/auth']);
-      return false;
+    canActivate() {
+        return this.isSignedIn();
     }
-    return true;
-  }
+
+    isSignedIn(): Observable<boolean> {
+        return this.authService.isSignedIn().pipe(
+            map((isSignedIn) => {
+                if (!isSignedIn) {
+                    // redirect to signin page
+                    this.router.navigate(['auth']);
+                    return false;
+                }
+                return true;
+            }));
+    }
 }

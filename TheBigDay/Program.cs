@@ -16,7 +16,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Configure services
-
+        builder.Services.AddControllers();
         builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
             .AddIdentityCookies()
             .ApplicationCookie!.Configure(opt => opt.Events = new CookieAuthenticationEvents()
@@ -25,7 +25,7 @@ public class Program
                 {
                     ctx.Response.StatusCode = 401;
                     return Task.CompletedTask;
-                }
+                },
             });
 
         builder.Services.AddAuthorizationBuilder();
@@ -36,10 +36,13 @@ public class Program
 
         builder.Services.ConfigureApplicationCookie((option) =>
         {
-            option.Cookie.Name = "TBDtoken";
+            //option.Cookie.Name = "TBDtoken";
+            option.Cookie.Domain = "localhost:4202";
+            option.Cookie.SecurePolicy = CookieSecurePolicy.None;
+            option.Cookie.SameSite = SameSiteMode.None;
         });
 
-        builder.Services.AddControllers();
+
 
 #if DEBUG
         // Add CORS configuration
@@ -48,7 +51,8 @@ public class Program
             options.AddPolicy("AllowLocalhost4202", builder => builder
                 .WithOrigins("http://localhost:4201", "http://localhost:4202", "https://localhost:4201", "https://localhost:4202")
                 .AllowAnyHeader()
-                .AllowAnyMethod());
+                .AllowAnyMethod()
+                .AllowCredentials());
         });
 #else
         // Add CORS configuration
@@ -88,6 +92,7 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseHttpsRedirection();
 
         app.MapControllers();
         app.MapIdentityApi<IdentityUser>();

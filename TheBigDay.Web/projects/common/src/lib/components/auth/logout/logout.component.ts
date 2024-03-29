@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../login/auth.service";
+import {AuthorizeService} from "../login/authorize.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class LogoutComponent {
 
-    constructor(auth: AuthService, router: Router) {
-        auth.logout().subscribe(() => router.navigate(['/auth']));
+    constructor(auth: AuthorizeService, router: Router) {
+        auth.signOut().subscribe(() => router.navigate(['/auth']));
     }
 }

@@ -12,18 +12,18 @@ export class BaseCommonRestService {
   }
 
   protected get<T>(path: string) {
-    return this.http.get<T>(path);
+    return this.http.get<T>(path, {withCredentials: true});
   }
 
   protected post<T>(path: string, payload: T) {
-    return this.http.post<T>(path, payload);
+    return this.http.post<T>(path, payload, {withCredentials: true});
   }
 
   protected put<T>(path: string, payload: T) {
-    return this.http.put<T>(path, payload)
+    return this.http.put<T>(path, payload, {withCredentials: true})
   }
 
   protected delete<T>(path: string) {
-    return this.http.delete(path);
+    return this.http.delete(path, {withCredentials: true});
   }
 }
