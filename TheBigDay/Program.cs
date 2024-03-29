@@ -6,6 +6,8 @@ using TheBigDay.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
 
 public class Program
 {
@@ -14,18 +16,37 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Configure services
-        builder.Services.AddControllers();
-        builder.Services.AddAuthorization();
 
-        builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-            .AddEntityFrameworkStores<DatabaseContext>();
+        builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+            .AddIdentityCookies()
+            .ApplicationCookie!.Configure(opt => opt.Events = new CookieAuthenticationEvents()
+            {
+                OnRedirectToLogin = ctx =>
+                {
+                    ctx.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                }
+            });
+
+        builder.Services.AddAuthorizationBuilder();
+
+        builder.Services.AddIdentityCore<IdentityUser>()
+            .AddEntityFrameworkStores<DatabaseContext>()
+            .AddApiEndpoints();
+
+        builder.Services.ConfigureApplicationCookie((option) =>
+        {
+            option.Cookie.Name = "TBDtoken";
+        });
+
+        builder.Services.AddControllers();
 
 #if DEBUG
         // Add CORS configuration
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost4202", builder => builder
-                .WithOrigins("http://localhost:4201", "http://localhost:4202")
+                .WithOrigins("http://localhost:4201", "http://localhost:4202", "https://localhost:4201", "https://localhost:4202")
                 .AllowAnyHeader()
                 .AllowAnyMethod());
         });
@@ -64,6 +85,9 @@ public class Program
 
         //Enable CORS
         app.UseCors("AllowLocalhost4202");
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapControllers();
         app.MapIdentityApi<IdentityUser>();
