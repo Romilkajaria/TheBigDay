@@ -10,6 +10,6 @@ import {Router} from "@angular/router";
 export class LogoutComponent {
 
     constructor(auth: AuthorizeService, router: Router) {
-        auth.signOut().subscribe(() => router.navigate(['/auth']));
+        auth.signOut();
     }
 }

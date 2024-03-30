@@ -203,12 +203,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "vendors:build:production",
-                            "ssl": true
+                            "browserTarget": "vendors:build:production"
                         },
                         "development": {
-                            "browserTarget": "vendors:build:development",
-                            "ssl": true
+                            "browserTarget": "vendors:build:development"
                         }
                     },
                     "defaultConfiguration": "development"

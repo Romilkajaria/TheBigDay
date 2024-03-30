@@ -9,7 +9,7 @@ using Microsoft.Identity.Web.Resource;
 
 namespace TheBigDay.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class VendorController : ControllerBase

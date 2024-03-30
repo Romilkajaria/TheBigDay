@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TheBigDay.DBContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using TheBigDay.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TheBigDay.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System;
+using Microsoft.Extensions.DependencyInjection;
 
 public class Program
 {
@@ -17,32 +17,41 @@ public class Program
 
         // Configure services
         builder.Services.AddControllers();
-        builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-            .AddIdentityCookies()
-            .ApplicationCookie!.Configure(opt => opt.Events = new CookieAuthenticationEvents()
+        //builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+        //    .AddIdentityCookies()
+        //    .ApplicationCookie!.Configure(opt => opt.Events = new CookieAuthenticationEvents()
+        //    {
+        //        OnRedirectToLogin = ctx =>
+        //        {
+        //            ctx.Response.StatusCode = 401;
+        //            return Task.CompletedTask;
+        //        },
+        //    });
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters = new TokenValidationParameters()
             {
-                OnRedirectToLogin = ctx =>
-                {
-                    ctx.Response.StatusCode = 401;
-                    return Task.CompletedTask;
-                },
-            });
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+            };
+        });
 
         builder.Services.AddAuthorizationBuilder();
 
-        builder.Services.AddIdentityCore<IdentityUser>()
+        builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<DatabaseContext>()
-            .AddApiEndpoints();
-
-        builder.Services.ConfigureApplicationCookie((option) =>
-        {
-            //option.Cookie.Name = "TBDtoken";
-            option.Cookie.Domain = "localhost:4202";
-            option.Cookie.SecurePolicy = CookieSecurePolicy.None;
-            option.Cookie.SameSite = SameSiteMode.None;
-        });
-
-
+            .AddDefaultTokenProviders();
 
 #if DEBUG
         // Add CORS configuration
@@ -93,9 +102,7 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseHttpsRedirection();
-
         app.MapControllers();
-        app.MapIdentityApi<IdentityUser>();
         app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager) =>
         {
             await signInManager.SignOutAsync().ConfigureAwait(false);

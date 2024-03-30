@@ -7,7 +7,7 @@ import {AuthConfig} from "@auth0/auth0-angular";
 export const environment = {
     production: false,
     apiUrl: 'https://localhost:44320/api/',
-    authUrl: 'https://localhost:44320'
+    authUrl: 'https://localhost:44320/api/authenticate'
 };
 
 /*

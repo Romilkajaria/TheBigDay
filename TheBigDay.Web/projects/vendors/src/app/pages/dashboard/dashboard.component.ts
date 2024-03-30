@@ -39,15 +39,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.initChart();
         });
 
-        vendorService.getVendors().subscribe((vendors) => {
-            const targetVendor = vendors.find((v) => v.email === this.user?.email);
-            if (!targetVendor) {
-                router.navigate(['/finish-signup']);
-            }
-            else {
-                this.vendor = targetVendor;
-            }
-        })
+        // vendorService.getVendors().subscribe((vendors) => {
+        //     const targetVendor = vendors.find((v) => v.email === this.user?.email);
+        //     if (!targetVendor) {
+        //         router.navigate(['/finish-signup']);
+        //     }
+        //     else {
+        //         this.vendor = targetVendor;
+        //     }
+        // })
     }
 
     ngOnInit() {

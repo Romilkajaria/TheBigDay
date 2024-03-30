@@ -17,7 +17,7 @@ export class VendorAuthGuard implements CanActivate {
     }
 
     isSignedIn(): Observable<boolean> {
-        return this.authService.isSignedIn().pipe(
+        return this.authService.onStateChanged().pipe(
             map((isSignedIn) => {
                 if (!isSignedIn) {
                     // redirect to signin page

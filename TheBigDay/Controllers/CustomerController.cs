@@ -10,7 +10,7 @@ using static Program;
 namespace TheBigDay.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     [Authorize]
     public class CustomerController : ControllerBase
