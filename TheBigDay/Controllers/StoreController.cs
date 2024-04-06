@@ -12,19 +12,19 @@ namespace TheBigDay.Controllers
     [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
-    public class VendorController : ControllerBase
+    public class StoreController : ControllerBase
     {
-        private readonly ILogger<VendorController> _logger;
+        private readonly ILogger<StoreController> _logger;
         private readonly IServiceProvider _serviceProvider;
 
-        public VendorController(ILogger<VendorController> logger, IServiceProvider serviceProvider)
+        public StoreController(ILogger<StoreController> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
         }
 
         [HttpGet]
-        public IEnumerable<Vendor> Get()
+        public IEnumerable<Store> Get()
         {
             try
             {
@@ -32,45 +32,46 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Vendor.Where((c) => c.IsDeleted == false).ToList();
+                    return context.Store.Where((c) => c.IsDeleted == false).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to get Vendors", ex);
+                throw new Exception("Failed to get Stores", ex);
             }
         }
-        // GET api/<VendorController>/5
+        // GET api/<StoreController>/5
         [HttpGet("{id}")]
-        public Vendor? Get(string id)
+        public Store? Get(string id)
         {
             try
             {
+                // context this request to 
                 using var context = new DatabaseContext(
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>());
-                var vendor = context.Vendor
-                    .FirstOrDefault((c) => c.Id == id);
+                var store = context.Store
+                    .FirstOrDefault((c) => c.Id.ToString() == id);
 
-                if (vendor != null)
+                if (store != null)
                 {
-                    vendor.Products = context.Product.Where((p) => p.VendorId == id && p.IsDeleted == false).ToList();
-                    vendor.Packages = context.Package.Where((p) => p.VendorId == id && p.IsDeleted == false).ToList();
-                    vendor.Services = context.Service.Where((s) => s.VendorId == id && s.IsDeleted == false).ToList();
+                    store.Products = context.Product.Where((p) => p.StoreId.ToString() == id && p.IsDeleted == false).ToList();
+                    store.Packages = context.Package.Where((p) => p.StoreId.ToString() == id && p.IsDeleted == false).ToList();
+                    store.Services = context.Service.Where((s) => s.StoreId.ToString() == id && s.IsDeleted == false).ToList();
                 }
 
-                return vendor;
+                return store;
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to get Vendor", ex);
+                throw new Exception("Failed to get Store", ex);
             }
 
         }
 
-        // POST api/<VendorController>
+        // POST api/<StoreController>
         [HttpPost]
-        public void Post([FromBody] Vendor e)
+        public void Post([FromBody] Store e)
         {
             try
             {
@@ -78,19 +79,19 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
-                    context.Vendor.Add(e);
+                    context.Store.Add(e);
                     context.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to add Vendor", ex);
+                throw new Exception("Failed to add Store", ex);
             }
         }
 
-        // PUT api/<VendorController>/5
+        // PUT api/<StoreController>/5
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] Vendor e)
+        public void Put(string id, [FromBody] Store e)
         {
             try
             {
@@ -98,11 +99,11 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceVendor = context.Vendor.FirstOrDefault((c) => c.Id == id);
+                    var sourceStore = context.Store.FirstOrDefault((c) => c.Id.ToString() == id);
 
-                    if (sourceVendor != null)
+                    if (sourceStore != null)
                     {
-                        sourceVendor = e;
+                        sourceStore = e;
                         context.SaveChanges();
                     }
 
@@ -110,11 +111,11 @@ namespace TheBigDay.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update Vendor", ex);
+                throw new Exception("Failed to update Store", ex);
             }
         }
 
-        // DELETE api/<VendorController>/5
+        // DELETE api/<StoreController>/5
         [HttpDelete("{id}")]
         public void Delete(string id)
         {
@@ -124,11 +125,11 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceVendor = context.Customer.FirstOrDefault((c) => c.Id == id);
+                    var sourceStore = context.User.FirstOrDefault((c) => c.Id == id);
 
-                    if (sourceVendor != null)
+                    if (sourceStore != null)
                     {
-                        sourceVendor.IsDeleted = true;
+                        sourceStore.IsDeleted = true;
                         context.SaveChanges();
                     }
 
@@ -136,7 +137,7 @@ namespace TheBigDay.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to delete Vendor", ex);
+                throw new Exception("Failed to delete Store", ex);
             }
         }
     }

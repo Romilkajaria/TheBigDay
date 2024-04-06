@@ -12,7 +12,7 @@ namespace TheBigDay.Models
         public string Description { get; set; }
         public int MinGuestLimit { get; set; }
         public int MaxGuestLimit { get; set; }
-        public string VendorId { get; set; }
+        public Guid StoreId { get; set; }
         public int Price { get; set; }
         public PriceType PriceType { get; set; }
         public bool IsDeleted { get; set; }

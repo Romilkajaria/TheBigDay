@@ -2,30 +2,36 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TheBigDay.DBContext;
+using TheBigDay.Models;
 using TheBigDay.Models.AuthModels;
 
 namespace TheBigDay.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/store/authenticate")]
     [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class StoreAuthenticateController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly IServiceProvider _serviceProvider;
 
-        public AuthenticateController(
+        public StoreAuthenticateController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
+            IServiceProvider serviceProvider,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _serviceProvider = serviceProvider;
         }
 
         [HttpPost]
@@ -63,19 +69,35 @@ namespace TheBigDay.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] Register model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByNameAsync(model.Username!);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            IdentityUser user = new()
+            User user = new User()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Username,
+                FirstName = model.FirstName!,
+                LastName = model.LastName!,
+                AddressLine1 = model.AddressLine1!,
+                AddressLine2 = model.AddressLine2,
+                Suburb = model.Suburb!,
+                State = model.State!,
+                Country = model.Country!,
+                Postcode = model.Postcode!,
+                DOB = model.DOB,
+                StoreId = model.StoreId!,
             };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password!);
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+
+            if(model.StoreId != null)
+            {
+                return AddUserToStore(user);
+            }
+
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
@@ -134,6 +156,36 @@ namespace TheBigDay.Controllers
                 );
 
             return token;
+        }
+
+        private ObjectResult AddUserToStore(User user)
+        {
+            try
+            {
+                using (var context = new DatabaseContext(
+                _serviceProvider.GetRequiredService<
+                    DbContextOptions<DatabaseContext>>()))
+                {
+                    // can only add users to stores that are not deleted
+                    var store = context.Store.FirstOrDefault((c) => c.IsDeleted == false && c.Id == user.StoreId);
+
+                    if (store == null)
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Adding to store failed! Please check store details and try again." });
+                    }
+
+                    store.Users ??= [];
+                    store.Users.Add(user);
+
+                    context.SaveChanges();
+
+                    return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Adding to store failed! Please check store details and try again." });
+            }
         }
     }
 }

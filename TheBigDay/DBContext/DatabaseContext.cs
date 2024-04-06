@@ -9,7 +9,7 @@ namespace TheBigDay.DBContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
-        public DbSet<Customer> Customer { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Event> Event { get; set; }
         public DbSet<EventCustomers> EventCustomers { get; set; }
         public DbSet<EventPackages> EventPackages { get; set; }
@@ -21,7 +21,7 @@ namespace TheBigDay.DBContext
         public DbSet<Package> Package { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Service> Service { get; set; }
-        public DbSet<Vendor> Vendor { get; set; }
+        public DbSet<Store> Store { get; set; }
 
     }
 }

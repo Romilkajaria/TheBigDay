@@ -123,7 +123,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceEvent = context.Customer.FirstOrDefault((c) => c.Id == id);
+                    var sourceEvent = context.Event.FirstOrDefault((c) => c.Id.ToString() == id);
 
                     if (sourceEvent != null)
                     {

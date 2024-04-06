@@ -14,7 +14,7 @@ namespace TheBigDay.Models
         public List<EventTypes> Type { get; set; }
         public int MinGuestLimit { get; set; }
         public int MaxGuestLimit { get; set; }
-        public string VendorId { get; set; }
+        public Guid StoreId { get; set; }
         public bool IsDeleted { get; set; }
 
         //dependancies

@@ -122,7 +122,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourcePackage = context.Customer.FirstOrDefault((c) => c.Id == id);
+                    var sourcePackage = context.User.FirstOrDefault((c) => c.Id == id);
 
                     if (sourcePackage != null)
                     {

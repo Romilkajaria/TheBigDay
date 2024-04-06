@@ -63,6 +63,32 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Store",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OperatingRadius = table.Column<int>(type: "int", nullable: false),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AfterHoursContactName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AfterHoursContactNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Store", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -169,65 +195,6 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customer",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstNme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mobile = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customer_AspNetUsers_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vendor",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OperatingRadius = table.Column<int>(type: "int", nullable: false),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AfterHoursMobile = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vendor", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Vendor_AspNetUsers_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Event",
                 columns: table => new
                 {
@@ -269,16 +236,16 @@ namespace TheBigDay.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MinGuestLimit = table.Column<int>(type: "int", nullable: false),
                     MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Package", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Package_Vendor_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendor",
+                        name: "FK_Package_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -292,7 +259,7 @@ namespace TheBigDay.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MinGuestLimit = table.Column<int>(type: "int", nullable: false),
                     MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     PriceType = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -301,9 +268,9 @@ namespace TheBigDay.Migrations
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Vendor_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendor",
+                        name: "FK_Product_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -317,7 +284,7 @@ namespace TheBigDay.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MinGuestLimit = table.Column<int>(type: "int", nullable: false),
                     MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    VendorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     PriceType = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -326,38 +293,45 @@ namespace TheBigDay.Migrations
                 {
                     table.PrimaryKey("PK_Service", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Service_Vendor_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendor",
+                        name: "FK_Service_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventCustomers",
+                name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
-                    IsCreator = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventCustomers", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventCustomers_Customer_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        name: "FK_User_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EventCustomers_Event_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Event",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_User_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -446,8 +420,8 @@ namespace TheBigDay.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     MinGuestLimit = table.Column<int>(type: "int", nullable: false),
                     MaxGuestLimit = table.Column<int>(type: "int", nullable: false)
                 },
@@ -458,14 +432,12 @@ namespace TheBigDay.Migrations
                         name: "FK_PackageProducts_Package_PackageId",
                         column: x => x.PackageId,
                         principalTable: "Package",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PackageProducts_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -501,8 +473,8 @@ namespace TheBigDay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     MinGuestLimit = table.Column<int>(type: "int", nullable: false),
                     MaxGuestLimit = table.Column<int>(type: "int", nullable: false)
                 },
@@ -513,14 +485,39 @@ namespace TheBigDay.Migrations
                         name: "FK_PackageServices_Package_PackageId",
                         column: x => x.PackageId,
                         principalTable: "Package",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PackageServices_Service_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Service",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventCustomers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    IsCreator = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventCustomers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventCustomers_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventCustomers_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -568,14 +565,14 @@ namespace TheBigDay.Migrations
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventCustomers_CustomerId",
-                table: "EventCustomers",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EventCustomers_EventId",
                 table: "EventCustomers",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventCustomers_UserId",
+                table: "EventCustomers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventPackages_EventId",
@@ -613,9 +610,9 @@ namespace TheBigDay.Migrations
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Package_VendorId",
+                name: "IX_Package_StoreId",
                 table: "Package",
-                column: "VendorId");
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PackageProducts_PackageId",
@@ -638,14 +635,19 @@ namespace TheBigDay.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_VendorId",
+                name: "IX_Product_StoreId",
                 table: "Product",
-                column: "VendorId");
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Service_VendorId",
+                name: "IX_Service_StoreId",
                 table: "Service",
-                column: "VendorId");
+                column: "StoreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_StoreId",
+                table: "User",
+                column: "StoreId");
         }
 
         /// <inheritdoc />
@@ -691,7 +693,7 @@ namespace TheBigDay.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Event");
@@ -706,13 +708,13 @@ namespace TheBigDay.Migrations
                 name: "Service");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "EventTypes");
 
             migrationBuilder.DropTable(
-                name: "Vendor");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Store");
         }
     }
 }
