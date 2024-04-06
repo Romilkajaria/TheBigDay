@@ -4,6 +4,7 @@
     {
         //store user roles
         public const string Admin = "Admin";
+        public const string StoreAdmin = "StoreAdmin";
         public const string User = "User";
 
         // event user Roles

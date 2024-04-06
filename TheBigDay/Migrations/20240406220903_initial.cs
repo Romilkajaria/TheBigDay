@@ -26,31 +26,6 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EventTypes",
                 columns: table => new
                 {
@@ -67,11 +42,11 @@ namespace TheBigDay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OperatingRadius = table.Column<int>(type: "int", nullable: false),
                     AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -81,7 +56,8 @@ namespace TheBigDay.Migrations
                     AfterHoursContactNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,6 +81,155 @@ namespace TheBigDay.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    allDay = table.Column<bool>(type: "bit", nullable: false),
+                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
+                    GuestListFinalised = table.Column<bool>(type: "bit", nullable: false),
+                    TicketLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Event_EventTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "EventTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Package",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MinGuestLimit = table.Column<int>(type: "int", nullable: false),
+                    MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Package", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Package_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MinGuestLimit = table.Column<int>(type: "int", nullable: false),
+                    MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    PriceType = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Service",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MinGuestLimit = table.Column<int>(type: "int", nullable: false),
+                    MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    PriceType = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Service", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Service_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -195,143 +320,30 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "EventCustomers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    allDay = table.Column<bool>(type: "bit", nullable: false),
-                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
-                    GuestListFinalised = table.Column<bool>(type: "bit", nullable: false),
-                    TicketLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    IsCreator = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.PrimaryKey("PK_EventCustomers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Event_EventTypes_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "EventTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Package",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MinGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Package", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Package_Store_StoreId",
-                        column: x => x.StoreId,
-                        principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MinGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    PriceType = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Product_Store_StoreId",
-                        column: x => x.StoreId,
-                        principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Service",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MinGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    MaxGuestLimit = table.Column<int>(type: "int", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    PriceType = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Service", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Service_Store_StoreId",
-                        column: x => x.StoreId,
-                        principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_User_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_EventCustomers_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_EventCustomers_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_User_Store_StoreId",
-                        column: x => x.StoreId,
-                        principalTable: "Store",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -493,33 +505,6 @@ namespace TheBigDay.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "EventCustomers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
-                    IsCreator = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventCustomers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventCustomers_Event_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Event",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventCustomers_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -551,6 +536,11 @@ namespace TheBigDay.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_StoreId",
+                table: "AspNetUsers",
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -643,11 +633,6 @@ namespace TheBigDay.Migrations
                 name: "IX_Service_StoreId",
                 table: "Service",
                 column: "StoreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_StoreId",
-                table: "User",
-                column: "StoreId");
         }
 
         /// <inheritdoc />
@@ -693,7 +678,7 @@ namespace TheBigDay.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Event");
@@ -706,9 +691,6 @@ namespace TheBigDay.Migrations
 
             migrationBuilder.DropTable(
                 name: "Service");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "EventTypes");

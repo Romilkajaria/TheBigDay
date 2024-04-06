@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata;
 
 namespace TheBigDay.Models
 {
-    [Table("User")]
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         public string? PhotoPath { get; set; }
         public string FirstName { get; set; }
@@ -19,6 +20,7 @@ namespace TheBigDay.Models
         public DateTime DOB { get; set; }
         public bool IsDeleted { get; set; }
         public Guid? StoreId { get; set; }
+        public Store? Store { get; set; }
 
         //Dependacies
         public List<EventCustomers>? EventCustomers { get; set; }

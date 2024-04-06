@@ -5,10 +5,6 @@ namespace TheBigDay.Models.AuthModels
 {
     public class Register
     {
-        public Register() 
-        {
-            IsDeleted = false;
-        } 
 
         [Required(ErrorMessage = "User Name is required")]
         public string? Username { get; set; }
@@ -32,10 +28,11 @@ namespace TheBigDay.Models.AuthModels
         [Required(ErrorMessage = "Postcode is required")]
         public string? Postcode { get; set; }
         [Required(ErrorMessage = "DOB is required")]
-        public DateTime DOB { get; set; }
+        public DateTime DOB { get; set; }        
+        [Required(ErrorMessage = "Phone number is required")]
+        public string PhoneNumber { get; set; }
 
         public string? AddressLine2 { get; set; }
-        public bool IsDeleted { get; set; }
         public Guid? StoreId { get; set; }
         public string? PhotoPath { get; set; }
     }

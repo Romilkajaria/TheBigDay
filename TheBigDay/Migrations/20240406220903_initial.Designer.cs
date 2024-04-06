@@ -12,7 +12,7 @@ using TheBigDay.DBContext;
 namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240406193328_initial")]
+    [Migration("20240406220903_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -104,6 +104,11 @@ namespace TheBigDay.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -156,7 +161,9 @@ namespace TheBigDay.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -622,7 +629,6 @@ namespace TheBigDay.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AfterHoursContactName")
@@ -642,18 +648,19 @@ namespace TheBigDay.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OperatingRadius")
@@ -728,7 +735,7 @@ namespace TheBigDay.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("User");
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("EventTypesPackage", b =>
@@ -917,15 +924,11 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.User", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithOne()
-                        .HasForeignKey("TheBigDay.Models.User", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TheBigDay.Models.Store", null)
+                    b.HasOne("TheBigDay.Models.Store", "Store")
                         .WithMany("Users")
                         .HasForeignKey("StoreId");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.Event", b =>

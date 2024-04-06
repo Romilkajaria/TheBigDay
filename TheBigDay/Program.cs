@@ -49,7 +49,7 @@ public class Program
 
         builder.Services.AddAuthorizationBuilder();
 
-        builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        builder.Services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<DatabaseContext>()
             .AddDefaultTokenProviders();
 
@@ -103,7 +103,7 @@ public class Program
         app.UseAuthorization();
         app.UseHttpsRedirection();
         app.MapControllers();
-        app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager) =>
+        app.MapPost("/logout", async (SignInManager<User> signInManager) =>
         {
             await signInManager.SignOutAsync().ConfigureAwait(false);
         });

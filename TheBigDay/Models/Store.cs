@@ -7,12 +7,19 @@ namespace TheBigDay.Models
     [Table("Store")]
     public class Store
     {
+        public Store() 
+        {
+            Users = new List<User>();
+        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public int OperatingRadius { get; set; }
         public string AddressLine1 { get; set; }
-        public string AddressLine2 { get; set; }
+        public string? AddressLine2 { get; set; }
         public string Suburb { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
@@ -23,12 +30,13 @@ namespace TheBigDay.Models
         public string Email { get; set; }
         public string? PhotoPath { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
 
 
         //Dependacies
         public List<Product>? Products { get; set; }
         public List<Service>? Services { get; set; }
         public List<Package>? Packages { get; set; }
-        public List<User>? Users { get; set; }
+        public List<User> Users { get; } = new List<User> { };
     }
 }

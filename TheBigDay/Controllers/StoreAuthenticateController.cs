@@ -17,13 +17,13 @@ namespace TheBigDay.Controllers
     [ApiController]
     public class StoreAuthenticateController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;
 
         public StoreAuthenticateController(
-            UserManager<IdentityUser> userManager,
+            UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             IServiceProvider serviceProvider,
             IConfiguration configuration)
@@ -38,14 +38,16 @@ namespace TheBigDay.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] Login model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            Store? store = null;
+
+            var identityUser = await _userManager.FindByEmailAsync(model.Email!);
+            if (identityUser != null && await _userManager.CheckPasswordAsync(identityUser, model.Password!))
             {
-                var userRoles = await _userManager.GetRolesAsync(user);
+                var userRoles = await _userManager.GetRolesAsync(identityUser);
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Name, identityUser.UserName!),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -56,10 +58,29 @@ namespace TheBigDay.Controllers
 
                 var token = GetToken(authClaims);
 
+                try
+                {
+                    using (var context = new DatabaseContext(
+                    _serviceProvider.GetRequiredService<
+                        DbContextOptions<DatabaseContext>>()))
+                { 
+                    var user = context.User.FirstOrDefault((u) => u.Id == identityUser.Id);
+
+                        if(user != null)
+                        {
+                            store = context.Store.FirstOrDefault((s) => s.Users.Contains(user));
+                        }
+                    
+                }
+                } catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Error when getting store for user!" });
+                }
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    store = store.Id,
                 });
             }
             return Unauthorized();
@@ -69,34 +90,48 @@ namespace TheBigDay.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] Register model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username!);
+            var userExists = await _userManager.FindByEmailAsync(model.Email!);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            User user = new User()
+            try
             {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username,
-                FirstName = model.FirstName!,
-                LastName = model.LastName!,
-                AddressLine1 = model.AddressLine1!,
-                AddressLine2 = model.AddressLine2,
-                Suburb = model.Suburb!,
-                State = model.State!,
-                Country = model.Country!,
-                Postcode = model.Postcode!,
-                DOB = model.DOB,
-                StoreId = model.StoreId!,
-            };
-            var result = await _userManager.CreateAsync(user, model.Password!);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                using (var context = new DatabaseContext(
+                _serviceProvider.GetRequiredService<
+                    DbContextOptions<DatabaseContext>>()))
+                {
+                    var store = context.Store.FirstOrDefault((s) => s.Id == model.StoreId);
 
-            if(model.StoreId != null)
-            {
-                return AddUserToStore(user);
+                    if(store == null)
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Cannot register a user without a store" });
+                    }
+
+                    User user = new User()
+                    {
+                        Email = model.Email,
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        UserName = model.Username,
+                        FirstName = model.FirstName!,
+                        LastName = model.LastName!,
+                        AddressLine1 = model.AddressLine1!,
+                        AddressLine2 = model.AddressLine2,
+                        Suburb = model.Suburb!,
+                        State = model.State!,
+                        Country = model.Country!,
+                        Postcode = model.Postcode!,
+                        DOB = model.DOB,
+                        StoreId = store.Id,
+                        PhoneNumber = model.PhoneNumber!,
+                        IsDeleted = false,
+                    };
+                    var result = await _userManager.CreateAsync(user, model.Password!);
+                    if (!result.Succeeded)
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                }
+
             }
+            catch (Exception ex) { }
 
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
@@ -106,34 +141,88 @@ namespace TheBigDay.Controllers
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] Register model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
-            IdentityUser user = new()
+            try
             {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                using (var context = new DatabaseContext(
+                _serviceProvider.GetRequiredService<
+                    DbContextOptions<DatabaseContext>>()))
+                {
+                    var store = context.Store.FirstOrDefault((s) => s.Id == model.StoreId);
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                    if(store == null)
+                    {
+                        store = new Store()
+                        {
+                            IsDeleted = false,
+                            AddressLine1 = model.AddressLine1!,
+                            AddressLine2 = model.AddressLine2,
+                            Email = model.Email!,
+                            ContactNum = model.PhoneNumber!,
+                            AfterHoursContactName = model.FirstName + " " + model.LastName,
+                            AfterHoursContactNum = model.PhoneNumber!,
+                            State = model.State!,
+                            Suburb = model.Suburb!,
+                            Postcode = model.Postcode!,
+                            Country = model.Country!,
+                            Name = "[Your New Store]",
+                            IsActive = false, // we will activate them manually on signup
+                        };
+                    }
 
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.User);
-            }
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+                    // TODO: doesnt work if the storeId is passed in. tries to create a new store.
+                    User user = new User()
+                    {
+                        Email = model.Email,
+                        SecurityStamp = Guid.NewGuid().ToString(),
+                        UserName = model.Username,
+                        FirstName = model.FirstName!,
+                        LastName = model.LastName!,
+                        AddressLine1 = model.AddressLine1!,
+                        AddressLine2 = model.AddressLine2,
+                        Suburb = model.Suburb!,
+                        State = model.State!,
+                        Country = model.Country!,
+                        Postcode = model.Postcode!,
+                        DOB = model.DOB,
+                        PhoneNumber = model.PhoneNumber!,
+                    };
+
+                    if(store.Id != null)
+                    {
+                        user.StoreId = store.Id;
+                    } else
+                    {
+                        user.Store = store;
+                    }
+
+                    var result = await _userManager.CreateAsync(user, model.Password!);
+                    if (!result.Succeeded)
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+
+                    if (!await _roleManager.RoleExistsAsync(UserRoles.StoreAdmin))
+                        await _roleManager.CreateAsync(new IdentityRole(UserRoles.StoreAdmin));
+                    if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                        await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                    if (await _roleManager.RoleExistsAsync(UserRoles.StoreAdmin))
+                    {
+                        await _userManager.AddToRoleAsync(user, UserRoles.StoreAdmin);
+                    }
+                    if (await _roleManager.RoleExistsAsync(UserRoles.User))
+                    {
+                        await _userManager.AddToRoleAsync(user, UserRoles.User);
+                    }
+
+                    return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+                }
+
+            } catch (Exception ex) { }
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
         }
 
         [HttpGet]
@@ -156,36 +245,6 @@ namespace TheBigDay.Controllers
                 );
 
             return token;
-        }
-
-        private ObjectResult AddUserToStore(User user)
-        {
-            try
-            {
-                using (var context = new DatabaseContext(
-                _serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
-                {
-                    // can only add users to stores that are not deleted
-                    var store = context.Store.FirstOrDefault((c) => c.IsDeleted == false && c.Id == user.StoreId);
-
-                    if (store == null)
-                    {
-                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Adding to store failed! Please check store details and try again." });
-                    }
-
-                    store.Users ??= [];
-                    store.Users.Add(user);
-
-                    context.SaveChanges();
-
-                    return Ok(new Response { Status = "Success", Message = "User created successfully!" });
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Adding to store failed! Please check store details and try again." });
-            }
         }
     }
 }
