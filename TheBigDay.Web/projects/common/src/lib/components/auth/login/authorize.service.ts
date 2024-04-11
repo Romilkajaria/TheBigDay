@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import {BehaviorSubject, Observable, Subject, catchError, map, of, switchMap, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
+import {RegisterModel} from "../../../common-rest-models/authentication-models";
 
 @Injectable({
     providedIn: 'root',
@@ -20,7 +21,7 @@ export class AuthorizeService {
 
     // cookie-based login
     public signIn(email: string, password: string) {
-        return this.http.post(environment.authUrl + '/login', {
+        return this.http.post(environment.apiUrl + 'store/authenticate/login', {
             email: email,
             password: password
         }, {
@@ -34,11 +35,8 @@ export class AuthorizeService {
     }
 
     // register new user
-    public register(email: string, password: string) {
-        return this.http.post(environment.authUrl + '/register', {
-            email: email,
-            password: password
-        }, {
+    public register(registerModel: RegisterModel) {
+        return this.http.post(environment.apiUrl + 'store/authenticate/register', registerModel, {
             observe: 'response',
             responseType: 'text'
         })
@@ -55,7 +53,7 @@ export class AuthorizeService {
 
     // check if the user is authenticated. the endpoint is protected so 401 if not.
     public ping() {
-        return this.http.get<any>(environment.authUrl + '/ping').pipe(
+        return this.http.get<any>(environment.apiUrl + 'store/authenticate/ping').pipe(
             tap((isSignedIn) => {
                 if(!isSignedIn) {
                     this.signOut();

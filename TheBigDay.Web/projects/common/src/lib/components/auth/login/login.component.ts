@@ -3,6 +3,7 @@ import {LayoutService} from "../../../layout/service/app.layout.service";
 import {Vendor} from "../../../common-rest-models/vendor";
 import {AuthorizeService} from "./authorize.service";
 import {Router} from "@angular/router";
+import {LoginModel, RegisterModel} from "../../../common-rest-models/authentication-models";
 
 @Component({
     selector: 'app-login',
@@ -18,9 +19,9 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
 
-    password?: string;
-    confirmPassword?: string;
-    email?: string;
+    registerModel!: RegisterModel;
+    loginModel!: LoginModel;
+    confirmPassword?: string
     isSigningUp = false
     vendor?: Vendor;
 
@@ -34,8 +35,14 @@ export class LoginComponent {
     }
 
     login() {
-        this.authService.signIn(this.email!, this.password!).subscribe((x) => {
-            this.router.navigate([''])
+        this.authService.signIn(this.loginModel.email!, this.loginModel.password!).subscribe(async (x) => {
+            await this.router.navigate([''])
+        })
+    }
+
+    register() {
+        this.authService.register(this.registerModel).subscribe(async () => {
+            await this.router.navigate(['']);
         })
     }
 }
