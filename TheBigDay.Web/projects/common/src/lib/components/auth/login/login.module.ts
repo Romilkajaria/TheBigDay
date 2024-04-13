@@ -8,17 +8,32 @@ import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import {CalendarModule} from "primeng/calendar";
+import { StepperModule } from 'primeng/stepper';
+import {InputIconModule} from "primeng/inputicon";
+import {IconFieldModule} from "primeng/iconfield";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {StepsModule} from "primeng/steps";
+import {RippleModule} from "primeng/ripple";
+import {FloatLabelModule} from "primeng/floatlabel";
+import {EditorModule} from "primeng/editor";
 
 @NgModule({
     imports: [
         CommonModule,
         LoginRoutingModule,
-        ButtonModule,
         CheckboxModule,
         InputTextModule,
         FormsModule,
         PasswordModule,
         CalendarModule,
+        StepperModule,
+        InputIconModule,
+        IconFieldModule,
+        ToggleButtonModule,
+        StepsModule,
+        RippleModule,
+        FloatLabelModule,
+        EditorModule,
     ],
     exports: [
         LoginComponent

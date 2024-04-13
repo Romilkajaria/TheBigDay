@@ -3,31 +3,46 @@ import {LayoutService} from "../../../layout/service/app.layout.service";
 import {Vendor} from "../../../common-rest-models/vendor";
 import {AuthorizeService} from "./authorize.service";
 import {Router} from "@angular/router";
-import {LoginModel, RegisterModel} from "../../../common-rest-models/authentication-models";
+import {LoginModel, RegisterStoreModel} from "../../../common-rest-models/authentication-models";
+import {MenuItem} from "primeng/api";
+import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
+import {switchMap} from "rxjs";
+
+export enum RegisterSteps {
+    YOU,
+    STORE,
+    CONFIRMATION
+}
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styles: [`
-        :host ::ng-deep .pi-eye,
-        :host ::ng-deep .pi-eye-slash {
-            transform:scale(1.6);
-            margin-right: 1rem;
-            color: var(--primary-color) !important;
-        }
-    `]
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
 
-    registerModel!: RegisterModel;
-    loginModel!: LoginModel;
+    registerModel: RegisterStoreModel = {user: {}, store: {}};
+    loginModel: LoginModel = {email: undefined, password: undefined};
     confirmPassword?: string
     isSigningUp = false
     vendor?: Vendor;
+    steps: MenuItem[] = [{
+        label: 'You'
+    }, {
+        label: 'Store'
+    }, {
+        label: 'Confirm'
+    }];
+
+    RegisterSteps = RegisterSteps;
+    activeIndex = RegisterSteps.YOU;
+    maxDob = new Date();
 
     constructor(public layoutService: LayoutService,
                 private authService: AuthorizeService,
+                private vendorService: CommonVendorService,
                 private router: Router) {
+        this.maxDob.setFullYear(new Date().getFullYear() - 18);
     }
 
     toggleSignup() {
@@ -41,8 +56,18 @@ export class LoginComponent {
     }
 
     register() {
-        this.authService.register(this.registerModel).subscribe(async () => {
+        this.authService.register(this.registerModel).pipe(
+            switchMap => this.vendorService.addVendor(this.registerModel.store),
+        ).subscribe(async () => {
             await this.router.navigate(['']);
         })
+    }
+
+    nextStep() {
+        this.activeIndex++;
+    }
+
+    previousStep() {
+        this.activeIndex--;
     }
 }

@@ -1,22 +1,44 @@
-export interface RegisterModel {
-    username: string;
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    addressLine1: string;
-    addressLine2?: string;
-    suburb: string;
-    state: string;
-    country: string;
-    postcode: string;
-    dOB: Date ;
-    phoneNumber: string;
-    storeId: string;
-    photoPath: string;
+export interface RegisterStoreModel {
+    user: RegisterCustomer
+    store: RegisterVendor
 }
 
 export interface LoginModel {
-    email: string;
-    password: string;
+    email?: string;
+    password?: string;
+}
+
+export interface RegisterCustomer {
+    password?: string
+    photoPath?: string; // not implemented yet
+    firstName?: string;
+    lastName?: string;
+    addressLine1?: string;
+    addressLine2?: string;
+    suburb?: string;
+    state?: string;
+    country?: string;
+    postcode?: string;
+    mobile?: string;
+    email?: string;
+    dob?: Date;
+    isDeleted?: boolean;
+}
+
+export interface RegisterVendor {
+    name?: string;
+    description?: string;
+    operatingRadius?: number;
+    addressLine1?: string;
+    addressLine2?: string;
+    suburb?: string;
+    state?: string;
+    country?: string;
+    postcode?: string;
+    contactNum?: string;
+    afterHoursMobile?: string;
+    email?: string;
+    photoPath?: string;
+    isDeleted?: boolean;
+    isActive?: boolean;
 }

@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import {BehaviorSubject, Observable, Subject, catchError, map, of, switchMap, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
-import {RegisterModel} from "../../../common-rest-models/authentication-models";
+import {RegisterStoreModel} from "../../../common-rest-models/authentication-models";
 
 @Injectable({
     providedIn: 'root',
@@ -35,8 +35,8 @@ export class AuthorizeService {
     }
 
     // register new user
-    public register(registerModel: RegisterModel) {
-        return this.http.post(environment.apiUrl + 'store/authenticate/register', registerModel, {
+    public register(registerModel: RegisterStoreModel) {
+        return this.http.post(environment.apiUrl + 'store/authenticate/register', registerModel.user, {
             observe: 'response',
             responseType: 'text'
         })

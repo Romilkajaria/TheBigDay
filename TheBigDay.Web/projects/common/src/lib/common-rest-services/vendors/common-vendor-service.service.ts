@@ -2,6 +2,7 @@ import {Injectable, Injector} from '@angular/core';
 import {BaseCommonRestService} from "../base-common-rest-service.service";
 import {environment} from "../../environments/environment";
 import {Vendor} from "../../common-rest-models/vendor";
+import {RegisterVendor} from "../../common-rest-models/authentication-models";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class CommonVendorService extends BaseCommonRestService {
         return this.get<Vendor>(`${this.vendorUrl}/${vendorId}`)
     }
 
-    public addVendor(vendor: Vendor) {
-        return this.post<Vendor>(this.vendorUrl, vendor);
+    public addVendor(vendor: RegisterVendor) {
+        return this.post<RegisterVendor>(this.vendorUrl, vendor);
     }
 
     public updateVendor(vendor: Vendor) {
