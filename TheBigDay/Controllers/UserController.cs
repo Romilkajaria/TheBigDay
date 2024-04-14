@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web.Resource;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
+using TheBigDay.Models.AuthModels;
 using static Program;
 
 namespace TheBigDay.Controllers
@@ -79,6 +80,36 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to add User", ex);
             }
 
+        }
+
+        [HttpGet]
+        [Route("ping")]
+        public IActionResult GetCurrent()
+        {
+            try
+            {
+                User? user = null;
+
+                using (var context = new DatabaseContext(
+                _serviceProvider.GetRequiredService<
+                    DbContextOptions<DatabaseContext>>()))
+                {
+                    if (User != null && User.Identity != null)
+                    {
+                        user = context.User.FirstOrDefault((u) => u.UserName == HttpContext.User.Identity.Name);
+                        if (user != null)
+                        {
+                            return Ok(user);
+                        }
+                        return Unauthorized();
+                    }
+                    return Unauthorized();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Error getting user details!" + ex });
+            }
         }
 
         // PUT api/<ValuesController>/5

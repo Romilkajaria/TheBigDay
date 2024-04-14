@@ -1,27 +1,50 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
-import {BehaviorSubject, Observable, Subject, catchError, map, of, switchMap, tap} from "rxjs";
+import {BehaviorSubject, Subject, map, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {RegisterStoreModel} from "../../../common-rest-models/authentication-models";
+import {Customer} from "../../../common-rest-models/customer";
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthorizeService {
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router) {
+
+    }
 
     private _authStateChanged: Subject<boolean> = new BehaviorSubject<boolean>(false);
+    private _user: Subject<Customer | undefined> = new BehaviorSubject<Customer | undefined>(undefined)
+    private readonly authUrl = environment.apiUrl + 'store/authenticate/';
+    public current: Customer | undefined;
+
+    public initialise() {
+        return this.ping().pipe(
+            tap((user) => {
+                this._user.next(user);
+                this.current = user;
+                this._authStateChanged.next(true);
+            })
+        );
+    }
 
     public onStateChanged() {
         return this._authStateChanged.asObservable();
     }
 
-    // cookie-based login
+    public get user$() {
+        return this._user.asObservable();
+    }
+
+    public getUser() {
+    }
+
+    // token-based login
     public signIn(email: string, password: string) {
-        return this.http.post(environment.apiUrl + 'store/authenticate/login', {
+        return this.http.post( this.authUrl + 'login', {
             email: email,
             password: password
         }, {
@@ -30,13 +53,24 @@ export class AuthorizeService {
             .pipe<boolean>(map((res: HttpResponse<any>) => {
                 this.setToken(res.body.token);
                 this._authStateChanged.next(res.ok);
+                this._user.next(res.body.user)
                 return res.ok;
             }));
     }
 
     // register new user
     public register(registerModel: RegisterStoreModel) {
-        return this.http.post(environment.apiUrl + 'store/authenticate/register', registerModel.user, {
+        return this.http.post(this.authUrl + 'register', registerModel, {
+            observe: 'response',
+            responseType: 'text'
+        })
+            .pipe<boolean>(map((res: HttpResponse<string>) => {
+                return res.ok;
+            }));
+    }
+
+    public registerAdmin(registerModel: RegisterStoreModel) {
+        return this.http.post(this.authUrl + 'register-admin', registerModel, {
             observe: 'response',
             responseType: 'text'
         })
@@ -49,19 +83,13 @@ export class AuthorizeService {
     public signOut() {
         this.deleteToken();
         this._authStateChanged.next(false);
+        this._user.next(undefined);
+        this.router.navigate(['/auth']);
     }
 
     // check if the user is authenticated. the endpoint is protected so 401 if not.
     public ping() {
-        return this.http.get<any>(environment.apiUrl + 'store/authenticate/ping').pipe(
-            tap((isSignedIn) => {
-                if(!isSignedIn) {
-                    this.signOut();
-                }
-            }),
-            catchError((_: HttpErrorResponse, __: Observable<any>) => {
-                return of(false);
-            }));
+        return this.http.get<Customer | undefined>(environment.apiUrl + 'user/ping');
     }
 
     public getToken() {

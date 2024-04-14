@@ -21,6 +21,7 @@ export interface RegisterCustomer {
     postcode?: string;
     mobile?: string;
     email?: string;
+    storeId?: string;
     dob?: Date;
     isDeleted?: boolean;
 }
@@ -36,7 +37,8 @@ export interface RegisterVendor {
     country?: string;
     postcode?: string;
     contactNum?: string;
-    afterHoursMobile?: string;
+    afterHoursContactName?: string;
+    afterHoursContactNum ?: string;
     email?: string;
     photoPath?: string;
     isDeleted?: boolean;

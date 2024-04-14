@@ -12,8 +12,7 @@ namespace TheBigDay.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class EventController : ControllerBase
     {
         private readonly ILogger<EventController> _logger;
@@ -25,8 +24,7 @@ namespace TheBigDay.Controllers
             _serviceProvider = serviceProvider;
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet]    
         public IEnumerable<Event> Get()
         {
             try
@@ -45,7 +43,6 @@ namespace TheBigDay.Controllers
         }
         // GET api/<EventController>/5
         [HttpGet("{id}")]
-        [Authorize]
         public Event? Get(Guid id)
         {
             try
@@ -65,8 +62,7 @@ namespace TheBigDay.Controllers
         }
 
         // POST api/<EventController>
-        [HttpPost]
-        [Authorize]
+        [HttpPost]        
         public void Post([FromBody] Event e)
         {
             try
@@ -86,8 +82,7 @@ namespace TheBigDay.Controllers
         }
 
         // PUT api/<EventController>/5
-        [HttpPut("{id}")]
-        [Authorize]
+        [HttpPut("{id}")]       
         public void Put(Guid id, [FromBody] Event e)
         {
             try
@@ -113,8 +108,7 @@ namespace TheBigDay.Controllers
         }
 
         // DELETE api/<EventController>/5
-        [HttpDelete("{id}")]
-        [Authorize]
+        [HttpDelete("{id}")]      
         public void Delete(string id)
         {
             try

@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     if (event.status !== 401 || (event.url && event.url.indexOf("ping") >= 0)) {
                         return;
                     }
-                    this.router.navigate(['auth']);
+                    this.router.navigate(['/auth']);
                 }
             }
         }));

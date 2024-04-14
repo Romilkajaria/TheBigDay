@@ -23,6 +23,7 @@ export interface Customer {
     email: string;
     dob: Date;
     isDeleted: boolean;
+    storeId?: string;
 
 //Dependacies
     eventCustomers: any[];

@@ -3,7 +3,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import {DOCUMENT} from "@angular/common";
 import { AuthorizeService } from "projects/common/src/lib/components/auth/login/authorize.service";
 import {Router} from "@angular/router";
-import {catchError, interval, switchMap, timer} from "rxjs";
+import {catchError, interval, map, switchMap, timer} from "rxjs";
 
 @Component({
     selector: 'app-root',
@@ -21,13 +21,17 @@ export class AppComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        interval(15000).pipe(
-            switchMap(() => {
-                return this.authService.ping()
-            })).subscribe((isSignedIn) => {
-                if(!isSignedIn) {
-                    this.authService.signOut();
-                }
-        })
+        // TODO implement this later
+        // interval(15000).pipe(
+        //     switchMap(() => this.authService.user$),
+        // ).subscribe((user) => {
+        //     if(user) {
+        //         this.authService.ping().subscribe();
+        //     }
+        // })
+
+        // this.authService.initialise().subscribe(() => {
+        //     this.router.navigate([''])
+        // });
     }
 }

@@ -9,6 +9,9 @@ import {
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
 import {Router} from "@angular/router";
 import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
+import {AuthorizeService, UserDto} from "../../../../../common/src/lib/components/auth/login/authorize.service";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Customer} from "../../../../../common/src/lib/common-rest-models/customer";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -25,7 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    user?: User | null;
+    user?: Customer | null;
 
     loading = true
 
@@ -34,20 +37,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     constructor( public layoutService: LayoutService,
                  private vendorService: CommonVendorService,
                  router: Router,
-                 auth: AuthService) {
+                 auth: AuthorizeService) {
+        auth.user$.pipe(takeUntilDestroyed()).subscribe((user) => this.user = user)
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
-
-        // vendorService.getVendors().subscribe((vendors) => {
-        //     const targetVendor = vendors.find((v) => v.email === this.user?.email);
-        //     if (!targetVendor) {
-        //         router.navigate(['/finish-signup']);
-        //     }
-        //     else {
-        //         this.vendor = targetVendor;
-        //     }
-        // })
     }
 
     ngOnInit() {

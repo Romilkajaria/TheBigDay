@@ -18,7 +18,7 @@ export class CommonServicesService extends BaseCommonRestService {
   }
 
   public addService(service: Service) {
-    return this.post<Service>(this.serviceUrl, service);
+    return this.post<Service>(this.serviceUrl + '/add', service);
   }
 
   public updateService(service: Service) {

@@ -11,8 +11,7 @@ namespace TheBigDay.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
@@ -24,8 +23,7 @@ namespace TheBigDay.Controllers
             _serviceProvider = serviceProvider;
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet]      
         public IEnumerable<Product> Get()
         {
             try
@@ -44,7 +42,6 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public Product? Get(Guid id)
         {
             try
@@ -63,9 +60,8 @@ namespace TheBigDay.Controllers
 
         }
 
-        // POST api/<ProductController>
         [HttpPost]
-        [Authorize]
+        [Route("add")]
         public void Post([FromBody] Product product)
         {
             try
@@ -85,8 +81,7 @@ namespace TheBigDay.Controllers
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        [Authorize]
+        [HttpPut("{id}")]      
         public void Put(Guid id, [FromBody] Product product)
         {
             try
@@ -107,8 +102,7 @@ namespace TheBigDay.Controllers
         }
 
         // DELETE api/<ProductController>/5
-        [HttpDelete("{id}")]
-        [Authorize]
+        [HttpDelete("{id}")]   
         public void Delete(Guid id)
         {
             try

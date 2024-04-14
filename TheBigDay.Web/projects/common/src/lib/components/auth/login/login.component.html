@@ -66,10 +66,10 @@
             <input type="text" [(ngModel)]="registerModel.user.country" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <label class="block text-900 font-medium text-xl mb-2">Postcode</label>
-            <input type="number" [(ngModel)]="registerModel.user.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+            <input type="text" [(ngModel)]="registerModel.user.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <label class="block text-900 font-medium text-xl mb-2">Contact</label>
-            <input type="number" [(ngModel)]="registerModel.user.mobile" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+            <input type="text" [(ngModel)]="registerModel.user.mobile" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <div class="flex-auto p-fluid">
                 <label class="font-bold block mb-2"> Date of birth </label>
@@ -103,16 +103,19 @@
             <input type="text" [(ngModel)]="registerModel.store.country" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <label class="block text-900 font-medium text-xl mb-2">Postcode</label>
-            <input type="number" [(ngModel)]="registerModel.store.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+            <input type="text" [(ngModel)]="registerModel.store.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <label class="block text-900 font-medium text-xl mb-2">Operating radius</label>
             <input type="number" [(ngModel)]="registerModel.store.operatingRadius" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <label class="block text-900 font-medium text-xl mb-2">Primary contact</label>
-            <input type="number" [(ngModel)]="registerModel.store.contactNum" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+            <input type="text" [(ngModel)]="registerModel.store.contactNum" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-            <label class="block text-900 font-medium text-xl mb-2">After hours contact</label>
-            <input type="number" [(ngModel)]="registerModel.store.afterHoursMobile" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+            <label class="block text-900 font-medium text-xl mb-2">After hours contact name</label>
+            <input type="text" [(ngModel)]="registerModel.store.afterHoursContactName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+            <label class="block text-900 font-medium text-xl mb-2">After hours contact number</label>
+            <input type="text" [(ngModel)]="registerModel.store.afterHoursContactNum" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <div class="flex-auto p-fluid mb-2">
                 <label class="block text-900 text-xl font-medium mb-2">Description</label>

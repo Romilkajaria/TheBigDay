@@ -56,8 +56,8 @@ export class LoginComponent {
     }
 
     register() {
-        this.authService.register(this.registerModel).pipe(
-            switchMap => this.vendorService.addVendor(this.registerModel.store),
+        this.authService.registerAdmin(this.registerModel).pipe(
+            switchMap(() => this.authService.signIn(this.registerModel.user.email!, this.registerModel.user.password!))
         ).subscribe(async () => {
             await this.router.navigate(['']);
         })

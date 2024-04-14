@@ -13,7 +13,6 @@ import { LogoutComponent } from './components/auth/logout/logout.component';
 @NgModule({
   declarations: [
     CommonComponent,
-    LogoutComponent,
   ],
   imports: [
     CheckboxModule,

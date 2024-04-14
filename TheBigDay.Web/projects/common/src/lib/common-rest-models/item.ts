@@ -4,7 +4,7 @@ export interface TBDItem {
   description: string;
   minGuestLimit: number;
   maxGuestLimit: number;
-  vendorID: string;
+  storeId: string;
   isDeleted: boolean;
   price: number;
   priceType: PriceType;

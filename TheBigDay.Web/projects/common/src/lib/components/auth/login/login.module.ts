@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginRoutingModule } from './login-routing.module';
+import { LoginRoutingModule } from '../login-routing.module';
 import { LoginComponent } from './login.component';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -16,6 +16,7 @@ import {StepsModule} from "primeng/steps";
 import {RippleModule} from "primeng/ripple";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {EditorModule} from "primeng/editor";
+import {LogoutComponent} from "../logout/logout.component";
 
 @NgModule({
     imports: [
@@ -38,6 +39,6 @@ import {EditorModule} from "primeng/editor";
     exports: [
         LoginComponent
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent, LogoutComponent]
 })
 export class LoginModule { }
