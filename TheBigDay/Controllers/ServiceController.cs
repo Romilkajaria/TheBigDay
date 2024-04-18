@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
-using Microsoft.Identity.Web.Resource;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +16,19 @@ namespace TheBigDay.Controllers
     {
         private readonly ILogger<ServiceController> _logger;
         private readonly IServiceProvider _serviceProvider;
+        private readonly Guid _currentStoreId;
 
-        public ServiceController(ILogger<ServiceController> logger, IServiceProvider serviceProvider)
+        public ServiceController(ILogger<ServiceController> logger, IServiceProvider serviceProvider, UserManager<User> userManager)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
+            // TODO: fix this up later. move this to a base controller
+            var currentUser = userManager.FindByNameAsync(User.Identity!.Name!).Result;
+
+            if (currentUser != null && currentUser.StoreId != null)
+            {
+                _currentStoreId = (Guid)currentUser.StoreId;
+            }
         }
 
         [HttpGet]
@@ -32,7 +40,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Service.Where((c) => c.IsDeleted == false).ToList();
+                    return context.Service.Where((c) => c.IsDeleted == false && c.StoreId == _currentStoreId).ToList();
                 }
             }
             catch (Exception ex)
@@ -50,7 +58,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Service.FirstOrDefault((c) => c.Id == id);
+                    return context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
                 }
             }
             catch (Exception ex)
@@ -91,7 +99,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceService = context.Service.FirstOrDefault((c) => c.Id == id);
+                    var sourceService = context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
 
                     if (sourceService != null)
                     {
@@ -117,7 +125,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceService = context.User.FirstOrDefault((c) => c.Id == id);
+                    var sourceService = context.User.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
 
                     if (sourceService != null)
                     {
