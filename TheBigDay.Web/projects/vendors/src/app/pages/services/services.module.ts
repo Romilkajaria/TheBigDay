@@ -26,6 +26,9 @@ import {LoadingModule} from "../../../../../common/src/lib/components/loading/lo
         ServicesComponent,
         AddServicesFormComponent
     ],
+    exports: [
+        ServicesComponent
+    ],
     imports: [
         CommonModule,
         ServicesRoutingModule,

@@ -17,6 +17,7 @@ import {RippleModule} from "primeng/ripple";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {EditorModule} from "primeng/editor";
 import {LogoutComponent} from "../logout/logout.component";
+import {LoadingModule} from "../../loading/loading/loading.module";
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import {LogoutComponent} from "../logout/logout.component";
         RippleModule,
         FloatLabelModule,
         EditorModule,
+        LoadingModule,
     ],
     exports: [
         LoginComponent

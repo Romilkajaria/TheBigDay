@@ -22,14 +22,17 @@ import {LoadingModule} from "../../../../../common/src/lib/components/loading/lo
 
 
 @NgModule({
-  declarations: [
-    ProductsComponent,
-    AddProductFormComponent
-  ],
+    declarations: [
+        ProductsComponent,
+        AddProductFormComponent
+    ],
+    exports: [
+        ProductsComponent
+    ],
     imports: [
         CommonModule,
         ProductsRoutingModule,
-      //prime modules
+        //prime modules
         ButtonModule,
         InputTextModule,
         TableModule,

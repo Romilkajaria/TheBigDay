@@ -24,7 +24,8 @@
                         </div>
                         <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
                     </div>
-                    <button [disabled]="!loginModel.password || !loginModel.email" pButton pRipple label="Log In" class="w-full p-3 text-xl" (click)="login()"></button>
+                    <button *ngIf="!loading" [disabled]="!loginModel.password || !loginModel.email" pButton pRipple label="Log In" class="w-full p-3 text-xl" (click)="login()"></button>
+                    <app-loading [showLoading]="loading"></app-loading>
                 </div>
             </div>
 
@@ -134,7 +135,8 @@
             </div>
             <div class="flex justify-content-between">
                 <button class="p-button-secondary" pButton pRipple label="Back" (click)="previousStep()"></button>
-                <button [disabled]="!registerModel.store || !registerModel.user" pButton pRipple label="Register" (click)="register()"></button>
+                <button *ngIf="!loading" [disabled]="!registerModel.store || !registerModel.user" pButton pRipple label="Register" (click)="register()"></button>
+                <app-loading [showLoading]="loading"></app-loading>
             </div>
         </div>
     </div>

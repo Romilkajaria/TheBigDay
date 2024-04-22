@@ -37,6 +37,7 @@ export class LoginComponent {
     RegisterSteps = RegisterSteps;
     activeIndex = RegisterSteps.YOU;
     maxDob = new Date();
+    public loading = false;
 
     constructor(public layoutService: LayoutService,
                 private authService: AuthorizeService,
@@ -50,15 +51,19 @@ export class LoginComponent {
     }
 
     login() {
+        this.loading = true;
         this.authService.signIn(this.loginModel.email!, this.loginModel.password!).subscribe(async (x) => {
+            this.loading = false;
             await this.router.navigate([''])
         })
     }
 
     register() {
+        this.loading = true;
         this.authService.registerAdmin(this.registerModel).pipe(
             switchMap(() => this.authService.signIn(this.registerModel.user.email!, this.registerModel.user.password!))
         ).subscribe(async () => {
+            this.loading = false;
             await this.router.navigate(['']);
         })
     }
