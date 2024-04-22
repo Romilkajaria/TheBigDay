@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
 using Microsoft.Identity.Web.Resource;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +17,19 @@ namespace TheBigDay.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IServiceProvider _serviceProvider;
+        private readonly Guid _currentStoreId;
 
-        public ProductController(ILogger<ProductController> logger, IServiceProvider serviceProvider)
+        public ProductController(ILogger<ProductController> logger, IServiceProvider serviceProvider, UserManager<User> userManager)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
+            // TODO: fix this up later. move this to a base controller
+            var currentUser = userManager.FindByNameAsync(User.Identity!.Name!).Result;
+
+            if(currentUser != null && currentUser.StoreId != null)
+            {
+                _currentStoreId = (Guid)currentUser.StoreId;
+            }
         }
 
         [HttpGet]      
@@ -32,7 +41,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.Where((c) => c.IsDeleted == false).ToList();
+                    return context.Product.Where((c) => c.IsDeleted == false && c.StoreId == _currentStoreId).ToList();
                 }
             }
             catch (Exception ex)
@@ -50,7 +59,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.FirstOrDefault((c) => c.Id == id);
+                    return context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
                 }
             }
             catch (Exception ex)
@@ -70,6 +79,7 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
+                    product.StoreId = _currentStoreId;
                     context.Product.Add(product);
                     context.SaveChanges();
                 }
@@ -90,8 +100,13 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    context.Product.Update(product);
-                    context.SaveChanges();
+                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+
+                    if (sourceProduct != null)
+                    {
+                        sourceProduct = product;
+                        context.SaveChanges();
+                    }
 
                 }
             }
@@ -111,7 +126,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id);
+                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
 
                     if (sourceProduct != null)
                     {
