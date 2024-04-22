@@ -9,8 +9,8 @@ import {CommonVendorService} from "../../../common-rest-services/vendors/common-
 import {switchMap} from "rxjs";
 
 export enum RegisterSteps {
-    YOU,
     STORE,
+    YOU,
     CONFIRMATION
 }
 
@@ -27,15 +27,15 @@ export class LoginComponent {
     isSigningUp = false
     vendor?: Vendor;
     steps: MenuItem[] = [{
-        label: 'You'
-    }, {
         label: 'Store'
+    }, {
+        label: 'You'
     }, {
         label: 'Confirm'
     }];
 
     RegisterSteps = RegisterSteps;
-    activeIndex = RegisterSteps.YOU;
+    activeIndex = RegisterSteps.STORE;
     maxDob = new Date();
 
     constructor(public layoutService: LayoutService,
