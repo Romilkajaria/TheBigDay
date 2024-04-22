@@ -17,19 +17,13 @@ namespace TheBigDay.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IServiceProvider _serviceProvider;
-        private readonly Guid _currentStoreId;
+        private readonly UserManager<User> _userManager;
 
         public ProductController(ILogger<ProductController> logger, IServiceProvider serviceProvider, UserManager<User> userManager)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
-            // TODO: fix this up later. move this to a base controller
-            var currentUser = userManager.FindByNameAsync(User.Identity!.Name!).Result;
-
-            if(currentUser != null && currentUser.StoreId != null)
-            {
-                _currentStoreId = (Guid)currentUser.StoreId;
-            }
+            _userManager = userManager;
         }
 
         [HttpGet]      
@@ -41,7 +35,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.Where((c) => c.IsDeleted == false && c.StoreId == _currentStoreId).ToList();
+                    return context.Product.Where((c) => c.IsDeleted == false && c.StoreId == CurrentStoreId()).ToList();
                 }
             }
             catch (Exception ex)
@@ -59,7 +53,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+                    return context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
                 }
             }
             catch (Exception ex)
@@ -79,7 +73,7 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
-                    product.StoreId = _currentStoreId;
+                    product.StoreId = CurrentStoreId();
                     context.Product.Add(product);
                     context.SaveChanges();
                 }
@@ -100,7 +94,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceProduct != null)
                     {
@@ -126,7 +120,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceProduct != null)
                     {
@@ -140,6 +134,17 @@ namespace TheBigDay.Controllers
             {
                 throw new Exception("Failed to delete Product", ex);
             }
+        }
+
+        private Guid CurrentStoreId()
+        {
+            var currentUser = _userManager.FindByNameAsync(User.Identity!.Name!).Result;
+
+            if (currentUser != null && currentUser.StoreId != null)
+            {
+                return (Guid)currentUser.StoreId;
+            }
+            return Guid.Empty;
         }
     }
 }
