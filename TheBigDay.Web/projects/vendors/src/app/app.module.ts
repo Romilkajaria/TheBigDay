@@ -14,6 +14,7 @@ import {environment} from "../environments/environment";
 import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {AuthInterceptor} from "./VendorAuthInterceptor";
 import {Router} from "@angular/router";
+import {AvatarModule} from "primeng/avatar";
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {Router} from "@angular/router";
         StyleClassModule,
         AuthModule.forRoot(environment.auth0),
         CommonModule,
+        AvatarModule,
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,

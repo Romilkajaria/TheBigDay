@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     constructor( public layoutService: LayoutService,
                  private vendorService: CommonVendorService,
                  router: Router,
-                 auth: AuthorizeService) {
+                 private auth: AuthorizeService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
