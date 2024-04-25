@@ -6,6 +6,7 @@ import {
 import {Router} from "@angular/router";
 import {AuthService, User} from "@auth0/auth0-angular";
 import {lastValueFrom} from "rxjs";
+import {LandingComponent} from "../pages/landing/landing.component";
 
 @Component({
   selector: 'app-consumer-page-shell',
@@ -29,7 +30,11 @@ export class ConsumerPageShellComponent implements OnInit {
         this.auth.user$.subscribe((a) => {
             this.user = a;
         });
-        this.selectedEvent = this.localStorageService.getItem<TBDEvent>("event");
+        const cachedEvent = this.localStorageService.getItem(LandingComponent.eventKey);
+        if(cachedEvent) {
+            this.selectedEvent = JSON.parse(cachedEvent) as TBDEvent;
+        }
+
         if (!this.selectedEvent) {
             await this.router.navigate([""])
         } else {

@@ -42,7 +42,6 @@ export const vendorMenu = [
         label: 'Configuration',
         items: [
             { label: 'Settings', icon: 'pi-fw pi-cog', routerLink: ['/pages/settings'] },
-            { label: 'Sign out', icon: 'pi-fw pi-sign-out', routerLink: ['/auth/logout'] },
         ]
     },
 
