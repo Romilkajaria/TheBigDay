@@ -52,7 +52,7 @@ export class LoginComponent {
 
     login() {
         this.loading = true;
-        this.authService.signIn(this.loginModel.email!, this.loginModel.password!).subscribe(async (x) => {
+        this.authService.signIn(this.loginModel.email!, this.loginModel.password!).subscribe(async () => {
             this.loading = false;
             await this.router.navigate([''])
         })

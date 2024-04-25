@@ -28,8 +28,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    user?: Customer | null;
-
     loading = true
 
     vendor?: Vendor;
@@ -38,7 +36,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                  private vendorService: CommonVendorService,
                  router: Router,
                  auth: AuthorizeService) {
-        auth.user$.pipe(takeUntilDestroyed()).subscribe((user) => this.user = user)
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });

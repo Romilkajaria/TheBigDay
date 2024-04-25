@@ -1,20 +1,23 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
-import {BehaviorSubject, Subject, map, tap} from "rxjs";
+import {BehaviorSubject, Subject, map, tap, switchMap, of} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {RegisterStoreModel} from "../../../common-rest-models/authentication-models";
 import {Customer} from "../../../common-rest-models/customer";
+import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
+import {LocalStorageService} from "../../../common-services/local-storage-service/local-storage.service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthorizeService {
 
-    constructor(private http: HttpClient, private router: Router) {
-
-    }
+    constructor(private http: HttpClient,
+                private router: Router,
+                private storeService: CommonVendorService,
+                private cacheService: LocalStorageService) {}
 
     private _authStateChanged: Subject<boolean> = new BehaviorSubject<boolean>(false);
     private _user: Subject<Customer | undefined> = new BehaviorSubject<Customer | undefined>(undefined)
@@ -49,12 +52,24 @@ export class AuthorizeService {
             password: password
         }, {
             observe: 'response',
-        })
-            .pipe<boolean>(map((res: HttpResponse<any>) => {
+        }).pipe(
+            switchMap((res: HttpResponse<any>) => {
                 this.setToken(res.body.token);
                 this._authStateChanged.next(res.ok);
-                this._user.next(res.body.user)
-                return res.ok;
+                this.current = res.body.user;
+                return of(res.ok);
+            }),
+            switchMap((res) => {
+                if(this.current && this.current.storeId) {
+                    return this.storeService.getVendor(this.current.storeId);
+                }
+                return of(res);
+            }),
+            switchMap((store) => {
+                if(store) {
+                    this.cacheService.setItem("currentStore", store);
+                }
+                return of(store)
             }));
     }
 
