@@ -62,7 +62,7 @@
             <label class="block text-900 font-medium text-xl mb-2">Operating radius</label>
             <input type="number" [(ngModel)]="registerModel.store.operatingRadius" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-            <label class="block text-900 font-medium text-xl mb-2">Primary contact</label>
+            <label class="block text-900 font-medium text-xl mb-2">Primary contact number</label>
             <input type="text" [(ngModel)]="registerModel.store.contactNum" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <label class="block text-900 font-medium text-xl mb-2">After hours contact name</label>
@@ -114,13 +114,18 @@
             <label class="block text-900 font-medium text-xl mb-2">Postcode</label>
             <input type="text" [(ngModel)]="registerModel.user.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-            <label class="block text-900 font-medium text-xl mb-2">Contact</label>
+            <label class="block text-900 font-medium text-xl mb-2">Contact Number</label>
             <input type="text" [(ngModel)]="registerModel.user.mobile" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
             <div class="flex-auto p-fluid">
                 <label class="font-bold block mb-2"> Date of birth </label>
                 <p-calendar [(ngModel)]="registerModel.user.dob" [maxDate]="maxDob" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
             </div>
+
+            <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted" />
+            <label class="font-bold block mb-2" for="tcAccepted"> I accept all the Terms & Conditions set out by The Bigg day. </label>
+            <p-checkbox [(ngModel)]="registerModel.user.marketingAccepted" [binary]="true" inputId="marketingAccepted" />
+            <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional emails. </label>
             <div class="flex justify-content-between mt-2">
                 <button class="p-button-secondary" pButton pRipple label="Back" (click)="previousStep()"></button>
                 <button  pButton pRipple label="Next" (click)="nextStep()"></button>

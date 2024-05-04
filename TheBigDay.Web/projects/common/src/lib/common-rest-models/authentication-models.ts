@@ -24,6 +24,8 @@ export interface RegisterCustomer {
     storeId?: string;
     dob?: Date;
     isDeleted?: boolean;
+    tcAccepted?: boolean;
+    marketingAccepted?: boolean;
 }
 
 export interface RegisterVendor {
