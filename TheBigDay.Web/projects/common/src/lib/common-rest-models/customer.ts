@@ -1,3 +1,5 @@
+import {Vendor} from "./vendor";
+
 export interface Country {
     name?: string;
     code?: string;
@@ -11,7 +13,7 @@ export interface Representative {
 export interface Customer {
     id: string
     photoPath: string;
-    firstNme: string;
+    firstName: string;
     lastName: string;
     addressLine1: string;
     addressLine2: string;
@@ -24,6 +26,7 @@ export interface Customer {
     dob: Date;
     isDeleted: boolean;
     storeId?: string;
+    store: Vendor | undefined;
 
 //Dependacies
     eventCustomers: any[];

@@ -13,6 +13,8 @@ import {User} from "@auth0/auth0-angular";
 export class AppLayoutComponent {
     @Input() contentTemplate!: TemplateRef<any>;
     @Input() user?: User | null;
+    @Input() showSearch = false;
+    @Input() showCart = false;
 
     isSidebarVisible = false;
     constructor(public layoutService: LayoutService) {

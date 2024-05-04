@@ -16,19 +16,13 @@ namespace TheBigDay.Controllers
     {
         private readonly ILogger<ServiceController> _logger;
         private readonly IServiceProvider _serviceProvider;
-        private readonly Guid _currentStoreId;
+        private readonly UserManager<User> _userManager;
 
         public ServiceController(ILogger<ServiceController> logger, IServiceProvider serviceProvider, UserManager<User> userManager)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
-            // TODO: fix this up later. move this to a base controller
-            var currentUser = userManager.FindByNameAsync(User.Identity!.Name!).Result;
-
-            if (currentUser != null && currentUser.StoreId != null)
-            {
-                _currentStoreId = (Guid)currentUser.StoreId;
-            }
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -40,7 +34,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Service.Where((c) => c.IsDeleted == false && c.StoreId == _currentStoreId).ToList();
+                    return context.Service.Where((c) => c.IsDeleted == false && c.StoreId == CurrentStoreId()).ToList();
                 }
             }
             catch (Exception ex)
@@ -58,7 +52,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+                    return context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
                 }
             }
             catch (Exception ex)
@@ -99,7 +93,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceService = context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+                    var sourceService = context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceService != null)
                     {
@@ -125,7 +119,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceService = context.User.FirstOrDefault((c) => c.Id == id && c.StoreId == _currentStoreId);
+                    var sourceService = context.User.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceService != null)
                     {
@@ -139,6 +133,17 @@ namespace TheBigDay.Controllers
             {
                 throw new Exception("Failed to delete Service", ex);
             }
+        }
+
+        private Guid CurrentStoreId()
+        {
+            var currentUser = _userManager.FindByNameAsync(User.Identity!.Name!).Result;
+
+            if (currentUser != null && currentUser.StoreId != null)
+            {
+                return (Guid)currentUser.StoreId;
+            }
+            return Guid.Empty;
         }
     }
 }

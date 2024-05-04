@@ -11,17 +11,21 @@
     <ng-content></ng-content>
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <span class="p-input-icon-left">
+        <span *ngIf="showSearch" class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input style="border-radius: 2rem" type="text" pInputText placeholder="Search" />
         </span>
-        <button class="p-link layout-topbar-button">
+        <button *ngIf="showCart" class="p-link layout-topbar-button">
             <i class="pi pi-shopping-cart"></i>
             <span>Cart</span>
         </button>
-<!--        <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">-->
-<!--            <i class="pi pi-calendar"></i>-->
-<!--            <span>Calendar</span>-->
-<!--        </button>-->
+        <button class="p-link layout-topbar-button" [routerLink]="''">
+            <i class="pi pi-calendar"></i>
+            <span>Calendar</span>
+        </button>
+        <button class="p-link layout-topbar-button" [routerLink]="''">
+            <i class="pi pi-bell"></i>
+            <span>Notification</span>
+        </button>
     </div>
 </div>

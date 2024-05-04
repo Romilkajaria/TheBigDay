@@ -1,6 +1,9 @@
 <div class="grid" *ngIf="!loading">
   <div class="col-12">
-    <button pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createService()"></button>
+      <div class="flex justify-content-between align-items-center">
+          <h5>Services</h5>
+          <button pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createService()"></button>
+      </div>
     <div class="card" *ngIf="services && services.length > 0">
       <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="ServiceColumns" [value]="services" [tableStyle]="{ 'min-width': '50rem' }" p-datatable-striped>
         <ng-template pTemplate="header" let-columns>

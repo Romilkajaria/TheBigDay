@@ -9,6 +9,8 @@ import {
 } from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {Router} from "@angular/router";
+import {LocalStorageService} from "../../../common/src/lib/common-services/local-storage-service/local-storage.service";
+import {AuthorizeService} from "../../../common/src/lib/components/auth/login/authorize.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

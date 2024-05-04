@@ -1,4 +1,4 @@
-<app-layout [contentTemplate]="user ? contentTemplate : noAuthTemplate">
+<app-layout [contentTemplate]="user ? contentTemplate : noAuthTemplate" [showSearch]="true" [showCart]="true">
     <div class="flex align-items-center" *ngIf="selectedEvent">
         <div>
             <div>{{selectedEvent.name}}</div>

@@ -9,7 +9,7 @@ import {RegisterVendor} from "../../common-rest-models/authentication-models";
 })
 export class CommonVendorService extends BaseCommonRestService {
 
-    private readonly vendorUrl = environment.apiUrl + "vendor";
+    private readonly vendorUrl = environment.apiUrl + "store";
     constructor(injector: Injector) {
         super(injector);
     }

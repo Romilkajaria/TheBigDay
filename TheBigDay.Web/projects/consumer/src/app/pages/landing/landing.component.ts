@@ -18,6 +18,7 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 export class LandingComponent {
     public event: TBDEvent = defaultEvent;
     public browsingAddress?: string;
+    public static readonly eventKey = "event"
 
     constructor(private dialogService: DialogService,
                 private router: Router,
@@ -31,7 +32,7 @@ export class LandingComponent {
     }
 
     public async startEvent() {
-        this.localStorageService.setItem<TBDEvent>("event", this.event);
+        this.localStorageService.setItem(LandingComponent.eventKey, JSON.stringify(this.event));
         await this.router.navigate(["app/dashboard"]);
     }
 
@@ -40,7 +41,7 @@ export class LandingComponent {
             const tbdEvent = defaultEvent;
             tbdEvent.addressLine1 = this.browsingAddress!;
             tbdEvent.name = "new Event"
-            this.localStorageService.setItem<TBDEvent>("event", tbdEvent);
+            this.localStorageService.setItem(LandingComponent.eventKey, JSON.stringify(tbdEvent));
             await this.router.navigate(["app/dashboard"]);
         }
     }
