@@ -31,9 +31,13 @@
 
   <ItemGroup>
     <None Remove="Authentication\" />
+    <None Remove="Services\" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>

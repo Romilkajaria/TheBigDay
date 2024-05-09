@@ -8,6 +8,8 @@ using System.Text;
 using TheBigDay.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
+using TheBigDay.Interfaces;
+using TheBigDay.Services;
 
 public class Program
 {
@@ -85,6 +87,8 @@ public class Program
 #endif
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddScoped<IUserService, UserService>();
 
         var app = builder.Build();
 
