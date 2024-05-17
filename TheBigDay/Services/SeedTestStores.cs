@@ -25,11 +25,6 @@ namespace TheBigDay.Services
 
         }
 
-        public Register CreateRegisterModel(string username, string password, string email)
-        {
-            return new Register();
-        }
-
         public void SeedStores()
         {
             try
@@ -51,39 +46,20 @@ namespace TheBigDay.Services
             {
                 User = new RegisterUser()
                 {
-                     PhotoPath = null,
-    FirstName = "Romil",
-    LastName = "Kajaria",
-    AddressLine1 = "14 Oldfield Chase",
-    AddressLine2 = null,
-    Suburb = "Brabham",
-    State = "WA",
-    Country = "Australia",
-    Postcode = "6055",
-    DOB = DateTime.ParseExact("1994-12-28T16:00:00", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture),
-    IsDeleted = false,
-
-                },
-                Store = new Store()
-                { 
-                    Name = "Hungry jacks",
-                    Description = null,
-                    OperatingRadius = 50,
+                    PhotoPath = null,
+                    FirstName = "Romil",
+                    LastName = "Kajaria",
                     AddressLine1 = "14 Oldfield Chase",
                     AddressLine2 = null,
                     Suburb = "Brabham",
                     State = "WA",
-                    Country =  "Australia",
+                    Country = "Australia",
                     Postcode = "6055",
-                    ContactNum = "123456",
-                    AfterHoursContactName = "123456",
-                    AfterHoursContactNum = "123456",
-                    Email = "romilkajaria@gmail.com",
-                    PhotoPath = null,
+                    DOB = DateTime.ParseExact("1994-12-28T16:00:00", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture),
                     IsDeleted = false,
-                    IsActive = false,
-
-                }
+                    Email = "kajariaromil@gmail.com",
+                    Password = "PassWord1."
+                },
             };
             _userService.RegisterAdminAsync(model);
         }

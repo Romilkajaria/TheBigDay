@@ -20,11 +20,12 @@ namespace TheBigDay.Services
         private readonly RoleManager<IdentityRole> _roleManager;
 
 
-        public UserService(ILogger<StoreController> logger, IServiceProvider serviceProvider, RoleManager<IdentityRole> roleManager)
+        public UserService(ILogger<StoreController> logger, IServiceProvider serviceProvider, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
 		{
             _logger = logger;
             _serviceProvider = serviceProvider;
             _roleManager = roleManager;
+            _userManager = userManager;
             _context = new DatabaseContext(
                     serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>());
@@ -42,27 +43,27 @@ namespace TheBigDay.Services
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    var store = context.Store.FirstOrDefault((s) => s.Id == model.User.StoreId);
+                    string defaultNotYetSet = "Not yet set";
 
-                    if (store == null && model.Store != null)
+                    // set up default store values
+                    Store store = new Store()
                     {
-                        store = new Store()
-                        {
-                            IsDeleted = false,
-                            AddressLine1 = model.Store.AddressLine1!,
-                            AddressLine2 = model.Store.AddressLine2,
-                            Email = model.Store.Email!,
-                            ContactNum = model.Store.ContactNum!,
-                            AfterHoursContactName = model.Store.AfterHoursContactNum,
-                            AfterHoursContactNum = model.Store.AfterHoursContactNum!,
-                            State = model.Store.State!,
-                            Suburb = model.Store.Suburb!,
-                            Postcode = model.Store.Postcode!,
-                            Country = model.Store.Country!,
-                            Name = model.Store.Name,
-                            IsActive = false, // we will activate them manually on signup
-                        };
-                    }
+                        IsDeleted = false,
+                        AddressLine1 = defaultNotYetSet,
+                        AddressLine2 = defaultNotYetSet,
+                        Email = defaultNotYetSet,
+                        ContactNum = defaultNotYetSet,
+                        AfterHoursContactName = defaultNotYetSet,
+                        AfterHoursContactNum = defaultNotYetSet,
+                        State = defaultNotYetSet,
+                        Suburb = defaultNotYetSet,
+                        Postcode = defaultNotYetSet,
+                        Country = defaultNotYetSet,
+                        Name = defaultNotYetSet,
+                        IsActive = false, // we will activate them manually on signup
+                        HasCompletedStoreSetup = false,
+                    };
+
 
                     // TODO: doesnt work if the storeId is passed in. tries to create a new store.
                     User user = new User()
@@ -72,14 +73,15 @@ namespace TheBigDay.Services
                         UserName = model.User.FirstName + model.User.LastName,
                         FirstName = model.User.FirstName,
                         LastName = model.User.LastName,
-                        AddressLine1 = model.User.AddressLine1,
-                        AddressLine2 = model.User.AddressLine2,
-                        Suburb = model.User.Suburb,
-                        State = model.User.State,
-                        Country = model.User.Country,
-                        Postcode = model.User.Postcode,
-                        DOB = model.User.DOB,
-                        PhoneNumber = model.User.PhoneNumber,
+                        AddressLine1 = defaultNotYetSet,
+                        AddressLine2 = defaultNotYetSet,
+                        Suburb = defaultNotYetSet,
+                        State = defaultNotYetSet,
+                        Country = defaultNotYetSet,
+                        Postcode = defaultNotYetSet,
+                        DOB = new DateTime(),
+                        PhoneNumber = defaultNotYetSet,
+                        HasCompletedProfile = false,
                     };
 
                     if (store!.Id != Guid.Empty)
@@ -115,7 +117,7 @@ namespace TheBigDay.Services
             }
             catch (Exception ex) { }
 
-            return  new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." };
+            return new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." };
         }
     }
 }
