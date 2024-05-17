@@ -31,6 +31,8 @@ namespace TheBigDay.Models
         public string? PhotoPath { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
+        public bool HasCompletedStoreSetup { get; set; }
+        public StoreType? StoreType { get; set; }
 
 
         //Dependacies
@@ -38,5 +40,10 @@ namespace TheBigDay.Models
         public List<Service>? Services { get; set; }
         public List<Package>? Packages { get; set; }
         public List<User> Users { get; } = new List<User> { };
+    }
+    public enum StoreType
+    {
+        SoleTrader,
+        Business,
     }
 }

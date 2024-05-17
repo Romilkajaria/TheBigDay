@@ -100,7 +100,7 @@ export class AuthorizeService {
             }));
     }
 
-    public registerAdmin(registerModel: RegisterStoreModel) {
+    public registerStore(registerModel: RegisterStoreModel) {
         return this.http.post(this.authUrl + 'register-admin', registerModel, {
             observe: 'response',
             responseType: 'text'

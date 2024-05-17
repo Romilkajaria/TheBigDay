@@ -11,6 +11,7 @@ import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/li
 import {AddServicesFormComponent} from "./add-services-form/add-services-form.component";
 import {GetPriceTypeCellData} from "../../../../../common/src/lib/helpers/page-helpers";
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
+import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 
 @Component({
   selector: 'app-services',
@@ -28,7 +29,8 @@ export class ServicesComponent  implements OnInit{
 
   constructor(private servicesService: CommonServicesService,
               private dialogService: DialogService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              public auth: AuthorizeService) {
   }
 
   ngOnInit(): void {

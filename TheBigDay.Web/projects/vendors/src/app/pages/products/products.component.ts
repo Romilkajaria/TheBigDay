@@ -11,6 +11,10 @@ import {FormControl} from "@angular/forms";
 import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/lib/helpers/tbd-item-table-column";
 import {GetPriceTypeCellData} from "../../../../../common/src/lib/helpers/page-helpers";
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
+import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
+import {
+    CommonVendorService
+} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
 
 
 @Component({
@@ -29,11 +33,11 @@ export class ProductsComponent implements OnInit {
 
   constructor(private productsService: CommonProductsService,
               private dialogService: DialogService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              public auth: AuthorizeService,) {
   }
   ngOnInit(): void {
     this.updateData();
-
   }
 
   createProduct() {

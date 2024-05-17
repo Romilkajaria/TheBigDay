@@ -11,6 +11,12 @@ import {PanelMenuModule} from 'primeng/panelmenu';
 import {DashboardsRoutingModule} from './dashboard-routing.module';
 import {ProductsModule} from "../products/products.module";
 import {ServicesModule} from "../services/services.module";
+import {MessagesModule} from "primeng/messages";
+import {AccordionModule} from "primeng/accordion";
+import {AvatarModule} from "primeng/avatar";
+import {BadgeModule} from "primeng/badge";
+import {MessageModule} from "primeng/message";
+import {RippleModule} from "primeng/ripple";
 
 @NgModule({
     imports: [
@@ -24,7 +30,13 @@ import {ServicesModule} from "../services/services.module";
         ButtonModule,
         DashboardsRoutingModule,
         ProductsModule,
-        ServicesModule
+        ServicesModule,
+        MessagesModule,
+        AccordionModule,
+        AvatarModule,
+        BadgeModule,
+        MessageModule,
+        RippleModule
     ],
     declarations: [DashboardComponent]
 })

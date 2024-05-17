@@ -17,6 +17,8 @@ export interface Vendor {
     email: string;
     photoPath?: string;
     isDeleted: boolean;
+    hasCompletedStoreSetup: boolean;
+    storeType?: boolean;
     products: Product[];
     services: Service[];
     // packages: Packages[];

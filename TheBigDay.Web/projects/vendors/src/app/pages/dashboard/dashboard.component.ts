@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import {MenuItem, Message} from 'primeng/api';
 import {exhaustMap, forkJoin, lastValueFrom, map, of, Subscription, switchMap, tap} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
 import {Product} from "../../../../../common/src/lib/common-rest-models/product";
@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     loading = true
 
     vendor?: Vendor;
+    messages: MessageConfig[] = [];
 
     constructor( public layoutService: LayoutService,
                  private vendorService: CommonVendorService,
@@ -46,6 +47,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
         ];
+
+        this.messages = [
+            { severity: 'warn', summary: 'What kind of business do you operate?', hide: this.auth.current?.store?.storeType, timeToFinish: 1, actionButtonText: 'Set business type' },
+            { severity: 'warn', summary: 'Finish off setting up your profile', hide: this.auth.current?.hasCompletedProfile, timeToFinish: 5, actionButtonText: 'Setup profile'},
+            { severity: 'warn', summary: 'Start setting up your storefront', hide: this.auth.current?.store?.hasCompletedStoreSetup, timeToFinish: 10, actionButtonText: "Start" }
+        ]
     }
 
     initChart() {
@@ -112,4 +119,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.subscription.unsubscribe();
         }
     }
+}
+
+export interface MessageConfig extends Message {
+    hide?: boolean;
+    timeToFinish?: number;
+    actionButtonText?: string;
+    onButtonClick?: () => void;
 }

@@ -27,6 +27,7 @@ export interface Customer {
     isDeleted: boolean;
     storeId?: string;
     store: Vendor | undefined;
+    hasCompletedProfile: boolean;
 
 //Dependacies
     eventCustomers: any[];

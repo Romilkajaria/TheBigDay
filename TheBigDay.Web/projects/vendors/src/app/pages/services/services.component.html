@@ -2,7 +2,7 @@
   <div class="col-12">
       <div class="flex justify-content-between align-items-center">
           <h5>Services</h5>
-          <button pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createService()"></button>
+          <button [disabled]="!auth.current?.hasCompletedProfile || !auth.current?.store?.hasCompletedStoreSetup || !auth.current?.store?.storeType" pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createService()"></button>
       </div>
     <div class="card" *ngIf="services && services.length > 0">
       <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="ServiceColumns" [value]="services" [tableStyle]="{ 'min-width': '50rem' }" p-datatable-striped>

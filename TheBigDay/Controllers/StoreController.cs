@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
 using Microsoft.Identity.Web.Resource;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +17,13 @@ namespace TheBigDay.Controllers
     {
         private readonly ILogger<StoreController> _logger;
         private readonly IServiceProvider _serviceProvider;
+        private readonly UserManager<User> _userManager;
 
-        public StoreController(ILogger<StoreController> logger, IServiceProvider serviceProvider)
+        public StoreController(ILogger<StoreController> logger, IServiceProvider serviceProvider, UserManager<User> userManager)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
+            _userManager = userManager;
         }
 
         [HttpGet]

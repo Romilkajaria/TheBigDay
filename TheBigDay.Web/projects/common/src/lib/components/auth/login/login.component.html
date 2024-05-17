@@ -14,8 +14,8 @@
                     <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
                     <input id="email1" type="text" [(ngModel)]="loginModel.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
 
-                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                    <p-password id="password1" feedback="false" [(ngModel)]="loginModel.password"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+                    <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
+                    <p-password id="password" feedback="false" [(ngModel)]="loginModel.password"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
                     <div class="flex align-items-center justify-content-between mb-5 gap-5">
                         <div class="flex align-items-center">
@@ -33,120 +33,24 @@
 </div>
 
 <ng-template #signupTemplate>
-    <p-steps [model]="steps" [activeIndex]="activeIndex"></p-steps>
-    <div [ngSwitch]="activeIndex">
-        <div *ngSwitchCase="RegisterSteps.STORE">
-            <div class="text-center mt-3 mb-3 text-xl font-semibold">Store details</div>
-            <label class="block text-900 text-xl font-medium mb-2">Name</label>
-            <input type="text" [(ngModel)]="registerModel.store.name" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+        <label class="block text-900 text-xl font-medium mb-2">Email</label>
+        <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
 
-            <label class="block text-900 text-xl font-medium mb-2">Store email</label>
-            <input type="text" [(ngModel)]="registerModel.store.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+        <label for="registerPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
+        <p-password id="registerPassword" [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-            <label class="block text-900 font-medium text-xl mb-2">Address line 1</label>
-            <input type="text" [(ngModel)]="registerModel.store.addressLine1" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-            <label class="block text-900 font-medium text-xl mb-2">Address line 2</label>
-            <input type="text" [(ngModel)]="registerModel.store.addressLine2" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+        <label for="confirmPassword"class="block text-900 font-medium text-xl mb-2">Confirm password</label>
+        <p-password id="confirmPassword" [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-            <label class="block text-900 font-medium text-xl mb-2">Suburb</label>
-            <input type="text" [(ngModel)]="registerModel.store.suburb" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+        <label class="block text-900 font-medium text-xl mb-2">First Name</label>
+        <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-            <label class="block text-900 font-medium text-xl mb-2">State</label>
-            <input type="text" [(ngModel)]="registerModel.store.state" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+        <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
+        <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-            <label class="block text-900 font-medium text-xl mb-2">Country</label>
-            <input type="text" [(ngModel)]="registerModel.store.country" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Postcode</label>
-            <input type="text" [(ngModel)]="registerModel.store.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Operating radius</label>
-            <input type="number" [(ngModel)]="registerModel.store.operatingRadius" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Primary contact</label>
-            <input type="text" [(ngModel)]="registerModel.store.contactNum" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">After hours contact name</label>
-            <input type="text" [(ngModel)]="registerModel.store.afterHoursContactName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">After hours contact number</label>
-            <input type="text" [(ngModel)]="registerModel.store.afterHoursContactNum" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <div class="flex-auto p-fluid mb-2">
-                <label class="block text-900 text-xl font-medium mb-2">Description</label>
-                <p-editor [(ngModel)]="registerModel.store.description" [style]="{ height: '320px' }" class="w-full md:w-30rem mb-5"></p-editor>
-            </div>
-
-            <div class="flex justify-content-end">
-                <button pButton pRipple label="Next" (click)="nextStep()"></button>
-            </div>
-        </div>
-        <div *ngSwitchCase="RegisterSteps.YOU">
-            <div class="text-center mt-3 mb-3 text-xl font-semibold">Your details</div>
-            <label class="block text-900 text-xl font-medium mb-2">Email</label>
-            <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
-
-            <label class="block text-900 font-medium text-xl mb-2">Password</label>
-            <p-password  [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
-
-            <label class="block text-900 font-medium text-xl mb-2">Confirm password</label>
-            <p-password  [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
-
-            <label class="block text-900 font-medium text-xl mb-2">First Name</label>
-            <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
-            <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Address Line 1</label>
-            <input type="text" [(ngModel)]="registerModel.user.addressLine1" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-            <label class="block text-900 font-medium text-xl mb-2">Address Line 2</label>
-            <input type="text" [(ngModel)]="registerModel.user.addressLine2" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Suburb</label>
-            <input type="text" [(ngModel)]="registerModel.user.suburb" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">State</label>
-            <input type="text" [(ngModel)]="registerModel.user.state" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Country</label>
-            <input type="text" [(ngModel)]="registerModel.user.country" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Postcode</label>
-            <input type="text" [(ngModel)]="registerModel.user.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <label class="block text-900 font-medium text-xl mb-2">Contact</label>
-            <input type="text" [(ngModel)]="registerModel.user.mobile" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
-
-            <div class="flex-auto p-fluid">
-                <label class="font-bold block mb-2"> Date of birth </label>
-                <p-calendar [(ngModel)]="registerModel.user.dob" [maxDate]="maxDob" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
-            </div>
-            <div class="flex justify-content-between mt-2">
-                <button class="p-button-secondary" pButton pRipple label="Back" (click)="previousStep()"></button>
-                <button  pButton pRipple label="Next" (click)="nextStep()"></button>
-            </div>
-
-        </div>
-        <div *ngSwitchCase="RegisterSteps.CONFIRMATION">
-            <div class="text-center mt-3 mb-3 text-xl font-semibold">Confirm details</div>
-            <div class="text-center">
-                <img alt="logo" src="https://primefaces.org/cdn/primeng/images/stepper/content.svg" />
-            </div>
-            <div class="flex justify-content-between">
-                <button class="p-button-secondary" pButton pRipple label="Back" (click)="previousStep()"></button>
-                <button *ngIf="!loading" [disabled]="!registerModel.store || !registerModel.user" pButton pRipple label="Register" (click)="register()"></button>
-                <app-loading [showLoading]="loading"></app-loading>
-            </div>
-        </div>
+    <div>
+        <button *ngIf="!loading" class="w-full p-3 text-xl" pButton pRipple label="Register" (click)="register()"></button>
     </div>
 
-<!--    <div class="flex align-items-center justify-content-between mb-5 gap-5">-->
-<!--        <div class="flex align-items-center">-->
-<!--            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>-->
-<!--            <label for="rememberme1">Remember me</label>-->
-<!--        </div>-->
-<!--        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(&#45;&#45;primary-color)">Forgot password?</a>-->
-<!--    </div>-->
-
+        <app-loading [showLoading]="loading"></app-loading>
 </ng-template>

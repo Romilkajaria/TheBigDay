@@ -1,6 +1,6 @@
 export interface RegisterStoreModel {
+    // might later add store details back in
     user: RegisterCustomer
-    store: RegisterVendor
 }
 
 export interface LoginModel {
@@ -13,17 +13,8 @@ export interface RegisterCustomer {
     photoPath?: string; // not implemented yet
     firstName?: string;
     lastName?: string;
-    addressLine1?: string;
-    addressLine2?: string;
-    suburb?: string;
-    state?: string;
-    country?: string;
-    postcode?: string;
     mobile?: string;
     email?: string;
-    storeId?: string;
-    dob?: Date;
-    isDeleted?: boolean;
 }
 
 export interface RegisterVendor {
