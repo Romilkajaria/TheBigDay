@@ -22,6 +22,8 @@ namespace TheBigDay.Models
         public bool IsDeleted { get; set; }
         public Guid? StoreId { get; set; }
         public Store? Store { get; set; }
+        public bool TCAccepted { get; set; }
+        public bool MarketingAccepted { get; set; }
         public bool HasCompletedProfile { get; set; }
 
         //Dependacies

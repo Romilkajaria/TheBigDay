@@ -33,20 +33,25 @@
 </div>
 
 <ng-template #signupTemplate>
-        <label class="block text-900 text-xl font-medium mb-2">Email</label>
-        <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+    <label class="block text-900 text-xl font-medium mb-2">Email</label>
+    <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
 
-        <label for="registerPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
-        <p-password id="registerPassword" [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+    <label for="registerPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
+    <p-password id="registerPassword" [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-        <label for="confirmPassword"class="block text-900 font-medium text-xl mb-2">Confirm password</label>
-        <p-password id="confirmPassword" [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+    <label for="confirmPassword"class="block text-900 font-medium text-xl mb-2">Confirm password</label>
+    <p-password id="confirmPassword" [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-        <label class="block text-900 font-medium text-xl mb-2">First Name</label>
-        <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+    <label class="block text-900 font-medium text-xl mb-2">First Name</label>
+    <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-        <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
-        <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+    <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
+    <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted" />
+    <label class="font-bold block mb-2" for="tcAccepted"> I accept all the Terms & Conditions set out by The Bigg day. </label>
+    <p-checkbox [(ngModel)]="registerModel.user.marketingAccepted" [binary]="true" inputId="marketingAccepted" />
+    <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional emails. </label>
 
     <div>
         <button *ngIf="!loading" class="w-full p-3 text-xl" pButton pRipple label="Register" (click)="register()"></button>

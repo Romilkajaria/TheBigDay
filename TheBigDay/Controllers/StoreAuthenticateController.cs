@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TheBigDay.DBContext;
+using TheBigDay.Interfaces;
 using TheBigDay.Models;
 using TheBigDay.Models.AuthModels;
 
@@ -21,17 +22,20 @@ namespace TheBigDay.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IUserService _userService;
 
         public StoreAuthenticateController(
             UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             IServiceProvider serviceProvider,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IUserService userService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _serviceProvider = serviceProvider;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -168,7 +172,7 @@ namespace TheBigDay.Controllers
                         IsActive = false, // we will activate them manually on signup
                         HasCompletedStoreSetup = false,
                     };
-                    
+
 
                     // TODO: doesnt work if the storeId is passed in. tries to create a new store.
                     User user = new User()

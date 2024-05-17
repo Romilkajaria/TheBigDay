@@ -15,6 +15,8 @@ export interface RegisterCustomer {
     lastName?: string;
     mobile?: string;
     email?: string;
+    tcAccepted?: boolean;
+    marketingAccepted?: boolean;
 }
 
 export interface RegisterVendor {
