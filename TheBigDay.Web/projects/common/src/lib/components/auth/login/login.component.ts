@@ -6,11 +6,14 @@ import {Router} from "@angular/router";
 import {LoginModel, RegisterStoreModel} from "../../../common-rest-models/authentication-models";
 import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
 import {switchMap} from "rxjs";
+import {MessageService} from "primeng/api";
+import {getToastMessage, ToastMessageType} from "../../../helpers/toastMessages";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    providers: [MessageService]
 })
 export class LoginComponent {
 
@@ -24,7 +27,7 @@ export class LoginComponent {
 
     constructor(public layoutService: LayoutService,
                 private authService: AuthorizeService,
-                private vendorService: CommonVendorService,
+                private messageService: MessageService,
                 private router: Router) {}
 
     toggleSignup() {
@@ -33,10 +36,14 @@ export class LoginComponent {
 
     login() {
         this.loading = true;
-        this.authService.signIn(this.loginModel.email!, this.loginModel.password!).subscribe(async () => {
-            this.loading = false;
-            await this.router.navigate([''])
-        })
+        this.authService.signIn(this.loginModel.email!, this.loginModel.password!
+        ).subscribe({
+            next: () => this.router.navigate(['']),
+            error: () => {
+                this.messageService.add(getToastMessage(ToastMessageType.ERROR, "Failed to login. Please try again or do forgot password."));
+                this.loading = false;
+            },
+        });
     }
 
     register() {
@@ -45,8 +52,10 @@ export class LoginComponent {
             switchMap(() => this.authService.signIn(this.registerModel.user.email!, this.registerModel.user.password!))
         ).subscribe({
             next: () => this.router.navigate(['']),
-            error: () =>
-
-    }
+            error: () => {
+                this.messageService.add(getToastMessage(ToastMessageType.ERROR, "Failed to login. Please try again or do forgot password."));
+                this.loading = false;
+            },
+        });
     }
 }

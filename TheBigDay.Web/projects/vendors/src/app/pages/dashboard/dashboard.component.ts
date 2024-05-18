@@ -1,20 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem, Message} from 'primeng/api';
-import {exhaustMap, forkJoin, lastValueFrom, map, of, Subscription, switchMap, tap} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
 import {Product} from "../../../../../common/src/lib/common-rest-models/product";
-import {AuthService, User} from "@auth0/auth0-angular";
 import {
     CommonVendorService
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
 import {Router} from "@angular/router";
 import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
-import {AuthorizeService, UserDto} from "../../../../../common/src/lib/components/auth/login/authorize.service";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {Customer} from "../../../../../common/src/lib/common-rest-models/customer";
+import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 
 @Component({
     templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
@@ -49,9 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ];
 
         this.messages = [
-            { severity: 'warn', summary: 'What kind of business do you operate?', hide: this.auth.current?.store?.storeType, timeToFinish: 1, actionButtonText: 'Set business type' },
-            { severity: 'warn', summary: 'Finish off setting up your profile', hide: this.auth.current?.hasCompletedProfile, timeToFinish: 5, actionButtonText: 'Setup profile'},
-            { severity: 'warn', summary: 'Start setting up your storefront', hide: this.auth.current?.store?.hasCompletedStoreSetup, timeToFinish: 10, actionButtonText: "Start" }
+            { severity: 'info', summary: 'What kind of business do you operate?', hide: this.auth.current?.store?.storeType, timeToFinish: 1, actionButtonText: 'Set business type' },
+            { severity: 'info', summary: 'Finish off setting up your profile', hide: this.auth.current?.hasCompletedProfile, timeToFinish: 5, actionButtonText: 'Setup profile'},
+            { severity: 'info', summary: 'Start setting up your storefront', hide: this.auth.current?.store?.hasCompletedStoreSetup, timeToFinish: 10, actionButtonText: "Start" }
         ]
     }
 
@@ -112,6 +110,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 }
             }
         };
+    }
+    public get activeMessageCount() {
+        return this.messages.filter(m => !m.hide ).length;
     }
 
     ngOnDestroy() {

@@ -1,7 +1,15 @@
 <div class="grid" >
-    <p-messages *ngFor="let message of messages" [severity]="message.severity" class="w-full">
-        <ng-container *ngIf="!message.hide">
-            <ng-template pTemplate>
+    <p-accordion [activeIndex]="0" class="w-full" *ngIf="messages.length > 0">
+        <p-accordionTab>
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center justify-content-between w-full">
+                    <span>To do</span>
+                    <p-badge [value]="activeMessageCount.toString()" class="ml-2 mr-2" />
+                </div>
+            </ng-template>
+            <p-messages *ngFor="let message of messages" [severity]="message.severity" class="w-full message">
+                <ng-container *ngIf="!message.hide">
+                    <ng-template pTemplate>
             <span class="flex align-items-center justify-content-between w-full">
                 <span>{{message.summary}}</span>
                 <div class="flex align-items-center">
@@ -11,9 +19,12 @@
                 </div>
 
             </span>
-            </ng-template>
-        </ng-container>
-    </p-messages>
+                    </ng-template>
+                </ng-container>
+            </p-messages>
+        </p-accordionTab>
+    </p-accordion>
+
 
 <!--    top 4 cards-->
     <div class="col-12 lg:col-6 xl:col-3">

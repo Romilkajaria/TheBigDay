@@ -1,0 +1,20 @@
+p-messages ::ng-deep {
+    .p-message {
+        margin: .5rem 0 !important;
+
+        .p-message-wrapper {
+            padding: 0 0 0 1.75rem
+        }
+    }
+}
+
+p-accordion ::ng-deep {
+    p-accordionTab ::ng-deep {
+        .p-accordion-header, .p-accordion-header-link {
+            background-color: #e9e9ff !important;
+        }
+    }
+}
+
+
+
