@@ -43,8 +43,10 @@ export class LoginComponent {
         this.loading = true;
         this.authService.registerStore(this.registerModel).pipe(
             switchMap(() => this.authService.signIn(this.registerModel.user.email!, this.registerModel.user.password!))
-        ).subscribe(async () => {
-            await this.router.navigate(['']);
-        })
+        ).subscribe({
+            next: () => this.router.navigate(['']),
+            error: () =>
+
+    }
     }
 }
