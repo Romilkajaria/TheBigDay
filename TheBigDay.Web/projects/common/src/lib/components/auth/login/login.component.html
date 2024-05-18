@@ -48,11 +48,15 @@
     <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
     <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
 
-    <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted" />
-    <label class="font-bold block mb-2" for="tcAccepted"> I accept all the Terms & Conditions set out by The Bigg day. </label>
-    <p-checkbox [(ngModel)]="registerModel.user.marketingAccepted" [binary]="true" inputId="marketingAccepted" />
-    <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional emails. </label>
+    <div class="flex gap-1">
+        <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted" />
+        <label class="font-bold block mb-2" for="tcAccepted"> I accept all the Terms & Conditions set out by The Biggg day. </label>
+    </div>
 
+    <div class="flex gap-1">
+        <p-checkbox [(ngModel)]="registerModel.user.marketingAccepted" [binary]="true" inputId="marketingAccepted" />
+        <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional emails. </label>
+    </div>
     <div>
         <button *ngIf="!loading" class="w-full p-3 text-xl" pButton pRipple label="Register" (click)="register()"></button>
     </div>
