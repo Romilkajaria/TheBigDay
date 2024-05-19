@@ -58,4 +58,16 @@ export class LoginComponent {
             },
         });
     }
+
+    get registerDisabled() {
+        return !this.registerModel.user.email ||
+            !this.registerModel.user.password ||
+            !this.confirmPassword ||
+            this.confirmPassword !== this.registerModel.user.password ||
+            !this.registerModel.user.firstName ||
+            !this.registerModel.user.lastName ||
+            !this.registerModel.user.tcAccepted;
+
+
+    }
 }

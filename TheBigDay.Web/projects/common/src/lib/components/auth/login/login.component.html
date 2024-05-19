@@ -2,10 +2,9 @@
     <div class="flex flex-column align-items-center justify-content-center">
         <img src="favicon.ico" alt=" logo" size="200" class="mb-5 ">
 
-            <div class="w-full card py-8 px-5 sm:px-8">
+            <div class="w-full card pt-5 px-5 sm:px-8">
                 <div class="text-center mb-5">
-<!--                    <img src="assets/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3">-->
-                    <div class="text-900 text-3xl font-medium mb-3">Welcome!</div>
+                    <div class="text-900 text-3xl font-medium mb-3">{{isSigningUp ? 'Sign up' : 'Log in'}}</div>
                     <span class="text-600 font-medium line-height-3">{{!isSigningUp ? 'Don\'t' : 'Already'}} have an account?</span>
                     <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="toggleSignup()">{{!isSigningUp ? 'Create today!' : 'Log in'}}</a>
                 </div>
@@ -34,19 +33,19 @@
 
 <ng-template #signupTemplate>
     <label class="block text-900 text-xl font-medium mb-2">Email</label>
-    <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+    <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full mb-5" style="padding:1rem">
 
     <label for="registerPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
-    <p-password id="registerPassword" [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full p-3"></p-password>
+    <p-password id="registerPassword" [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full"></p-password>
 
-    <label for="confirmPassword"class="block text-900 font-medium text-xl mb-2">Confirm password</label>
-    <p-password id="confirmPassword" [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full p-3"></p-password>
+    <label for="confirmPassword" class="block text-900 font-medium text-xl mb-2">Confirm password</label>
+    <p-password id="confirmPassword" [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full"></p-password>
 
     <label class="block text-900 font-medium text-xl mb-2">First Name</label>
-    <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+    <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full mb-5" style="padding:1rem"/>
 
     <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
-    <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+    <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full mb-5" style="padding:1rem"/>
 
     <div class="flex gap-1">
         <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted" />
@@ -58,7 +57,7 @@
         <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional emails. </label>
     </div>
     <div>
-        <button *ngIf="!loading" class="w-full p-3 text-xl" pButton pRipple label="Register" (click)="register()"></button>
+        <button *ngIf="!loading" [disabled]="registerDisabled" class="w-full p-3 text-xl" pButton pRipple label="Register" (click)="register()"></button>
     </div>
 
         <app-loading [showLoading]="loading"></app-loading>
