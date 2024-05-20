@@ -3,7 +3,7 @@
 namespace TheBigDay.Models.Form_Models
 {
 
-    public class Field
+    public class FormField
     {
         [Key]
         public Guid FieldId { get; set; }
@@ -11,7 +11,6 @@ namespace TheBigDay.Models.Form_Models
         public required string Label { get; set; }
         public string? Placeholder { get; set; }
         public bool Required { get; set; }
-        public List<Option> Options { get; set; } = new List<Option>();
     }
 
     public enum FieldTypes
