@@ -2,10 +2,12 @@
 {
     public static class UserRoles
     {
-        //store user roles
+        // god user role
         public const string Admin = "Admin";
+
+        //store user roles
         public const string StoreAdmin = "StoreAdmin";
-        public const string User = "User";
+        public const string User = "StoreUser";
 
         // event user Roles
         public const string Organiser = "Organiser";
