@@ -47,9 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ];
 
         this.messages = [
-            { severity: 'info', summary: 'What kind of business do you operate?', hide: this.auth.current?.store?.storeType, timeToFinish: 1, actionButtonText: 'Set business type' },
-            { severity: 'info', summary: 'Finish off setting up your profile', hide: this.auth.current?.hasCompletedProfile, timeToFinish: 5, actionButtonText: 'Setup profile'},
-            { severity: 'info', summary: 'Start setting up your storefront', hide: this.auth.current?.store?.hasCompletedStoreSetup, timeToFinish: 10, actionButtonText: "Start" }
+            { severity: 'info', summary: 'Are you an individual or a business?', hide: this.auth.current?.store?.storeType, timeToFinish: 1, actionButtonText: 'Set business type' },
+            { severity: 'info', summary: 'Finish off setting up your personal profile', hide: this.auth.current?.hasCompletedProfile, timeToFinish: 5, actionButtonText: 'Setup profile'},
+            { severity: 'info', summary: 'Start setting up your store', hide: this.auth.current?.store?.hasCompletedStoreSetup, timeToFinish: 10, actionButtonText: "Start" }
         ]
     }
 

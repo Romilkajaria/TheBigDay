@@ -6,8 +6,9 @@
         public Guid FormId { get; set; }
         public Guid FormFieldId { get; set; }
         public string? StringValue { get; set; }
-        public bool BooleanValue { get; set; }
-        public long LongValue { get; set; }
-        public int IntValue { get; set; }
+        public bool? BooleanValue { get; set; }
+        public long? LongValue { get; set; }
+        public int? IntValue { get; set; }
+        public string? LinkValue { get; set; }
     }
 }
