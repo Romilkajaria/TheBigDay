@@ -1,9 +1,9 @@
 <app-layout [contentTemplate]="user ? contentTemplate : noAuthTemplate" [showSearch]="true" [showCart]="true">
     <div class="flex align-items-center" *ngIf="selectedEvent">
-        <div>
-            <div>{{selectedEvent.name}}</div>
-            <div class="font-italic text-color"> {{selectedEvent.addressLine1}}</div>
-        </div>
+<!--        <div>-->
+<!--            <div>{{selectedEvent.name}}</div>-->
+<!--            <div class="font-italic text-color"> {{selectedEvent.addressLine1}}</div>-->
+<!--        </div>-->
 
         <button class="p-link layout-topbar-button"
                 (click)="editEventOverlay.toggle($event)">

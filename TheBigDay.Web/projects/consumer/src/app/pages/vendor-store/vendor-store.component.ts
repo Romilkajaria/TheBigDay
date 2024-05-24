@@ -3,10 +3,9 @@ import {ActivatedRoute} from "@angular/router";
 import {
     CommonVendorService
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
-import {Product} from "../../../../../common/src/lib/common-rest-models/product";
-import {Service} from "../../../../../common/src/lib/common-rest-models/service";
 import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
-import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
+import {Store} from "../../../../../common/src/lib/common-rest-models/store";
+import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 
 @Component({
     selector: 'app-vendor-store',
@@ -14,7 +13,7 @@ import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
     styleUrls: ['./vendor-store.component.scss'],
 })
 export class VendorStoreComponent implements OnInit {
-    public vendor?: Vendor;
+    public vendor?: Store;
     public productId?: string | null;
     public serviceId?: string | null;
     public vendorId?: string | null
@@ -42,23 +41,21 @@ export class VendorStoreComponent implements OnInit {
         })
     }
 
-    addCardWrapperProduct(item: Product): IDashboardCard<Product> {
+    addCardWrapperProduct(item: FormEntry): IDashboardCard<FormEntry> {
         return {
-            heading: item.name,
-            description: item.description,
+            heading: '',
             maxWidth: '260px',
             subheading: 'popular',
             metadata: item
-        } as IDashboardCard<Product>;
+        } as IDashboardCard<FormEntry>;
     }
 
-    addCardWrapperService(item: Service): IDashboardCard<Service> {
+    addCardWrapperService(item: FormEntry): IDashboardCard<FormEntry> {
         return {
-            heading: item.name,
-            description: item.description,
+            heading: '',
             maxWidth: '260px',
             subheading: 'popular',
             metadata: item
-        } as IDashboardCard<Service>;
+        } as IDashboardCard<FormEntry>;
     }
 }

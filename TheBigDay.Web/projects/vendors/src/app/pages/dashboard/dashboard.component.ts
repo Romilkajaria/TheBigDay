@@ -2,13 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem, Message} from 'primeng/api';
 import {Subscription} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
-import {Product} from "../../../../../common/src/lib/common-rest-models/product";
 import {
     CommonVendorService
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
 import {Router} from "@angular/router";
-import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
+import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
+import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     items!: MenuItem[];
 
-    products!: Product[];
+    products!: FormEntry[];
 
     chartData: any;
 
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     loading = true
 
-    vendor?: Vendor;
+    vendor?: Store;
     messages: MessageConfig[] = [];
 
     constructor( public layoutService: LayoutService,

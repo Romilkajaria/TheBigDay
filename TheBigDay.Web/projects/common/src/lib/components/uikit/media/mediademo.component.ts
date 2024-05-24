@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Product} from "../../../common-rest-models/product";
+import {FormEntry} from "../../../common-rest-models/form-entry";
 
 
 @Component({
@@ -7,7 +7,7 @@ import {Product} from "../../../common-rest-models/product";
 })
 export class MediaDemoComponent implements OnInit {
 
-    products!: Product[];
+    products!: FormEntry[];
 
     images!: any[];
 

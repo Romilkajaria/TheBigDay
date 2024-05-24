@@ -1,7 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {PriceType} from "../../../../../../common/src/lib/common-rest-models/item";
-import {Service} from "../../../../../../common/src/lib/common-rest-models/service";
-import {DialogPriceTypeOptions} from "../../../../../../common/src/lib/helpers/page-helpers";
 import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {KeyValue} from "@angular/common";
@@ -11,6 +8,7 @@ import {
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {DialogConfig} from "@angular/cdk/dialog";
 import {AuthorizeService} from "../../../../../../common/src/lib/components/auth/login/authorize.service";
+import {FormEntry} from "../../../../../../common/src/lib/common-rest-models/form-entry";
 
 @Component({
     selector: 'app-add-services-form',
@@ -19,22 +17,10 @@ import {AuthorizeService} from "../../../../../../common/src/lib/components/auth
     providers: [DialogConfig, MessageService, ConfirmationService]
 })
 export class AddServicesFormComponent implements OnInit {
-    service: Service = {
-        description: "",
-        id: undefined,
-        isDeleted: false,
-        maxGuestLimit: 0,
-        minGuestLimit: 0,
-        name: "",
-        storeId: "",
-        packageProducts: undefined,
-        eventProducts: undefined,
-        price: 0,
-        priceType: PriceType.FLAT
-    };
+    service?: FormEntry;
 
     constructor(private servicesService: CommonServicesService,
-                private dialogConfig: DynamicDialogConfig<Service>,
+                private dialogConfig: DynamicDialogConfig<FormEntry>,
                 private ref: DynamicDialogRef,
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
@@ -45,17 +31,17 @@ export class AddServicesFormComponent implements OnInit {
     }
     @Output() onClose = new EventEmitter<void>();
     loading = false;
-    priceTypeOptions = DialogPriceTypeOptions;
 
 
     ngOnInit(): void {
-        if(this.service.storeId === "" && this.auth.current && this.auth.current.storeId) {
+        if(this.service && this.service.storeId === "" && this.auth.current && this.auth.current.storeId) {
             this.service.storeId = this.auth.current.storeId;
         }
     }
 
     save() {
         this.loading = true;
+        if(!this.service) return;
         if (this.service.id) {
             this.servicesService.updateService(this.service).subscribe({
                 next: () => {
@@ -90,13 +76,9 @@ export class AddServicesFormComponent implements OnInit {
         this.ref.close(toastMessage);
     }
 
-    onPriceTypeChanged($event: KeyValue<PriceType, string>) {
-        this.service.priceType = $event.key;
-    }
-
     delete() {
         this.loading = true;
-        this.servicesService.deleteService(this.service.id!).subscribe({
+        this.servicesService.deleteService(this.service!.id).subscribe({
             next: () => {
                 this.confirmation("Service deleted");
             },

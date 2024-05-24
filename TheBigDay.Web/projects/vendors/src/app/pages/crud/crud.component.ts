@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import {Product} from "../../../../../common/src/lib/common-rest-models/product";
+import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 
 @Component({
     templateUrl: './crud.component.html',
@@ -15,11 +15,11 @@ export class CrudComponent implements OnInit {
 
     deleteProductsDialog: boolean = false;
 
-    products: Product[] = [];
+    products: FormEntry[] = [];
 
     // product: Product = {};
 
-    selectedProducts: Product[] = [];
+    selectedProducts: FormEntry[] = [];
 
     submitted: boolean = false;
 
@@ -59,12 +59,12 @@ export class CrudComponent implements OnInit {
         this.deleteProductsDialog = true;
     }
 
-    editProduct(product: Product) {
+    editProduct(product: FormEntry) {
         // this.product = { ...product };
         this.productDialog = true;
     }
 
-    deleteProduct(product: Product) {
+    deleteProduct(product: FormEntry) {
         this.deleteProductDialog = true;
         // this.product = { ...product };
     }

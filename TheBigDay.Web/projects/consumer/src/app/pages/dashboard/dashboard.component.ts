@@ -7,18 +7,16 @@ import {
 } from "../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
 import {Router} from "@angular/router";
-import {Product} from "../../../../../common/src/lib/common-rest-models/product";
 import {CarouselResponsiveOptions} from "primeng/carousel";
-import {Service} from "../../../../../common/src/lib/common-rest-models/service";
-import {Vendor} from "../../../../../common/src/lib/common-rest-models/vendor";
+import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {
     CommonServicesService
 } from "../../../../../common/src/lib/common-rest-services/services/common-services-service.service";
 import {
     CommonVendorService
 } from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
-import {TBDItem} from "../../../../../common/src/lib/common-rest-models/item";
 import {KeyValue} from "@angular/common";
+import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 
 export interface Category {
     url: string;
@@ -59,9 +57,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ]
     items!: MenuItem[];
 
-    products!: IDashboardCard<Product>[];
-    services!: IDashboardCard<Service>[];
-    vendors!: IDashboardCard<Vendor>[];
+    products!: IDashboardCard<FormEntry>[];
+    services!: IDashboardCard<FormEntry>[];
+    vendors!: IDashboardCard<Store>[];
 
     subscription!: Subscription;
     loading = true;
@@ -123,7 +121,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 maxWidth: '360px',
                 subheading: 'popular',
                 metadata: v
-            } as IDashboardCard<Vendor>))
+            } as IDashboardCard<Store>))
             this.loading = false;
         })
         this.productsService.getProducts().subscribe((products) => {
@@ -135,10 +133,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         })
     }
 
-    private mapToDashboardElement<T extends TBDItem>(items: T[]): IDashboardCard<T>[] {
+    private mapToDashboardElement<T extends FormEntry>(items: T[]): IDashboardCard<T>[] {
         return items.map((p) => ({
-            heading: p.name,
-            description: p.description,
+            heading: '',
             maxWidth: '360px',
             subheading: 'popular',
             metadata: p
@@ -152,7 +149,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
     }
 
-    async navigateToVendorPage(vendorId: string, product?: Product, service?: Service) {
+    async navigateToVendorPage(vendorId: string, product?: FormEntry, service?: FormEntry) {
         const route = `app/store`;
 
         if(product) {

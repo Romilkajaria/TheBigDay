@@ -1,5 +1,4 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Product} from "../../../../../../common/src/lib/common-rest-models/product";
 import {DialogConfig} from "@angular/cdk/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {
@@ -7,10 +6,8 @@ import {
 } from "../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
-import {KeyValue} from "@angular/common";
-import {PriceType, priceTypeLabelMap} from "../../../../../../common/src/lib/common-rest-models/item";
-import {DialogPriceTypeOptions} from "../../../../../../common/src/lib/helpers/page-helpers";
 import {AuthorizeService} from "../../../../../../common/src/lib/components/auth/login/authorize.service";
+import {FormEntry} from "../../../../../../common/src/lib/common-rest-models/form-entry";
 
 @Component({
     selector: 'app-add-product-form',
@@ -19,24 +16,11 @@ import {AuthorizeService} from "../../../../../../common/src/lib/components/auth
     providers: [DialogConfig, MessageService, ConfirmationService]
 })
 export class AddProductFormComponent implements OnInit{
-    product: Product = {
-        description: "",
-        id: undefined,
-        isDeleted: false,
-        maxGuestLimit: 0,
-        minGuestLimit: 0,
-        name: "",
-        storeId: "",
-        packageProducts: undefined,
-        eventProducts: undefined,
-        price: 0,
-        priceType: PriceType.FLAT
-    };
+    product?: FormEntry
     @Output() onClose = new EventEmitter<void>();
     loading = false;
-    priceTypeOptions = DialogPriceTypeOptions
 
-    constructor(private dialogConfig: DynamicDialogConfig<Product>,
+    constructor(private dialogConfig: DynamicDialogConfig<FormEntry>,
                 private productService: CommonProductsService,
                 private ref: DynamicDialogRef,
                 private messageService: MessageService,
@@ -49,13 +33,14 @@ export class AddProductFormComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        if(this.product.storeId === "" && this.auth.current && this.auth.current.storeId) {
+        if(this.product && this.product.storeId === "" && this.auth.current && this.auth.current.storeId) {
             this.product.storeId = this.auth.current.storeId;
         }
     }
 
     save() {
         this.loading = true;
+        if(!this.product) return;
         if (this.product.id) {
             this.productService.updateProduct(this.product).subscribe({
                 next: () => {
@@ -90,13 +75,9 @@ export class AddProductFormComponent implements OnInit{
         this.ref.close(toastMessage);
     }
 
-    onPriceTypeChanged($event: KeyValue<PriceType, string>) {
-        this.product.priceType = $event.key;
-    }
-
     delete() {
         this.loading = true;
-        this.productService.deleteProduct(this.product.id!).subscribe({
+        this.productService.deleteProduct(this.product!.id).subscribe({
             next: () => {
                 this.confirmation("product deleted");
             },

@@ -8,7 +8,7 @@ import {RegisterStoreModel} from "../../../common-rest-models/authentication-mod
 import {Customer} from "../../../common-rest-models/customer";
 import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
 import {LocalStorageService} from "../../../common-services/local-storage-service/local-storage.service";
-import {Vendor} from "../../../common-rest-models/vendor";
+import {Store} from "../../../common-rest-models/store";
 
 @Injectable({
     providedIn: 'root',
@@ -40,7 +40,7 @@ export class AuthorizeService {
             }),
             tap((value) => {
                 if(value && this.current && this.current.storeId) {
-                    this.current.store = value as Vendor;
+                    this.current.store = value as Store;
                 }
             })
         );
@@ -81,7 +81,7 @@ export class AuthorizeService {
             switchMap((store) => {
                 if(store) {
                     if(this.current && this.current.storeId) {
-                        this.current.store = store as Vendor;
+                        this.current.store = store as Store;
                     }
                     this.cacheService.setItem(AuthorizeService.storeKey, JSON.stringify(store));
                 }

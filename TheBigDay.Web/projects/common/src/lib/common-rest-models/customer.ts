@@ -1,4 +1,4 @@
-import {Vendor} from "./vendor";
+import {Store} from "./store";
 
 export interface Country {
     name?: string;
@@ -26,7 +26,7 @@ export interface Customer {
     dob: Date;
     isDeleted: boolean;
     storeId?: string;
-    store: Vendor | undefined;
+    store: Store | undefined;
     hasCompletedProfile: boolean;
 
 //Dependacies

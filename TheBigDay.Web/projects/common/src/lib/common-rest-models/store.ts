@@ -1,7 +1,6 @@
-import {Product} from "./product";
-import {Service} from "./service";
+import {FormEntry} from "./form-entry";
 
-export interface Vendor {
+export interface Store {
     id: string;
     name: string;
     description: string;
@@ -19,7 +18,5 @@ export interface Vendor {
     isDeleted: boolean;
     hasCompletedStoreSetup: boolean;
     storeType?: boolean;
-    products: Product[];
-    services: Service[];
-    // packages: Packages[];
+    items: FormEntry[];
 }

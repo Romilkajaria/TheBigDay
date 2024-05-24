@@ -9,13 +9,13 @@
         <div class="col-12">
             <h3>Products</h3>
             <div class=" grid">
-                <div class="col-2" *ngFor="let product of vendor.products">
+                <div class="col-2" *ngFor="let product of vendor.items">
                     <lib-dashboard-card class="mx-2" [cardConfig]="addCardWrapperProduct(product)"></lib-dashboard-card>
                 </div>
             </div>
             <h3>Services</h3>
             <div class="grid">
-                <div class="col-2" *ngFor="let service of vendor.services">
+                <div class="col-2" *ngFor="let service of vendor.items">
                     <lib-dashboard-card class="mx-2" [cardConfig]="addCardWrapperService(service)"></lib-dashboard-card>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {BaseCommonRestService} from "../base-common-rest-service.service";
-import {Product} from "../../common-rest-models/product";
 import {environment} from "../../environments/environment";
+import {FormEntry} from "../../common-rest-models/form-entry";
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +14,18 @@ export class CommonProductsService extends BaseCommonRestService {
   }
 
   public getProducts() {
-    return this.get<Product[]>(this.productUrl);
+    return this.get<FormEntry[]>(this.productUrl);
   }
 
-  public addProduct(product: Product) {
-    return this.post<Product>(this.productUrl + '/add', product);
+  public addProduct(product: FormEntry) {
+    return this.post<FormEntry>(this.productUrl + '/add', product);
   }
 
-  public updateProduct(product: Product) {
-    return this.put<Product>(`${this.productUrl}/${product.id}`, product);
+  public updateProduct(product: FormEntry) {
+    return this.put<FormEntry>(`${this.productUrl}/${product.id}`, product);
   }
 
   public deleteProduct(id: string) {
-    return this.delete<Product>(`${this.productUrl}/${id}`)
+    return this.delete<FormEntry>(`${this.productUrl}/${id}`)
   }
 }

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TBDEvent} from "../../../../common/src/lib/common-rest-models/event";
 import {
     LocalStorageService
 } from "../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
@@ -16,8 +15,8 @@ import {LandingComponent} from "../pages/landing/landing.component";
 export class ConsumerPageShellComponent implements OnInit {
 
     public readonly consumerMenu = consumerMenu;
-    events: TBDEvent[] = []
-    selectedEvent?: TBDEvent;
+    events: Event[] = []
+    selectedEvent?: Event;
     user?: User | null;
 
     constructor(private localStorageService: LocalStorageService,
@@ -32,7 +31,7 @@ export class ConsumerPageShellComponent implements OnInit {
         });
         const cachedEvent = this.localStorageService.getItem(LandingComponent.eventKey);
         if(cachedEvent) {
-            this.selectedEvent = JSON.parse(cachedEvent) as TBDEvent;
+            this.selectedEvent = JSON.parse(cachedEvent) as Event;
         }
 
         if (!this.selectedEvent) {

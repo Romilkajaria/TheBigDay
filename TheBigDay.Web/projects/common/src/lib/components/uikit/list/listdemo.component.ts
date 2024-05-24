@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { DataView } from 'primeng/dataview';
-import {Product} from "../../../common-rest-models/product";
+import {FormEntry} from "../../../common-rest-models/form-entry";
 
 @Component({
     templateUrl: './listdemo.component.html'
 })
 export class ListDemoComponent implements OnInit {
 
-    products: Product[] = [];
+    products: FormEntry[] = [];
 
     sortOptions: SelectItem[] = [];
 

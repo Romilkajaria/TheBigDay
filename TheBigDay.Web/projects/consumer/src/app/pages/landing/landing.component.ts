@@ -1,13 +1,12 @@
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {DialogService} from "primeng/dynamicdialog";
 import {LoginSignupDialogComponent} from "./login-signup-dialog/login-signup-dialog.component";
-import {defaultEvent, TBDEvent} from "../../../../../common/src/lib/common-rest-models/event";
+import {defaultEvent, Event} from "../../../../../common/src/lib/common-rest-models/event";
 import {Router} from "@angular/router";
 import {
     LocalStorageService
 } from "../../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
 import {AuthService} from "@auth0/auth0-angular";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'consumer-landing',
@@ -16,7 +15,7 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
     providers: [DialogService],
 })
 export class LandingComponent {
-    public event: TBDEvent = defaultEvent;
+    public event: Event = defaultEvent;
     public browsingAddress?: string;
     public static readonly eventKey = "event"
 

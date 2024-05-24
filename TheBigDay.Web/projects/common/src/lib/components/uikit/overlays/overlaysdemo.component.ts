@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import {Product} from "../../../common-rest-models/product";
+import {FormEntry} from "../../../common-rest-models/form-entry";
 
 @Component({
     templateUrl: './overlaysdemo.component.html',
@@ -12,7 +12,7 @@ export class OverlaysDemoComponent implements OnInit {
 
     display: boolean = false;
 
-    products: Product[] = [];
+    products: FormEntry[] = [];
 
     // selectedProduct: Product = {};
 

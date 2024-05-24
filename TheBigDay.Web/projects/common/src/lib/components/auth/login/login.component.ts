@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {LayoutService} from "../../../layout/service/app.layout.service";
-import {Vendor} from "../../../common-rest-models/vendor";
+import {Store} from "../../../common-rest-models/store";
 import {AuthorizeService} from "./authorize.service";
 import {Router} from "@angular/router";
 import {LoginModel, RegisterStoreModel} from "../../../common-rest-models/authentication-models";
@@ -21,7 +21,7 @@ export class LoginComponent {
     loginModel: LoginModel = {email: undefined, password: undefined};
     confirmPassword?: string
     isSigningUp = false
-    vendor?: Vendor;
+    vendor?: Store;
 
     public loading = false;
 

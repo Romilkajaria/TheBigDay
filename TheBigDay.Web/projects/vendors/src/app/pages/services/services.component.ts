@@ -1,17 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {Service} from "../../../../../common/src/lib/common-rest-models/service";
 import {
   CommonServicesService
 } from "../../../../../common/src/lib/common-rest-services/services/common-services-service.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Message, MessageService} from "primeng/api";
-import {Product} from "../../../../../common/src/lib/common-rest-models/product";
 import {TableRowSelectEvent} from "primeng/table";
 import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/lib/helpers/tbd-item-table-column";
 import {AddServicesFormComponent} from "./add-services-form/add-services-form.component";
-import {GetPriceTypeCellData} from "../../../../../common/src/lib/helpers/page-helpers";
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
 import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
+import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 
 @Component({
   selector: 'app-services',
@@ -21,11 +19,10 @@ import {AuthorizeService} from "../../../../../common/src/lib/components/auth/lo
 })
 export class ServicesComponent  implements OnInit{
   loading = true;
-  services?: Service[];
+  services?: FormEntry[];
   ref = new DynamicDialogRef();
   ServiceColumnNames = TBDItemColumnNames;
   ServiceColumns = TBDItemColumnMap;
-  getPriceTypeCellData = GetPriceTypeCellData;
 
   constructor(private servicesService: CommonServicesService,
               private dialogService: DialogService,
@@ -44,7 +41,7 @@ export class ServicesComponent  implements OnInit{
   }
 
   onRowSelect($event: TableRowSelectEvent) {
-    this.ref = this.dialogService.open(AddServicesFormComponent, {header: 'Edit: ' + $event.data.name, data: $event.data as Product, width: '50rem', maximizable: true})
+    this.ref = this.dialogService.open(AddServicesFormComponent, {header: 'Edit: ' + $event.data.name, data: $event.data as FormEntry, width: '50rem', maximizable: true})
     this.onCloseSubscribe();
   }
 
@@ -60,7 +57,7 @@ export class ServicesComponent  implements OnInit{
   private updateData() {
     this.loading = true;
     this.servicesService.getServices().subscribe({
-      next: (p: Product[]) => {
+      next: (p: FormEntry[]) => {
         this.loading = false
         this.services = p;
       },

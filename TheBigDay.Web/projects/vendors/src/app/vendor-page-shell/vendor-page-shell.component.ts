@@ -3,7 +3,7 @@ import {AuthorizeService} from "../../../../common/src/lib/components/auth/login
 import {
     LocalStorageService
 } from "../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
-import {Vendor} from "../../../../common/src/lib/common-rest-models/vendor";
+import {Store} from "../../../../common/src/lib/common-rest-models/store";
 
 @Component({
   selector: 'app-vendor-page-shell',

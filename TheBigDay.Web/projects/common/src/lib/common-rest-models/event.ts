@@ -1,10 +1,12 @@
-export interface TBDEvent {
+import {FormEntry} from "./form-entry";
+import {Customer} from "./customer";
+
+export interface Event {
     id?: string
     name: string;
     description: string;
     startDateTime: Date;
     endDateTime: Date;
-    allDay:boolean;
     isPrivate: boolean;
     guestListFinalised: boolean;
     ticketLink?: string;
@@ -15,21 +17,60 @@ export interface TBDEvent {
     country: string;
     postcode: string;
     isDeleted: boolean;
+    eventType: EventType
+
+    // navigation
+    eventItems?: EventItem[];
+    eventCustomers?: EventCustomer[];
 }
 
-export const defaultEvent: TBDEvent = {
-    addressLine1: '',
-    allDay: false,
-    country: '',
-    description: 'Add some description about the event here',
+export interface EventType {
+    id: string;
+    name: string;
+}
+
+export interface EventCustomer {
+    id: string;
+    customerId: string;
+    eventId: string;
+    isAdmin: boolean;
+    isCreator: boolean;
+
+    // navigation
+    customer: Customer;
+    event: Event;
+}
+
+export interface EventItem {
+    id: string;
+    eventId: string;
+    formEntryId: string;
+    isFinalisedByCustomer: boolean;
+    isFinalisedByStore: boolean;
+    finalPriceByStore: number;
+
+    // navigation
+    event: Event;
+    formEntry: FormEntry;
+}
+
+export const defaultEvent: Event = {
+    addressLine1: "",
+    country: "",
+    description: "",
     endDateTime: new Date(),
+    eventCustomers: [],
+    eventItems: [],
+    eventType: {
+        id: '',
+        name: ''
+    },
     guestListFinalised: false,
     isDeleted: false,
     isPrivate: false,
-    name: '',
-    postcode: '',
+    name: "",
+    postcode: "",
     startDateTime: new Date(),
-    state: '',
-    suburb: ''
-
+    state: "",
+    suburb: "",
 }
