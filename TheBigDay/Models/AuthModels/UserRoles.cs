@@ -3,7 +3,7 @@
     public static class UserRoles
     {
         // god user role
-        public const string Admin = "Admin";
+        public const string AppAdmin = "AppAdmin";
 
         //store user roles
         public const string StoreAdmin = "StoreAdmin";

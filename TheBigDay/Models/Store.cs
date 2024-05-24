@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 
 namespace TheBigDay.Models
 {
@@ -35,10 +34,8 @@ namespace TheBigDay.Models
         public StoreType? StoreType { get; set; }
 
 
-        //Dependacies
-        public List<Product>? Products { get; set; }
-        public List<Service>? Services { get; set; }
-        public List<Package>? Packages { get; set; }
+        // navigation
+        public List<FormEntry>? Items { get; set; }
         public List<User> Users { get; } = new List<User> { };
     }
     public enum StoreType

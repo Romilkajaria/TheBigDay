@@ -3,16 +3,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheBigDay.Models
 {
-    [Table("EventProduct")]
-    public class EventProduct
+    [Table("EventItem")]
+    public class EventItem
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid EventId { get; set; }
-        public Guid ProductId { get; set; }
+        public Guid FormEntryId { get; set; }
         public bool IsFinalisedByCustomer { get; set; }
-        public bool IsFinalisedByVendor { get; set; }
-        public double Price { get; set; }
+        public bool IsFinalisedByStore { get; set; }
+        public double FinalPriceByStore { get; set; }
+
+        // navigation 
+        public required Event Event {  get; set; }
+        public required FormEntry FormEntry { get; set; }
     }
 }

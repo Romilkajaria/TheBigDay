@@ -27,7 +27,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpGet]      
-        public IEnumerable<Product> Get()
+        public IEnumerable<FormEntry> Get()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.Where((c) => c.IsDeleted == false && c.StoreId == CurrentStoreId()).ToList();
+                    return context.FormEntry.Where((c) => !c.IsDeleted && c.StoreId == CurrentStoreId() && c.Form.ItemType == ItemType.PRODUCT).ToList();
                 }
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public Product? Get(Guid id)
+        public FormEntry? Get(Guid id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
+                    return context.FormEntry.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
                 }
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace TheBigDay.Controllers
 
         [HttpPost]
         [Route("add")]
-        public void Post([FromBody] Product product)
+        public void Post([FromBody] FormEntry product)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace TheBigDay.Controllers
                        DbContextOptions<DatabaseContext>>()))
                 {
                     product.StoreId = CurrentStoreId();
-                    context.Product.Add(product);
+                    context.FormEntry.Add(product);
                     context.SaveChanges();
                 }
             }
@@ -86,7 +86,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]      
-        public void Put(Guid id, [FromBody] Product product)
+        public void Put(Guid id, [FromBody] FormEntry product)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
+                    var sourceProduct = context.FormEntry.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceProduct != null)
                     {
@@ -120,7 +120,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceProduct = context.Product.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
+                    var sourceProduct = context.FormEntry.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceProduct != null)
                     {

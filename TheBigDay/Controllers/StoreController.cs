@@ -56,13 +56,6 @@ namespace TheBigDay.Controllers
                 var store = context.Store
                     .FirstOrDefault((c) => c.Id.ToString() == id);
 
-                if (store != null)
-                {
-                    store.Products = context.Product.Where((p) => p.StoreId.ToString() == id && p.IsDeleted == false).ToList();
-                    store.Packages = context.Package.Where((p) => p.StoreId.ToString() == id && p.IsDeleted == false).ToList();
-                    store.Services = context.Service.Where((s) => s.StoreId.ToString() == id && s.IsDeleted == false).ToList();
-                }
-
                 return store;
             }
             catch (Exception ex)

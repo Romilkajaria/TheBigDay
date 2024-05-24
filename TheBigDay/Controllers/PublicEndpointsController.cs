@@ -22,7 +22,7 @@ namespace TheBigDay.Controllers
 
         // GET api/<PublicEndpointsController>/5
         [HttpGet("products/{state}")]
-        public IActionResult GetProducts(string state)
+        public IActionResult GetItemsByState(string state)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace TheBigDay.Controllers
 
                     if(stores != null)
                     {
-                        return Ok(stores.Select((store) => store.Products));
+                        return Ok(stores.Select((store) => store.Items));
                     }
 
                     return Ok();
@@ -45,12 +45,6 @@ namespace TheBigDay.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Error getting user details!" + ex });
             }
-        }
-
-        [HttpGet("services/{address}")]
-        public string GetServices(string address)
-        {
-            return "value";
         }
     }
 }

@@ -26,7 +26,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Service> Get()
+        public IEnumerable<FormEntry> Get()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Service.Where((c) => c.IsDeleted == false && c.StoreId == CurrentStoreId()).ToList();
+                    return context.FormEntry.Where((c) => c.IsDeleted == false && c.StoreId == CurrentStoreId() && c.Form.ItemType == ItemType.SERVICE).ToList();
                 }
             }
             catch (Exception ex)
@@ -44,7 +44,7 @@ namespace TheBigDay.Controllers
         }
         // GET api/<ServiceController>/5
         [HttpGet("{id}")]
-        public Service? Get(Guid id)
+        public FormEntry? Get(Guid id)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>()))
                 {
-                    return context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
+                    return context.FormEntry.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
                 }
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace TheBigDay.Controllers
         // POST api/<ServiceController>
         [HttpPost]
         [Route("add")]
-        public void Post([FromBody] Service e)
+        public void Post([FromBody] FormEntry e)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace TheBigDay.Controllers
                    _serviceProvider.GetRequiredService<
                        DbContextOptions<DatabaseContext>>()))
                 {
-                    context.Service.Add(e);
+                    context.FormEntry.Add(e);
                     context.SaveChanges();
                 }
             }
@@ -85,7 +85,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<ServiceController>/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Service e)
+        public void Put(Guid id, [FromBody] FormEntry e)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceService = context.Service.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
+                    var sourceService = context.FormEntry.FirstOrDefault((c) => c.Id == id && c.StoreId == CurrentStoreId());
 
                     if (sourceService != null)
                     {
