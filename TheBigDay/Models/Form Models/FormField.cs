@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TheBigDay.Models.Form_Models
 {
@@ -6,6 +7,7 @@ namespace TheBigDay.Models.Form_Models
     public class FormField
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid FieldId { get; set; }
         public required FieldTypes Type { get; set; }
         public required string Label { get; set; }
