@@ -5,7 +5,7 @@ namespace TheBigDay.Interfaces
 {
 	public interface IUserService
 	{
-		public Task<Response> RegisterAdminAsync(Register model);
+		public Task<Response> RegisterAdminAsync(Register model, string topRole = UserRoles.StoreAdmin);
 	}
 }
 

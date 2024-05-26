@@ -31,7 +31,7 @@ namespace TheBigDay.Services
                         DbContextOptions<DatabaseContext>>());
         }
 
-        public async Task<Response> RegisterAdminAsync(Register model)
+        public async Task<Response> RegisterAdminAsync(Register model, string topRole = UserRoles.StoreAdmin)
         {
             var userExists = await _userManager.FindByEmailAsync(model.User.Email);
             if (userExists != null)
@@ -97,14 +97,14 @@ namespace TheBigDay.Services
                     if (!result.Succeeded)
                         return new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." };
 
-                    if (!await _roleManager.RoleExistsAsync(UserRoles.StoreAdmin))
-                        await _roleManager.CreateAsync(new IdentityRole(UserRoles.StoreAdmin));
+                    if (!await _roleManager.RoleExistsAsync(topRole))
+                        await _roleManager.CreateAsync(new IdentityRole(topRole));
                     if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                         await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                    if (await _roleManager.RoleExistsAsync(UserRoles.StoreAdmin))
+                    if (await _roleManager.RoleExistsAsync(topRole))
                     {
-                        await _userManager.AddToRoleAsync(user, UserRoles.StoreAdmin);
+                        await _userManager.AddToRoleAsync(user, topRole);
                     }
                     if (await _roleManager.RoleExistsAsync(UserRoles.User))
                     {
