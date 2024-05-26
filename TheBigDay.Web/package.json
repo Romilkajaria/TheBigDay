@@ -5,7 +5,8 @@
     "ng": "ng",
     "start vendor": "ng serve vendors --port 4202 --configuration development",
     "start consumer": "ng serve consumer --port 4201 --configuration development",
-    "build clients prod": "ng build vendors && ng build consumer",
+    "start administration": "ng serve administration --port 4203 --configuration development",
+    "build clients prod": "ng build vendors && ng build consumer && ng build administration",
     "build common": "ng build common",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

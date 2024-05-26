@@ -117,7 +117,7 @@
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/common/tsconfig.lib.prod.json",
+                            "tsConfig": "projects/common/tsconfig.lib.prod.json"
                         },
                         "development": {
                             "tsConfig": "projects/common/tsconfig.lib.json"
@@ -346,6 +346,119 @@
                     }
                 }
             }
+        },
+        "administration": {
+          "projectType": "application",
+          "schematics": {
+            "@schematics/angular:component": {
+              "style": "scss"
+            }
+          },
+          "root": "projects/administration",
+          "sourceRoot": "projects/administration/src",
+          "prefix": "administration",
+          "architect": {
+            "build": {
+              "builder": "@angular-devkit/build-angular:browser",
+              "options": {
+                "outputPath": "dist/administration",
+                "index": "projects/administration/src/index.html",
+                "main": "projects/administration/src/main.ts",
+                "polyfills": [
+                  "zone.js"
+                ],
+                "tsConfig": "projects/administration/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  "projects/administration/src/favicon.ico",
+                  "projects/administration/src/assets"
+                ],
+                "styles": [
+                  "projects/administration/src/styles.scss",
+                    "node_modules/primeicons/primeicons.css",
+                    "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+                    "node_modules/primeng/resources/primeng.min.css"
+                ],
+                "stylePreprocessorOptions": {
+                  "includePaths": ["node_modules/"]
+                },
+                "scripts": []
+              },
+              "configurations": {
+                "production": {
+                  "budgets": [
+                    {
+                      "type": "initial",
+                      "maximumWarning": "500kb",
+                      "maximumError": "1mb"
+                    },
+                    {
+                      "type": "anyComponentStyle",
+                      "maximumWarning": "2kb",
+                      "maximumError": "4kb"
+                    }
+                  ],
+                  "outputHashing": "all",
+                    "fileReplacements": [{
+                    "replace": "projects/administration/src/environments/environment.ts",
+                    "with": "projects/administration/src/environments/environment.prod.ts"
+                    }]
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+              },
+              "defaultConfiguration": "production"
+            },
+            "serve": {
+              "builder": "@angular-devkit/build-angular:dev-server",
+              "configurations": {
+                "production": {
+                  "buildTarget": "administration:build:production"
+                },
+                "development": {
+                  "buildTarget": "administration:build:development"
+                }
+              },
+              "defaultConfiguration": "development"
+            },
+            "extract-i18n": {
+              "builder": "@angular-devkit/build-angular:extract-i18n",
+              "options": {
+                "buildTarget": "administration:build"
+              }
+            },
+            "test": {
+              "builder": "@angular-devkit/build-angular:karma",
+              "options": {
+                "polyfills": [
+                  "zone.js",
+                  "zone.js/testing"
+                ],
+                "tsConfig": "projects/administration/tsconfig.spec.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                  "projects/administration/src/favicon.ico",
+                  "projects/administration/src/assets"
+                ],
+                "styles": [
+                    "projects/administration/src/styles.scss",
+                    "node_modules/primeicons/primeicons.css",
+                    "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+                    "node_modules/primeng/resources/primeng.min.css"
+                ],
+                  "stylePreprocessorOptions": {
+                      "includePaths": ["node_modules/"]
+                  },
+                "scripts": []
+              }
+            }
+          }
         }
     },
     "cli": {

@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Web.Resource;
 using TheBigDay.DBContext;
 using TheBigDay.Models;
 using TheBigDay.Models.AuthModels;
-using static Program;
 
 namespace TheBigDay.Controllers
 {
@@ -34,7 +31,7 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return [.. context.User.Where((c) => c.IsDeleted == false)];
+                    return context.User.Where((c) => c.IsDeleted == false);
                 }
             }
             catch (Exception ex) 

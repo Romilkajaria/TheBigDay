@@ -18,7 +18,7 @@ namespace TheBigDay.Controllers
             _serviceProvider = serviceProvider;
         }
 
-        [HttpPost]
+        [HttpPost("form")]
         public async Task<IActionResult> CreateFormAsync(Form form)
         {
             try
@@ -35,7 +35,7 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to create form: " + form.Name, ex);
             }
         }
-
+        [HttpPut("form")]
         public IActionResult UpdateForm(Form form)
         {
             try
@@ -52,7 +52,7 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to update form: " + form.Name, ex);
             }
         }
-
+        [HttpPost("field")]
         public async Task<IActionResult> AddField(FormField formField)
         {
             try
@@ -69,7 +69,7 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to create field: " + formField.Label, ex);
             }
         }
-
+        [HttpPut("field")]
         public IActionResult UpdateField(FormField formField)
         {
             try
