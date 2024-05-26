@@ -31,16 +31,18 @@ export class LoginComponent {
                 private router: Router) {}
 
     toggleSignup() {
-        this.isSigningUp = !this.isSigningUp
+        this.isSigningUp = !this.isSigningUp;
+        this.messageService.clear();
     }
 
     login() {
         this.loading = true;
+        this.messageService.clear();
         this.authService.signIn(this.loginModel.email!, this.loginModel.password!
         ).subscribe({
             next: () => this.router.navigate(['']),
-            error: () => {
-                this.messageService.add(getToastMessage(ToastMessageType.ERROR, "Failed to login. Please try again or do forgot password."));
+            error: (e) => {
+                this.messageService.add(getToastMessage(ToastMessageType.ERROR, "Failed to login. Please try again or do forgot password.", false));
                 this.loading = false;
             },
         });
@@ -48,6 +50,7 @@ export class LoginComponent {
 
     register() {
         this.loading = true;
+        this.messageService.clear();
         this.authService.registerStore(this.registerModel).pipe(
             switchMap(() => this.authService.signIn(this.registerModel.user.email!, this.registerModel.user.password!))
         ).subscribe({

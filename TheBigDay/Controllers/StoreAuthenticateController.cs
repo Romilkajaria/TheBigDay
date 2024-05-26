@@ -49,6 +49,15 @@ namespace TheBigDay.Controllers
             {
                 var userRoles = await _userManager.GetRolesAsync(identityUser);
 
+                // Check the request origin
+                var requestOrigin = Request.Headers["Origin"].ToString();
+
+                // If the origin is "https://localhost:4203", apply the Admin role restriction
+                if (requestOrigin == "http://localhost:4203" && !userRoles.Contains("AppAdmin"))
+                {
+                    return Unauthorized(new Response { Status = "Error", Message = "You do not have sufficent permissions for this app." });
+                }
+
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, identityUser.UserName!),
@@ -145,6 +154,14 @@ namespace TheBigDay.Controllers
             return Ok(await _userService.RegisterAdminAsync(model));
         }
 
+#if DEBUG
+        [HttpPost]
+        [Route("register-god-admin")]
+        public async Task<IActionResult> RegisterGodAdmin([FromBody] Register model)
+        {
+            return Ok(await _userService.RegisterAdminAsync(model, UserRoles.AppAdmin));
+        }
+#endif
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));

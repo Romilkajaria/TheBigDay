@@ -18,6 +18,7 @@ import {FloatLabelModule} from "primeng/floatlabel";
 import {EditorModule} from "primeng/editor";
 import {LogoutComponent} from "../logout/logout.component";
 import {LoadingModule} from "../../loading/loading/loading.module";
+import {MessagesModule} from "primeng/messages";
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import {LoadingModule} from "../../loading/loading/loading.module";
         FloatLabelModule,
         EditorModule,
         LoadingModule,
+        MessagesModule,
     ],
     exports: [
         LoginComponent
