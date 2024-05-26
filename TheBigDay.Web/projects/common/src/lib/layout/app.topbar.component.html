@@ -10,7 +10,7 @@
 
     <ng-content></ng-content>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+    <div #topbarmenu  *ngIf="!hideIcons" class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <span *ngIf="showSearch" class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input style="border-radius: 2rem" type="text" pInputText placeholder="Search" />

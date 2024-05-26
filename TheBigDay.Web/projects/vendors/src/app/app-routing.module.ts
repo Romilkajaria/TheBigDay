@@ -1,7 +1,6 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {VendorPageShellComponent} from "./vendor-page-shell/vendor-page-shell.component";
-import {LogoutComponent} from "../../../common/src/lib/components/auth/logout/logout.component";
 import {VendorAuthGuard} from "./VendorAuthGuard";
 
 @NgModule({

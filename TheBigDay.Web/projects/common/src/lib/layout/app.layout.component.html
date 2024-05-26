@@ -1,6 +1,6 @@
 <div class="layout-wrapper">
 <!--    TODO: consolidate topbar to here. later-->
-    <app-topbar [showCart]="showCart" [showSearch]="showSearch">
+    <app-topbar [showCart]="showCart" [showSearch]="showSearch" [hideIcons]="hideIcons">
         <ng-content></ng-content>
     </app-topbar>
     <p-sidebar [(visible)]="isSidebarVisible">

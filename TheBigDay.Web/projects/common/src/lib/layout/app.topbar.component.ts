@@ -9,6 +9,7 @@ import { LayoutService } from "./service/app.layout.service";
 export class AppTopBarComponent {
     @Input() showSearch = false;
     @Input() showCart = false;
+    @Input() hideIcons = false;
 
     items!: MenuItem[];
 

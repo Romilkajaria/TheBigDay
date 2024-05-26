@@ -13,36 +13,10 @@ export class AdminPageShellComponent {
 }
 
 export const vendorMenu = [
-    {
-        label: 'Home',
-        items: [
-            { label: 'Dashboard', icon: 'pi-fw pi-home', routerLink: ['/'] }
-        ]
-    },
-    {
-        label: 'Manage',
-        items: [
-            { label: 'Products', icon: 'pi-fw pi-shopping-bag', routerLink: ['/pages/products'] },
-            { label: 'Services', icon: 'pi-fw pi-truck', routerLink: ['/pages/services'] },
-            { label: 'Packages', icon: 'pi-fw pi-box', routerLink: ['/pages/packages'] },
-        ]
-    },
-    {
-        label: 'Comms',
-        items: [
-            { label: 'Chat', icon: 'pi-fw pi-comments', routerLink: ['/pages/chat'] },
-            { label: 'Feedback', icon: 'pi-fw pi-star', routerLink: ['/pages/feedback'] },
-        ]
-    },
-    {
-        label: 'Configuration',
-        items: [
-            { label: 'Settings', icon: 'pi-fw pi-cog', routerLink: ['/pages/settings'] },
-        ]
-    },
-    // { label: 'Forms', routerLink: ['/forms'] },
-    // { label: 'Item types', routerLink: ['/item-types'] },
-    // { label: 'Event types', routerLink: ['/event-types'] },
+
+    { label: 'Forms', routerLink: ['/forms'] },
+    { label: 'Item categories', routerLink: ['/item-categories'] },
+    { label: 'Event types', routerLink: ['/event-categories'] },
 
     // {
     //     label: 'UI Components',

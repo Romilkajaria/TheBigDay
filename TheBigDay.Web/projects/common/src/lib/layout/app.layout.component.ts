@@ -15,6 +15,7 @@ export class AppLayoutComponent {
     @Input() user?: User | null;
     @Input() showSearch = false;
     @Input() showCart = false;
+    @Input() hideIcons = false;
 
     isSidebarVisible = false;
     constructor(public layoutService: LayoutService) {
