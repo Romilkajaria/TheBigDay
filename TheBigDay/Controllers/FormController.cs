@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
+using TheBigDay.Models.AuthModels;
 using TheBigDay.Models.Form_Models;
 
 namespace TheBigDay.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = UserRoles.AppAdmin)]
     [Route("api/[controller]")]
     [ApiController]
     public class FormController : ControllerBase

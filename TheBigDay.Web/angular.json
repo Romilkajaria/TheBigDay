@@ -380,10 +380,6 @@
                     "node_modules/primeng/resources/primeng.min.css"
                 ],
                 "scripts": [],
-                  "fileReplacements": [{
-                      "replace": "projects/administration/src/environments/environment.ts",
-                      "with": "projects/administration/src/environments/environment.prod.ts"
-                  }]
               },
               "configurations": {
                 "production": {
