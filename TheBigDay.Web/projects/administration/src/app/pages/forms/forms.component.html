@@ -1,1 +1,48 @@
-<p>forms works!</p>
+
+<p-messages severity="warn">
+    <ng-template pTemplate>
+        <div class="ml-2">- Forms are things that vendors/customers can fill out need to fill out.
+            - currently only used by vendors when adding an item to their store.
+            - forms are generic and can be user referenced anywhere in the customer and vendor application.
+            - be careful when deleting forms. there could assiciated Form Entries that might get deleted too.
+        </div>
+    </ng-template>
+</p-messages>
+<p-splitter
+    [panelSizes]="[30, 70]"
+    [style]="{ height: '300px' }"
+    styleClass="mb-5">
+    <ng-template pTemplate>
+        <div class="col">
+            <div class="flex w-full justify-content-between">
+                <h4>Item categories</h4>
+                <button  pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createNew()"></button>
+            </div>
+            <p-listbox
+                *ngIf="itemCategories.length > 0; else noCategories"
+                [options]="itemCategories"
+                [(ngModel)]="selectedCategory"
+                optionLabel="name"
+                [listStyle]="{'max-height': '220px'}" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate>
+        <div class="p-4 w-full" *ngIf="selectedCategory">
+            <label class="block text-900 font-medium text-xl my-2">Name</label>
+            <input type="text" [(ngModel)]="selectedCategory.name" pInputText class="w-full mb-5" style="padding:1rem"/>
+            <div class="flex gap-2 justify-content-end">
+                <button [disabled]="!selectedCategory || !selectedCategory.name" pButton pRipple label="Save" icon="pi pi-check" class="flex mb-3 align-self-end" (click)="addOrUpdate()"></button>
+                <p-button *ngIf="selectedCategory && selectedCategory.id" icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deleteConfirmation()"></p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-splitter>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<ng-template #noCategories>
+    You have no item categories.
+</ng-template>
+
+
+
+

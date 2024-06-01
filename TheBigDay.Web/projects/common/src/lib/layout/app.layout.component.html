@@ -3,10 +3,10 @@
     <app-topbar [showCart]="showCart" [showSearch]="showSearch" [hideIcons]="hideIcons">
         <ng-content></ng-content>
     </app-topbar>
-    <p-sidebar [(visible)]="isSidebarVisible">
+    <p-sidebar [(visible)]="isSidebarVisible" closeOnEscape="true">
         <ng-template pTemplate="header">
                 <span>
-                    <img class="ms-3" src="favicon.ico" width="40%" alt="logo">
+                    <img class="ms-3 cursor-pointer" src="favicon.ico" routerLink="" width="40%" alt="logo">
                 </span>
         </ng-template>
 

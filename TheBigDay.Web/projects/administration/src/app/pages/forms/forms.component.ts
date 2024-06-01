@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Form } from 'projects/common/src/lib/common-rest-models/Form/form';
 
 @Component({
   selector: 'administration-forms',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './forms.component.scss'
 })
 export class FormsComponent {
-
+    public forms: Form[] = [];
+    public selectedForm?: Form;
 }
