@@ -13,6 +13,10 @@ import {RippleModule} from "primeng/ripple";
 import {SharedModule} from "primeng/api";
 import {SplitterModule} from "primeng/splitter";
 import {ToastModule} from "primeng/toast";
+import {FormsModule as AngularFormsModule} from "@angular/forms";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {CheckboxModule} from "primeng/checkbox";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -29,7 +33,11 @@ import {ToastModule} from "primeng/toast";
         RippleModule,
         SharedModule,
         SplitterModule,
-        ToastModule
+        ToastModule,
+        AngularFormsModule,
+        RadioButtonModule,
+        CheckboxModule,
+        DropdownModule,
     ]
 })
 export class FormsModule { }

@@ -33,7 +33,7 @@ namespace TheBigDay.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to get item categories", ex);
+                throw new Exception("Failed to get event categories", ex);
             }
         }
 
@@ -55,7 +55,7 @@ namespace TheBigDay.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update item category", ex);
+                throw new Exception("Failed to update event category", ex);
             }
         }
 
@@ -78,7 +78,7 @@ namespace TheBigDay.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to add event type", ex);
+                throw new Exception("Failed to add event category", ex);
             }
         }
 
@@ -100,13 +100,13 @@ namespace TheBigDay.Controllers
                         return Ok();
                     }
 
-                    throw new Exception("target event type not found: " + id);
+                    throw new Exception("target event category not found: " + id);
 
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to delete event type", ex);
+                throw new Exception("Failed to delete event category", ex);
             }
         }
     }

@@ -2,11 +2,11 @@ import {ItemCategory} from "../item-category";
 import {FormField} from "./form-field";
 
 export interface Form {
-    id: string;
+    id?: string;
     name: string;
     description: string;
-    itemType: ItemType,
-    itemCategory: ItemCategory,
+    itemType?: ItemType,
+    itemCategory?: ItemCategory,
     formLevel: FormLevel;
     isDeleted: boolean;
 
@@ -22,4 +22,14 @@ export enum FormLevel {
 export enum ItemType {
     PRODUCT ,
     SERVICE,
+}
+
+
+export const ItemTypeLabelRecord: Record<ItemType, string> = {
+    [ItemType.PRODUCT]: 'Product',
+    [ItemType.SERVICE]: 'Service',
+}
+export const FormLevelLabelRecord: Record<FormLevel, string> = {
+    [FormLevel.STORE]: 'Store',
+    [FormLevel.ITEM]: 'Item',
 }

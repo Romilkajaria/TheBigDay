@@ -1,46 +1,107 @@
 
 <p-messages severity="warn">
     <ng-template pTemplate>
-        <div class="ml-2">- Forms are things that vendors/customers can fill out need to fill out.
-            - currently only used by vendors when adding an item to their store.
-            - forms are generic and can be user referenced anywhere in the customer and vendor application.
-            - be careful when deleting forms. there could assiciated Form Entries that might get deleted too.
+        <div class="ml-2">Forms are things that vendors/customers can fill out need to fill out.
+            <br/> Currently only used by vendors when adding an item to their store.
+            <br/> Forms are generic and can be user referenced anywhere in the customer and vendor application.
+            <br/> Be careful when deleting forms. there could assiciated Form Entries that might get deleted too.
         </div>
     </ng-template>
 </p-messages>
 <p-splitter
     [panelSizes]="[30, 70]"
-    [style]="{ height: '300px' }"
     styleClass="mb-5">
     <ng-template pTemplate>
         <div class="col">
             <div class="flex w-full justify-content-between">
-                <h4>Item categories</h4>
+                <h4>Forms</h4>
                 <button  pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createNew()"></button>
             </div>
             <p-listbox
-                *ngIf="itemCategories.length > 0; else noCategories"
-                [options]="itemCategories"
-                [(ngModel)]="selectedCategory"
+                *ngIf="forms.length > 0; else noForms"
+                [options]="forms"
+                [(ngModel)]="selectedForm"
                 optionLabel="name"
-                [listStyle]="{'max-height': '220px'}" />
+                [listStyle]="{'max-height': '220px'}"/>
         </div>
     </ng-template>
     <ng-template pTemplate>
-        <div class="p-4 w-full" *ngIf="selectedCategory">
+        <div class="p-4 w-full" *ngIf="selectedForm">
             <label class="block text-900 font-medium text-xl my-2">Name</label>
-            <input type="text" [(ngModel)]="selectedCategory.name" pInputText class="w-full mb-5" style="padding:1rem"/>
+            <input type="text" [(ngModel)]="selectedForm.name" pInputText class="w-full mb-5" style="padding:1rem"/>
+
+            <label class="block text-900 font-medium text-xl my-2">Description</label>
+            <input type="text" [(ngModel)]="selectedForm.description" pInputText class="w-full mb-5" style="padding:1rem"/>
+
+            <label class="block text-900 font-medium text-xl my-2">Form Type</label>
+            <div class="flex gap-3">
+                <div *ngFor="let type of formTypes" class="field-checkbox">
+                    <p-radioButton
+                        [value]="type"
+                        [(ngModel)]="selectedForm.itemType" />
+                    <label class="ml-2">
+                        {{ ItemTypeLabelRecord[type] }}
+                    </label>
+                </div>
+            </div>
+
+            <label class="block text-900 font-medium text-xl my-2">Form Level</label>
+            <div class="flex gap-3">
+                <div *ngFor="let level of formLevels" class="field-checkbox">
+                    <p-radioButton
+                        [value]="level"
+                        [(ngModel)]="selectedForm.formLevel" />
+                    <label class="ml-2">
+                        {{ FormLevelLabelRecord[level] }}
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="flex justify-content-between">
+                    <h5>Fields</h5>
+                    <button  pButton pRipple label="Add field" icon="pi pi-plus" class="mb-3" (click)="createNewField()"></button>
+                </div>
+                <div *ngFor="let field of selectedForm.fields">
+                    <div class="card mb-2">
+                        <label class="block text-900 font-medium text-xl my-2">Label</label>
+                        <input type="text" [(ngModel)]="field.label" pInputText class="mb-5" style="padding:1rem"/>
+
+                        <label class="block text-900 font-medium text-xl my-2">Placeholder</label>
+                        <input type="text" [(ngModel)]="field.placeholder" pInputText class="mb-5" style="padding:1rem"/>
+
+                        <label class="block text-900 font-medium text-xl my-2">Type</label>
+                        <p-dropdown
+                            [options]="fieldTypes"
+                            [(ngModel)]="field.type"
+                            [placeholder]="'Select a type'">
+                            <ng-template pTemplate="selectedItem">
+                                <div>{{ getFieldTypeLabel(field.type) }}</div>
+                            </ng-template>
+                            <ng-template let-type pTemplate="item">
+                                    <div>{{ getFieldTypeLabel(type) }}</div>
+                            </ng-template>
+                        </p-dropdown>
+
+                        <div class="flex align-items-center gap-1">
+                            <label class="block text-900 font-medium text-xl my-2">Required</label>
+                            <p-checkbox [(ngModel)]="field.required" [binary]="true" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex gap-2 justify-content-end">
-                <button [disabled]="!selectedCategory || !selectedCategory.name" pButton pRipple label="Save" icon="pi pi-check" class="flex mb-3 align-self-end" (click)="addOrUpdate()"></button>
-                <p-button *ngIf="selectedCategory && selectedCategory.id" icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deleteConfirmation()"></p-button>
+                <button [disabled]="!selectedForm || !selectedForm.name" pButton pRipple label="Save" icon="pi pi-check" class="flex mb-3 align-self-end" (click)="addOrUpdate()"></button>
+                <p-button *ngIf="selectedForm && selectedForm.id" icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deleteConfirmation()"></p-button>
             </div>
         </div>
     </ng-template>
 </p-splitter>
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<ng-template #noCategories>
-    You have no item categories.
+<ng-template #noForms>
+    You have forms configured.
 </ng-template>
 
 
