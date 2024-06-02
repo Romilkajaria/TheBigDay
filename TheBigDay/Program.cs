@@ -55,17 +55,7 @@ public class Program
             .AddEntityFrameworkStores<DatabaseContext>()
             .AddDefaultTokenProviders();
 
-#if DEBUG
-        // Add CORS configuration
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowLocalhost4202", builder => builder
-                .WithOrigins("http://localhost:4201", "http://localhost:4202", "http://localhost:4203", "https://localhost:4201", "https://localhost:4202", "https://localhost:4203")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials());
-        });
-#else
+
         // Add CORS configuration
         builder.Services.AddCors(options =>
         {
@@ -74,17 +64,13 @@ public class Program
                 .AllowAnyHeader()
                 .AllowAnyMethod());
         });
-#endif
 
 
         builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
         //string connectionString = builder.Configuration.GetSection("TBDContext").Get<TBDContext>().TBDDatabaseConnectionString;
-#if DEBUG
-        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=TheBigDay;Integrated Security=True"));
-#else
 
         builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=tcp:thebigggdaydbserver.database.windows.net,1433;Initial Catalog=TheBigDay-dev;Persist Security Info=False;User ID=tabadmin;Password=Romilk01.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-#endif
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 

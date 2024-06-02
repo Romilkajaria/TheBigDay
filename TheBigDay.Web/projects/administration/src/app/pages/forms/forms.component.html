@@ -1,16 +1,21 @@
 
 <p-messages severity="warn">
     <ng-template pTemplate>
-        <div class="ml-2">Forms are things that vendors/customers can fill out need to fill out.
-            <br/> Currently only used by vendors when adding an item to their store.
-            <br/> Forms are generic and can be user referenced anywhere in the customer and vendor application.
-            <br/> Be careful when deleting forms. there could assiciated Form Entries that might get deleted too.
+        <img src="favicon.ico" alt="TBD icon" width="32" />
+        <div class="ml-2">
+            <ul>
+                <li>Forms are things that vendors/customers can fill out need to fill out.</li>
+                <li>Currently only used by vendors when adding an item to their store.</li>
+                <li>Forms are generic and can be user referenced anywhere in the customer and vendor application.</li>
+                <li>Be careful when deleting forms. there could associated Form Entries that might get deleted too.</li>
+            </ul>
         </div>
     </ng-template>
 </p-messages>
 <p-splitter
     [panelSizes]="[30, 70]"
-    styleClass="mb-5">
+    styleClass="mb-5"
+    [style]="{ height: '80%' }">
     <ng-template pTemplate>
         <div class="col">
             <div class="flex w-full justify-content-between">
@@ -56,6 +61,13 @@
                     </label>
                 </div>
             </div>
+
+            <p-dropdown
+                [options]="itemCategories"
+                (onChange)="formCategorySelected($event)"
+                optionLabel="name"
+                [placeholder]="'Select a category'">
+            </p-dropdown>
 
             <div class="card">
                 <div class="flex justify-content-between">

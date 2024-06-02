@@ -6,11 +6,12 @@ export interface Form {
     name: string;
     description: string;
     itemType?: ItemType,
-    itemCategory?: ItemCategory,
+    itemCategoryId?: string,
     formLevel: FormLevel;
     isDeleted: boolean;
 
     //Nav
+    itemCategory?: ItemCategory,
     fields?: FormField[];
     subForms?: Form[];
 }

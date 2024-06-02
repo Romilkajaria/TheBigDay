@@ -1,6 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TheBigDay.Models.Form_Models;
 
 namespace TheBigDay.Models
 {
@@ -12,6 +13,8 @@ namespace TheBigDay.Models
 		public required string Name { get; set; }
 		public List<ItemCategory>? SubCategories { get; set; }
 
+		//nav
+		public List<Form>? Forms { get; set; }
 	}
 }
 

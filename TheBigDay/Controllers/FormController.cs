@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
@@ -19,8 +20,8 @@ namespace TheBigDay.Controllers
             _serviceProvider = serviceProvider;
         }
 
-        [HttpPost("form")]
-        public async Task<IActionResult> CreateFormAsync(Form form)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             try
             {
@@ -28,7 +29,28 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return Ok(await context.Form.AddAsync(form).ConfigureAwait(false));
+                    return Ok(await context.Form.Include("Fields").ToListAsync().ConfigureAwait(false));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to get forms", ex);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateFormAsync(Form form)
+        {
+            try
+            {
+                using (var context = new DatabaseContext(
+                _serviceProvider.GetRequiredService<
+                    DbContextOptions<DatabaseContext>>()))
+                {
+                    context.Form.Add(form);
+                    context.SaveChanges();
+
+                    return Ok();
                 }
             }
             catch (Exception ex)
@@ -36,7 +58,7 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to create form: " + form.Name, ex);
             }
         }
-        [HttpPut("form")]
+        [HttpPut]
         public IActionResult UpdateForm(Form form)
         {
             try
@@ -53,39 +75,39 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to update form: " + form.Name, ex);
             }
         }
-        [HttpPost("field")]
-        public async Task<IActionResult> AddField(FormField formField)
-        {
-            try
-            {
-                using (var context = new DatabaseContext(
-                _serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
-                {
-                    return Ok(await context.FormField.AddAsync(formField).ConfigureAwait(false));
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to create field: " + formField.Label, ex);
-            }
-        }
-        [HttpPut("field")]
-        public IActionResult UpdateField(FormField formField)
-        {
-            try
-            {
-                using (var context = new DatabaseContext(
-                _serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
-                {
-                    return Ok(context.FormField.Update(formField));
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to update field: " + formField.Label, ex);
-            }
-        }
+        //[HttpPost("field")]
+        //public async Task<IActionResult> AddField(FormField formField)
+        //{
+        //    try
+        //    {
+        //        using (var context = new DatabaseContext(
+        //        _serviceProvider.GetRequiredService<
+        //            DbContextOptions<DatabaseContext>>()))
+        //        {
+        //            return Ok(await context.FormField.AddAsync(formField).ConfigureAwait(false));
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Failed to create field: " + formField.Label, ex);
+        //    }
+        //}
+        //[HttpPut("field")]
+        //public IActionResult UpdateField(FormField formField)
+        //{
+        //    try
+        //    {
+        //        using (var context = new DatabaseContext(
+        //        _serviceProvider.GetRequiredService<
+        //            DbContextOptions<DatabaseContext>>()))
+        //        {
+        //            return Ok(context.FormField.Update(formField));
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Failed to update field: " + formField.Label, ex);
+        //    }
+        //}
     }
 }

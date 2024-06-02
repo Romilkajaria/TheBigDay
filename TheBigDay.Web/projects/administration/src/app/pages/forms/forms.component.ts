@@ -13,6 +13,10 @@ import {
     FormField
 } from "../../../../../common/src/lib/common-rest-models/Form/form-field";
 import {FormService} from "./form.service";
+import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
+import {forkJoin} from "rxjs";
+import {ItemCategoryService} from "../item-category/item-category.service";
+import {DropdownChangeEvent} from "primeng/dropdown";
 
 @Component({
   selector: 'administration-forms',
@@ -32,7 +36,7 @@ export class FormsComponent {
         isDeleted: false,
         formLevel: FormLevel.STORE,
         itemType: undefined,
-        itemCategory: undefined,
+        itemCategoryId: undefined,
         fields: [],
         subForms: []
     }
@@ -67,13 +71,19 @@ export class FormsComponent {
         FieldType.COLOR_PICKER,
         FieldType.EMAIL,
     ];
+    itemCategories: ItemCategory[] = [];
 
-    public constructor(private formService: FormService) {
+    public constructor(private formService: FormService, private itemCategoryService: ItemCategoryService) {
         this.updateData();
     }
 
     updateData() {
-        this.formService.getForms().subscribe((f) => this.forms = f);
+        forkJoin([this.formService.getForms(), this.itemCategoryService.getCategories()]).subscribe(
+            ([forms, categories]) => {
+                this.forms = forms;
+                this.itemCategories = categories;
+            }
+        )
     }
     createNew() {
         this.selectedForm = {...this.newForm};
@@ -99,5 +109,11 @@ export class FormsComponent {
 
     getFieldTypeLabel(type: FieldType) {
         return FieldTypeLabelRecord[type];
+    }
+
+    formCategorySelected($event: DropdownChangeEvent) {
+        if(this.selectedForm) {
+            this.selectedForm.itemCategoryId = $event.value.id
+        }
     }
 }
