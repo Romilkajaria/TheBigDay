@@ -51,6 +51,8 @@ export class FormsComponent {
     public readonly formLevels = [FormLevel.ITEM, FormLevel.STORE]
     public readonly FormLevelLabelRecord = FormLevelLabelRecord;
 
+    public readonly FieldType = FieldType;
+
     public readonly fieldTypes = [
         FieldType.STRING,
         FieldType.INT32,
@@ -74,12 +76,12 @@ export class FormsComponent {
         this.formService.getForms().subscribe((f) => this.forms = f);
     }
     createNew() {
-        this.selectedForm = this.newForm;
+        this.selectedForm = {...this.newForm};
     }
 
     createNewField() {
         if(this.selectedForm) {
-            this.selectedForm.fields!.push(this.newField)
+            this.selectedForm.fields!.push({...this.newField})
         }
     }
 

@@ -76,7 +76,7 @@
                             [(ngModel)]="field.type"
                             [placeholder]="'Select a type'">
                             <ng-template pTemplate="selectedItem">
-                                <div>{{ getFieldTypeLabel(field.type) }}</div>
+                                <div>{{ getFieldTypeLabel(field.type) ?? FieldType.STRING }}</div>
                             </ng-template>
                             <ng-template let-type pTemplate="item">
                                     <div>{{ getFieldTypeLabel(type) }}</div>

@@ -20,11 +20,11 @@ export class FormService extends BaseCommonRestService {
     }
 
     public add(form: Form) {
-        return this.post<Form>(`${this.baseUrl}/add`, form);
+        return this.post<Form>(this.baseUrl, form);
     }
 
     public update(form: Form) {
-        return this.put<Form>(`${this.baseUrl}/${form.id}`, form);
+        return this.put<Form>(this.baseUrl, form);
     }
 
     public deleteForm(id: string) {
