@@ -17,6 +17,9 @@ import {FormsModule as AngularFormsModule} from "@angular/forms";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {CheckboxModule} from "primeng/checkbox";
 import {DropdownModule} from "primeng/dropdown";
+import {AccordionModule} from "primeng/accordion";
+import {DividerModule} from "primeng/divider";
+import {BadgeModule} from "primeng/badge";
 
 
 @NgModule({
@@ -38,6 +41,9 @@ import {DropdownModule} from "primeng/dropdown";
         RadioButtonModule,
         CheckboxModule,
         DropdownModule,
+        AccordionModule,
+        DividerModule,
+        BadgeModule,
     ]
 })
 export class FormsModule { }

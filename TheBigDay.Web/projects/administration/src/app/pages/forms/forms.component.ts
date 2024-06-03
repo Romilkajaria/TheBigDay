@@ -89,6 +89,11 @@ export class FormsComponent {
         this.selectedForm = {...this.newForm};
     }
 
+    createNewSubForm(form: Form) {
+        form.subForms!.push({...this.newForm});
+
+    }
+
     createNewField() {
         if(this.selectedForm) {
             this.selectedForm.fields!.push({...this.newField})
