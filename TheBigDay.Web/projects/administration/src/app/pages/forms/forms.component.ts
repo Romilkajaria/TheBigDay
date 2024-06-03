@@ -90,8 +90,12 @@ export class FormsComponent {
     }
 
     createNewSubForm(form: Form) {
-        form.subForms!.push({...this.newForm});
-
+        const subForm = {...this.newForm}
+        subForm.itemCategory = form.itemCategory;
+        subForm.itemCategoryId = form.itemCategoryId;
+        subForm.formLevel = form.formLevel;
+        subForm.itemType = form.itemType;
+        form.subForms!.push(subForm);
     }
 
     createNewField() {
@@ -114,11 +118,5 @@ export class FormsComponent {
 
     getFieldTypeLabel(type: FieldType) {
         return FieldTypeLabelRecord[type];
-    }
-
-    formCategorySelected($event: DropdownChangeEvent) {
-        if(this.selectedForm) {
-            this.selectedForm.itemCategoryId = $event.value.id
-        }
     }
 }

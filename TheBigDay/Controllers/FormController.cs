@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.DBContext;
+using TheBigDay.Models;
 using TheBigDay.Models.AuthModels;
 using TheBigDay.Models.Form_Models;
 
@@ -21,7 +22,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             try
             {
@@ -29,7 +30,23 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return Ok(await context.Form.Include("Fields").ToListAsync().ConfigureAwait(false));
+
+                    var forms = context.Form
+                        .Include("Fields")
+                        .Include("ItemCategory")
+                        .ToList();
+
+                    //var categories = context.ItemCategory.ToList();
+                    //forms.ForEach(f =>
+                    //{
+                    //    var targetCategory = categories.FirstOrDefault(ic => ic.Id == f.ItemCategoryId);
+                    //    if (targetCategory != null)
+                    //    {
+                    //        f.ItemCategory = targetCategory;
+                    //    }
+                    //});
+
+                    return Ok(forms);
                 }
             }
             catch (Exception ex)
@@ -47,10 +64,15 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    context.Form.Add(form);
-                    context.SaveChanges();
+                    if(form.ItemCategory != null)
+                    {
+                        context.Entry(form.ItemCategory).State = EntityState.Unchanged;
+                        context.Form.Add(form);
+                        context.SaveChanges();
 
-                    return Ok();
+                        return Ok();
+                    }
+                    throw new Exception("Failed to attach item category: " + form.ItemCategoryId);
                 }
             }
             catch (Exception ex)
@@ -67,7 +89,10 @@ namespace TheBigDay.Controllers
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    return Ok(context.Form.Update(form));
+                    context.Form.Update(form);
+                    context.SaveChanges();
+
+                    return Ok();
                 }
             }
             catch (Exception ex)

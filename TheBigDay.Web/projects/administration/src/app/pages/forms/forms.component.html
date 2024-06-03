@@ -31,7 +31,7 @@
         </div>
     </ng-template>
     <ng-template pTemplate>
-        <ng-container *ngTemplateOutlet="selectedFormTemplate; context: {$implicit: selectedForm }" ></ng-container>
+        <ng-container *ngTemplateOutlet="selectedFormTemplate; context: {$implicit: selectedForm, isTop: true }" ></ng-container>
     </ng-template>
 </p-splitter>
 <p-toast></p-toast>
@@ -40,9 +40,9 @@
     You have forms configured.
 </ng-template>
 
-<ng-template #selectedFormTemplate let-form>
-    <div class="p-4 w-full" *ngIf="form">
-        <div class="flex gap-2 justify-content-end">
+<ng-template #selectedFormTemplate let-form let-isTop="isTop">
+    <div class="card p-4 w-full" *ngIf="form" [ngClass]="{'mb-4': !isTop}">
+        <div class="flex gap-2 justify-content-end" *ngIf="isTop">
             <button [disabled]="!form || !form.name" pButton pRipple label="Save" icon="pi pi-check" class="flex mb-3 align-self-end" (click)="addOrUpdate()"></button>
             <p-button *ngIf="form.id" icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deleteConfirmation()"></p-button>
         </div>
@@ -79,7 +79,7 @@
         <label class="block text-900 font-medium text-xl my-2">Item category</label>
         <p-dropdown
             [options]="itemCategories"
-            (onChange)="formCategorySelected($event)"
+            [(ngModel)]="form.itemCategory"
             optionLabel="name"
             [placeholder]="'Select a category'">
         </p-dropdown>
@@ -135,7 +135,7 @@
                 <button  pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createNewSubForm(form)"></button>
 
                 <div *ngFor="let subForm of form.subForms">
-                    <ng-container *ngTemplateOutlet="selectedFormTemplate; context: {$implicit: subForm }" ></ng-container>
+                    <ng-container *ngTemplateOutlet="selectedFormTemplate; context: {$implicit: subForm, isTop: false }" ></ng-container>
                 </div>
             </p-accordionTab>
         </p-accordion>

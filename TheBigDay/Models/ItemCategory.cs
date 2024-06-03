@@ -12,9 +12,6 @@ namespace TheBigDay.Models
         public Guid Id { get; set; }
 		public required string Name { get; set; }
 		public List<ItemCategory>? SubCategories { get; set; }
-
-		//nav
-		public List<Form>? Forms { get; set; }
 	}
 }
 
