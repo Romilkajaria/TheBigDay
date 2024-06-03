@@ -12,6 +12,7 @@ namespace TheBigDay.Models.Form_Models
         public required FieldTypes Type { get; set; }
         public required string Label { get; set; }
         public string? Placeholder { get; set; }
+        public string? Description { get; set; } 
         public bool Required { get; set; }
     }
 
