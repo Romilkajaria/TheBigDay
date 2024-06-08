@@ -9,6 +9,8 @@ export interface Form {
     itemCategoryId?: string,
     formLevel: FormLevel;
     isDeleted: boolean;
+    // parent form
+    formId?: string
 
     //Nav
     itemCategory?: ItemCategory,

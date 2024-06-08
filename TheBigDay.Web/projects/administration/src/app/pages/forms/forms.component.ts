@@ -86,7 +86,17 @@ export class FormsComponent {
         )
     }
     createNew() {
-        this.selectedForm = {...this.newForm};
+        this.selectedForm = {
+            id: undefined,
+            name: '',
+            description: '',
+            isDeleted: false,
+            formLevel: FormLevel.STORE,
+            itemType: undefined,
+            itemCategoryId: undefined,
+            fields: [],
+            subForms: []
+        };
     }
 
     createNewSubForm(form: Form) {
@@ -95,7 +105,19 @@ export class FormsComponent {
         subForm.itemCategoryId = form.itemCategoryId;
         subForm.formLevel = form.formLevel;
         subForm.itemType = form.itemType;
-        form.subForms!.push(subForm);
+        form.subForms!.push({
+            id: undefined,
+            name: '',
+            fields: [],
+            subForms: [],
+            description: '',
+            isDeleted: false,
+            itemCategory: form.itemCategory,
+            itemCategoryId: form.itemCategoryId,
+            formLevel: form.formLevel,
+            itemType: form.itemType,
+            formId: form.id,
+        });
     }
 
     createNewField() {

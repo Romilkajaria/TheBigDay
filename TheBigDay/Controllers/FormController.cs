@@ -26,28 +26,16 @@ namespace TheBigDay.Controllers
         {
             try
             {
-                using (var context = new DatabaseContext(
+                using var context = new DatabaseContext(
                 _serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
-                {
+                    DbContextOptions<DatabaseContext>>());
 
-                    var forms = context.Form
-                        .Include("Fields")
-                        .Include("ItemCategory")
-                        .ToList();
+                var forms = context.Form
+                    .Include("Fields")
+                    .Include("ItemCategory")
+                    .ToList();
 
-                    //var categories = context.ItemCategory.ToList();
-                    //forms.ForEach(f =>
-                    //{
-                    //    var targetCategory = categories.FirstOrDefault(ic => ic.Id == f.ItemCategoryId);
-                    //    if (targetCategory != null)
-                    //    {
-                    //        f.ItemCategory = targetCategory;
-                    //    }
-                    //});
-
-                    return Ok(forms);
-                }
+                return Ok(forms);
             }
             catch (Exception ex)
             {
@@ -60,20 +48,18 @@ namespace TheBigDay.Controllers
         {
             try
             {
-                using (var context = new DatabaseContext(
+                using var context = new DatabaseContext(
                 _serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
+                    DbContextOptions<DatabaseContext>>());
+                if (form.ItemCategory != null)
                 {
-                    if(form.ItemCategory != null)
-                    {
-                        context.Entry(form.ItemCategory).State = EntityState.Unchanged;
-                        context.Form.Add(form);
-                        context.SaveChanges();
+                    context.Entry(form.ItemCategory).State = EntityState.Unchanged;
+                    context.Form.Add(form);
+                    context.SaveChanges();
 
-                        return Ok();
-                    }
-                    throw new Exception("Failed to attach item category: " + form.ItemCategoryId);
+                    return Ok();
                 }
+                throw new Exception("Failed to attach item category: " + form.ItemCategoryId);
             }
             catch (Exception ex)
             {
@@ -85,15 +71,13 @@ namespace TheBigDay.Controllers
         {
             try
             {
-                using (var context = new DatabaseContext(
+                using var context = new DatabaseContext(
                 _serviceProvider.GetRequiredService<
-                    DbContextOptions<DatabaseContext>>()))
-                {
-                    context.Form.Update(form);
-                    context.SaveChanges();
+                    DbContextOptions<DatabaseContext>>());
 
-                    return Ok();
-                }
+                context.Form.Update(form);
+                context.SaveChanges();
+                return Ok();
             }
             catch (Exception ex)
             {
