@@ -87,7 +87,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<StoreController>/5
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] Store e)
+        public void Put(string id, [FromBody] Store store)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace TheBigDay.Controllers
 
                     if (sourceStore != null)
                     {
-                        sourceStore = e;
+                        context.Entry(sourceStore).CurrentValues.SetValues(store);
                         context.SaveChanges();
                     }
 

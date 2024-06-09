@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Graph.TermStore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -162,6 +163,40 @@ namespace TheBigDay.Controllers
             return Ok(await _userService.RegisterAdminAsync(model, UserRoles.AppAdmin));
         }
 #endif
+        [HttpPut]
+        public IActionResult UpdateUser([FromBody] User user)
+        {
+            using (var context = new DatabaseContext(
+                    _serviceProvider.GetRequiredService<
+                       DbContextOptions<DatabaseContext>>()))
+            {
+                try
+                {
+                    var sourceUser = context.User.FirstOrDefault(u => u.Id == user.Id);
+
+                    if(sourceUser != null)
+                    {
+                        if(!user.AddressLine1.IsNullOrEmpty() &&
+                            !user.Suburb.IsNullOrEmpty() &&
+                            !user.State.IsNullOrEmpty() &&
+                            !user.Country.IsNullOrEmpty() &&
+                            !user.Postcode.IsNullOrEmpty())
+                        {
+                            user.HasCompletedProfile = true;
+                        }
+
+                        context.Entry(sourceUser).CurrentValues.SetValues(user);
+                        context.User.Update(sourceUser);
+                    }
+                    throw new Exception("Failed to find user");
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception("Failed to update user details", ex);
+                }
+            }
+        }
+
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));

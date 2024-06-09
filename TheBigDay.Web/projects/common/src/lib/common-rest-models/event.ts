@@ -1,5 +1,5 @@
 import {FormEntry} from "./form-entry";
-import {Customer} from "./customer";
+import {User} from "./user";
 
 export interface Event {
     id?: string
@@ -37,7 +37,7 @@ export interface EventCustomer {
     isCreator: boolean;
 
     // navigation
-    customer: Customer;
+    customer: User;
     event: Event;
 }
 

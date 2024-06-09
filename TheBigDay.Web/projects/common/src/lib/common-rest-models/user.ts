@@ -10,7 +10,7 @@ export interface Representative {
     image?: string;
 }
 
-export interface Customer {
+export interface User {
     id: string
     photoPath: string;
     firstName: string;

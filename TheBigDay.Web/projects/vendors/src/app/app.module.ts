@@ -10,7 +10,7 @@ import {SharedModule} from "primeng/api";
 import {StyleClassModule} from "primeng/styleclass";
 import {AuthGuard, AuthModule, AuthService} from "@auth0/auth0-angular";
 import {environment} from "../environments/environment";
-import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./VendorAuthInterceptor";
 import {Router} from "@angular/router";
 import {AvatarModule} from "primeng/avatar";

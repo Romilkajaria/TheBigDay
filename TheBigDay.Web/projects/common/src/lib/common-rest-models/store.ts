@@ -17,6 +17,11 @@ export interface Store {
     photoPath?: string;
     isDeleted: boolean;
     hasCompletedStoreSetup: boolean;
-    storeType?: boolean;
+    storeType?: StoreType;
     items: FormEntry[];
+}
+
+export enum StoreType {
+    INDIVIDUAL,
+    BUSINESS,
 }

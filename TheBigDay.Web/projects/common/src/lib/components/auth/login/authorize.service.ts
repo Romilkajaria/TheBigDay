@@ -5,7 +5,7 @@ import {BehaviorSubject, Subject, map, tap, switchMap, of} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {RegisterStoreModel} from "../../../common-rest-models/authentication-models";
-import {Customer} from "../../../common-rest-models/customer";
+import {User} from "../../../common-rest-models/user";
 import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
 import {LocalStorageService} from "../../../common-services/local-storage-service/local-storage.service";
 import {Store} from "../../../common-rest-models/store";
@@ -21,11 +21,11 @@ export class AuthorizeService {
                 private cacheService: LocalStorageService) {}
 
     private _authStateChanged: Subject<boolean> = new BehaviorSubject<boolean>(false);
-    private _user: Subject<Customer | undefined> = new BehaviorSubject<Customer | undefined>(undefined)
+    private _user: Subject<User | undefined> = new BehaviorSubject<User | undefined>(undefined)
     private readonly authUrl = environment.apiUrl + 'store/authenticate/';
     public static readonly  tokenKey = 'token'
     public static readonly  storeKey = 'store'
-    public current: Customer | undefined;
+    public current: User | undefined;
 
     public initialise() {
         return this.ping().pipe(
@@ -54,8 +54,6 @@ export class AuthorizeService {
         return this._user.asObservable();
     }
 
-    public getUser() {
-    }
 
     // token-based login
     public signIn(email: string, password: string) {
@@ -120,7 +118,7 @@ export class AuthorizeService {
 
     // check if the user is authenticated. the endpoint is protected so 401 if not.
     public ping() {
-        return this.http.get<Customer | undefined>(environment.apiUrl + 'user/ping');
+        return this.http.get<User | undefined>(environment.apiUrl + 'user/ping');
     }
 }
 

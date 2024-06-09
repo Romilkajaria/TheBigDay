@@ -19,6 +19,7 @@ import {InputSwitchModule} from "primeng/inputswitch";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {LoadingModule} from "../../../../../common/src/lib/components/loading/loading/loading.module";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {LoadingModule} from "../../../../../common/src/lib/components/loading/lo
         InputSwitchModule,
         ToastModule,
         ConfirmDialogModule,
-        LoadingModule
+        LoadingModule,
+        RippleModule
     ]
 })
 export class ProductsModule { }

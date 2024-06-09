@@ -40,7 +40,7 @@ namespace TheBigDay.Models
     }
     public enum StoreType
     {
-        SoleTrader,
-        Business,
+        INDIVIDUAL,
+        BUSINESS,
     }
 }

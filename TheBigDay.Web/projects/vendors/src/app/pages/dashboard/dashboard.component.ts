@@ -1,23 +1,26 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MenuItem, Message} from 'primeng/api';
-import {Subscription} from 'rxjs';
+import {Message, MessageService} from 'primeng/api';
+import {Subscription, switchMap, tap} from 'rxjs';
 import {LayoutService} from "../../../../../common/src/lib/layout/service/app.layout.service";
-import {
-    CommonVendorService
-} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
-import {Router} from "@angular/router";
 import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
+import {DialogService} from "primeng/dynamicdialog";
+import {SetStoreTypeDialogComponent} from "./set-store-type-dialog/set-store-type-dialog.component";
+import {
+    CommonVendorService
+} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+import {User} from "../../../../../common/src/lib/common-rest-models/user";
+import {SetUserProfileDialogComponent} from "./set-user-profile-dialog/set-user-profile-dialog.component";
+import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-store-details-dialog.component";
+// import {SetProfileDialogComponent} from "./set-profile-diallog/set-profile-dialog.component";
 
 @Component({
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss']
+    styleUrls: ['./dashboard.component.scss'],
+    providers: [DialogService, MessageService]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
-    items!: MenuItem[];
-
     products!: FormEntry[];
 
     chartData: any;
@@ -28,29 +31,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     loading = true
 
-    vendor?: Store;
+    store?: Store;
     messages: MessageConfig[] = [];
+    user?: User;
 
     constructor( public layoutService: LayoutService,
-                 private vendorService: CommonVendorService,
-                 router: Router,
-                 private auth: AuthorizeService) {
-        this.subscription = this.layoutService.configUpdate$.subscribe(() => {
-            this.initChart();
-        });
+                 auth: AuthorizeService,
+                 private dialogService: DialogService,
+                 private messageService: MessageService,
+                 private storeService: CommonVendorService) {
+        this.store = auth.current?.store;
     }
 
     ngOnInit() {
-        this.items = [
-            { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Remove', icon: 'pi pi-fw pi-minus' }
-        ];
-
-        this.messages = [
-            { severity: 'info', summary: 'Are you an individual or a business?', hide: this.auth.current?.store?.storeType, timeToFinish: 1, actionButtonText: 'Set business type' },
-            { severity: 'info', summary: 'Finish off setting up your personal profile', hide: this.auth.current?.hasCompletedProfile, timeToFinish: 5, actionButtonText: 'Setup profile'},
-            { severity: 'info', summary: 'Start setting up your store', hide: this.auth.current?.store?.hasCompletedStoreSetup, timeToFinish: 10, actionButtonText: "Start" }
-        ]
+        this.setMessages();
     }
 
     initChart() {
@@ -119,6 +113,67 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    private setStoreType() {
+        this.dialogService.open(SetStoreTypeDialogComponent, {header: 'Set store type', data: this.store, width: '50rem'})
+            .onClose
+            .pipe(
+                tap((message?: Message) => {
+                    if(message) {
+                        this.messageService.add(message);
+                    }
+                }),
+                switchMap(() => this.storeService.getVendor(this.store!.id)))
+            .subscribe((store) => {
+                this.store = store;
+                this.setMessages();
+            })
+    }
+
+    private setProfile() {
+        this.dialogService.open(SetUserProfileDialogComponent, {header: 'Setup your profile', data: this.user, width: '50rem'})
+            .onClose
+            .pipe(
+                tap((message?: Message) => {
+                    if(message) {
+                        this.messageService.add(message);
+                    }
+                }),
+                switchMap(() => this.storeService.getVendor(this.store!.id)))
+            .subscribe((store) => {
+                this.store = store;
+                this.setMessages();
+            })
+    }
+
+    private setMessages() {
+        this.messages = [
+            { severity: 'info', summary: 'Are you an individual or a business?',
+                hide: this.store?.storeType != undefined,
+                timeToFinish: 1,
+                actionButtonText: 'Set store type',
+                onButtonClick: () => this.setStoreType(),
+            },
+            { severity: 'info',
+                summary: 'Finish off setting up your personal profile',
+                hide: this.user?.hasCompletedProfile,
+                timeToFinish: 5,
+                actionButtonText: 'Setup profile',
+                onButtonClick: () => this.setProfile(),
+            },
+            { severity: 'info',
+                summary: 'Start setting up your store',
+                hide: this.store?.hasCompletedStoreSetup,
+                timeToFinish: 10,
+                actionButtonText: "Start",
+                onButtonClick: () => this.startSettingStoreDetailWizard()
+            }
+        ]
+    }
+
+    private startSettingStoreDetailWizard() {
+        this.dialogService.open(SetStoreDetailsDialogComponent, {header: 'Set store details', data: this.store, width: '50rem'})
     }
 }
 

@@ -43,7 +43,7 @@ namespace TheBigDay.Services
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>()))
                 {
-                    string defaultNotYetSet = "Not yet set";
+                    string defaultNotYetSet = "";
 
                     // set up default store values
                     Store store = new Store()

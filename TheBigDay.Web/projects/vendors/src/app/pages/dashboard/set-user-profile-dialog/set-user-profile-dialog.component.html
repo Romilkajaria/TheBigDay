@@ -1,0 +1,42 @@
+<p>Please provide us with your information.</p>
+
+<div *ngIf="user">
+    <div class="text-center mt-3 mb-3 text-xl font-semibold">Your details</div>
+    <label class="block text-900 text-xl font-medium mb-2">Email</label>
+    <input type="text" [(ngModel)]="user.email" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+    <label class="block text-900 font-medium text-xl mb-2">First Name</label>
+    <input type="text" [(ngModel)]="user.firstName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
+    <input type="text" [(ngModel)]="user.lastName" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">Address Line 1</label>
+    <input type="text" [(ngModel)]="user.addressLine1" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+    <label class="block text-900 font-medium text-xl mb-2">Address Line 2</label>
+    <input type="text" [(ngModel)]="user.addressLine2" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">Suburb</label>
+    <input type="text" [(ngModel)]="user.suburb" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">State</label>
+    <input type="text" [(ngModel)]="user.state" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">Country</label>
+    <input type="text" [(ngModel)]="user.country" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">Postcode</label>
+    <input type="text" [(ngModel)]="user.postcode" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <label class="block text-900 font-medium text-xl mb-2">Contact</label>
+    <input type="text" [(ngModel)]="user.mobile" pInputText  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+
+    <div class="flex-auto p-fluid">
+        <label class="font-bold block mb-2"> Date of birth </label>
+        <p-calendar [(ngModel)]="user.dob" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
+    </div>
+
+    <div class="flex justify-content-end gap-3 mt-2">
+        <button class="p-button-secondary" pButton pRipple label="Save" (click)="save()"></button>
+    </div>
+</div>

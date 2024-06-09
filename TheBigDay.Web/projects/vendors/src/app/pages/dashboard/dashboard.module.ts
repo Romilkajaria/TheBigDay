@@ -17,6 +17,9 @@ import {AvatarModule} from "primeng/avatar";
 import {BadgeModule} from "primeng/badge";
 import {MessageModule} from "primeng/message";
 import {RippleModule} from "primeng/ripple";
+import {SetUserProfileDialogComponent} from "./set-user-profile-dialog/set-user-profile-dialog.component";
+import {SetStoreTypeDialogComponent} from "./set-store-type-dialog/set-store-type-dialog.component";
+import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-store-details-dialog.component";
 
 @NgModule({
     imports: [
@@ -36,7 +39,10 @@ import {RippleModule} from "primeng/ripple";
         AvatarModule,
         BadgeModule,
         MessageModule,
-        RippleModule
+        RippleModule,
+        SetUserProfileDialogComponent,
+        SetStoreTypeDialogComponent,
+        SetStoreDetailsDialogComponent
     ],
     declarations: [DashboardComponent]
 })
