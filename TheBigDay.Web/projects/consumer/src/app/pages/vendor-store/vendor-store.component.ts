@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {
-    CommonVendorService
-} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+    StoreService
+} from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
 import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
 import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
@@ -20,7 +20,7 @@ export class VendorStoreComponent implements OnInit {
     loading = true;
 
     constructor(private route: ActivatedRoute,
-                private vendorService: CommonVendorService) {
+                private vendorService: StoreService) {
 
 
         // this.vendorService.getVendor()

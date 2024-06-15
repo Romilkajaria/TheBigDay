@@ -15,7 +15,7 @@ import {
 import {FormService} from "./form.service";
 import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
 import {forkJoin} from "rxjs";
-import {ItemCategoryService} from "../item-category/item-category.service";
+import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
 import {DropdownChangeEvent} from "primeng/dropdown";
 
 @Component({

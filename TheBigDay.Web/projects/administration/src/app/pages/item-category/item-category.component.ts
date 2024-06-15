@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
-import {ItemCategoryService} from "./item-category.service";
+import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({

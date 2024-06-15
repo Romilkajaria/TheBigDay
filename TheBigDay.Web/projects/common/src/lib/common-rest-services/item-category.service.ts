@@ -1,9 +1,9 @@
 import {Injectable, Injector} from "@angular/core";
 import {
     BaseCommonRestService
-} from "../../../../../common/src/lib/common-rest-services/base-common-rest-service.service";
-import {environment} from "../../../../../common/src/lib/environments/environment";
-import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
+} from "./base-common-rest-service.service";
+import {environment} from "../environments/environment";
+import {ItemCategory} from "../common-rest-models/item-category";
 
 @Injectable({
     providedIn: "root",

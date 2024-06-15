@@ -14,7 +14,7 @@ import {CalendarModule} from "primeng/calendar";
 import {RippleModule} from "primeng/ripple";
 
 @Component({
-  selector: 'vendors-set-user-profile-dialog',
+  selector: 'store-set-user-profile-dialog',
   templateUrl: './set-user-profile-dialog.component.html',
   styleUrl: './set-user-profile-dialog.component.scss',
     standalone: true,

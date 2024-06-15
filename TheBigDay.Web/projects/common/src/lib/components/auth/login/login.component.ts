@@ -4,7 +4,7 @@ import {Store} from "../../../common-rest-models/store";
 import {AuthorizeService} from "./authorize.service";
 import {Router} from "@angular/router";
 import {LoginModel, RegisterStoreModel} from "../../../common-rest-models/authentication-models";
-import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
+import {StoreService} from "../../../common-rest-services/store/store-service.service";
 import {switchMap} from "rxjs";
 import {MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../helpers/toastMessages";

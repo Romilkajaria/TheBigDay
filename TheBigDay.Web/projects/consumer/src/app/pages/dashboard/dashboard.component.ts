@@ -13,8 +13,8 @@ import {
     CommonServicesService
 } from "../../../../../common/src/lib/common-rest-services/services/common-services-service.service";
 import {
-    CommonVendorService
-} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+    StoreService
+} from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
 import {KeyValue} from "@angular/common";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     constructor( public layoutService: LayoutService,
                  private productsService: CommonProductsService,
                  private servicesService: CommonServicesService,
-                 private vendorService: CommonVendorService,
+                 private vendorService: StoreService,
                  private router: Router) {
     }
 

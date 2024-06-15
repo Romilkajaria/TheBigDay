@@ -7,7 +7,7 @@ import {RegisterVendor} from "../../common-rest-models/authentication-models";
 @Injectable({
   providedIn: 'root'
 })
-export class CommonVendorService extends BaseCommonRestService {
+export class StoreService extends BaseCommonRestService {
 
     private readonly vendorUrl = environment.apiUrl + "store";
     constructor(injector: Injector) {

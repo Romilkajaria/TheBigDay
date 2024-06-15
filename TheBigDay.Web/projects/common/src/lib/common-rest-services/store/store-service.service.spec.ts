@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CommonVendorService } from './common-vendor-service.service';
+import { StoreService } from './store-service.service';
 
 describe('CommonVendorServiceService', () => {
-  let service: CommonVendorService;
+  let service: StoreService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CommonVendorService);
+    service = TestBed.inject(StoreService);
   });
 
   it('should be created', () => {

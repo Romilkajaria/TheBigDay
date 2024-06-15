@@ -4,14 +4,14 @@ import {DialogConfig} from "@angular/cdk/dialog";
 import {Store, StoreType} from "../../../../../../common/src/lib/common-rest-models/store";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {
-    CommonVendorService
-} from "../../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+    StoreService
+} from "../../../../../../common/src/lib/common-rest-services/store/store-service.service";
 import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 
 @Component({
-  selector: 'vendors-set-store-type-dialog',
+  selector: 'store-set-store-type-dialog',
   templateUrl: './set-store-type-dialog.component.html',
   styleUrl: './set-user-profile-dialog.component.scss',
     standalone: true,
@@ -25,7 +25,7 @@ export class SetStoreTypeDialogComponent {
     public loading = false;
 
     constructor(private dialogConfig: DynamicDialogConfig<Store>,
-                private storeService: CommonVendorService,
+                private storeService: StoreService,
                 private messageService: MessageService,
                 private ref: DynamicDialogRef) {
     }

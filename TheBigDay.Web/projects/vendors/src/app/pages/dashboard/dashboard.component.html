@@ -13,7 +13,7 @@
             <span class="flex align-items-center justify-content-between w-full">
                 <span>{{message.summary}}</span>
                 <div class="flex align-items-center">
-                    <p-badge *ngIf="message.timeToFinish" [value]="message.timeToFinish.toString() + ' mins'" class="ml-2 mr-2" />
+                    <p-badge *ngIf="message.timeToFinish" [value]="message.timeToFinish" class="ml-2 mr-2" />
                     <button *ngIf="message.actionButtonText && message.onButtonClick" class="me-2" pButton pRipple [label]="message.actionButtonText" (click)="message.onButtonClick()"></button>
 
                 </div>

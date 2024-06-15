@@ -6,7 +6,7 @@ import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {RegisterStoreModel} from "../../../common-rest-models/authentication-models";
 import {User} from "../../../common-rest-models/user";
-import {CommonVendorService} from "../../../common-rest-services/vendors/common-vendor-service.service";
+import {StoreService} from "../../../common-rest-services/store/store-service.service";
 import {LocalStorageService} from "../../../common-services/local-storage-service/local-storage.service";
 import {Store} from "../../../common-rest-models/store";
 
@@ -17,7 +17,7 @@ export class AuthorizeService {
 
     constructor(private http: HttpClient,
                 private router: Router,
-                private storeService: CommonVendorService,
+                private storeService: StoreService,
                 private cacheService: LocalStorageService) {}
 
     private _authStateChanged: Subject<boolean> = new BehaviorSubject<boolean>(false);

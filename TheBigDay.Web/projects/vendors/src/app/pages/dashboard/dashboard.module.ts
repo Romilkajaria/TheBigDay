@@ -42,7 +42,7 @@ import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-sto
         RippleModule,
         SetUserProfileDialogComponent,
         SetStoreTypeDialogComponent,
-        SetStoreDetailsDialogComponent
+        SetStoreDetailsDialogComponent,
     ],
     declarations: [DashboardComponent]
 })

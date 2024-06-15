@@ -8,8 +8,8 @@ import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-e
 import {DialogService} from "primeng/dynamicdialog";
 import {SetStoreTypeDialogComponent} from "./set-store-type-dialog/set-store-type-dialog.component";
 import {
-    CommonVendorService
-} from "../../../../../common/src/lib/common-rest-services/vendors/common-vendor-service.service";
+    StoreService
+} from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
 import {User} from "../../../../../common/src/lib/common-rest-models/user";
 import {SetUserProfileDialogComponent} from "./set-user-profile-dialog/set-user-profile-dialog.component";
 import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-store-details-dialog.component";
@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                  auth: AuthorizeService,
                  private dialogService: DialogService,
                  private messageService: MessageService,
-                 private storeService: CommonVendorService) {
+                 private storeService: StoreService) {
         this.store = auth.current?.store;
     }
 
@@ -151,21 +151,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.messages = [
             { severity: 'info', summary: 'Are you an individual or a business?',
                 hide: this.store?.storeType != undefined,
-                timeToFinish: 1,
+                timeToFinish: '< 1 min',
                 actionButtonText: 'Set store type',
                 onButtonClick: () => this.setStoreType(),
             },
             { severity: 'info',
                 summary: 'Finish off setting up your personal profile',
                 hide: this.user?.hasCompletedProfile,
-                timeToFinish: 5,
+                timeToFinish: '< 5 mins',
                 actionButtonText: 'Setup profile',
                 onButtonClick: () => this.setProfile(),
             },
             { severity: 'info',
                 summary: 'Start setting up your store',
                 hide: this.store?.hasCompletedStoreSetup,
-                timeToFinish: 10,
+                timeToFinish: '< 5 mins',
                 actionButtonText: "Start",
                 onButtonClick: () => this.startSettingStoreDetailWizard()
             }
@@ -179,7 +179,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 export interface MessageConfig extends Message {
     hide?: boolean;
-    timeToFinish?: number;
+    timeToFinish?: string;
     actionButtonText?: string;
     onButtonClick?: () => void;
 }
