@@ -1,4 +1,5 @@
 import {FormEntry} from "./form-entry";
+import {ItemCategory} from "./item-category";
 
 export interface Store {
     id: string;
@@ -19,6 +20,7 @@ export interface Store {
     hasCompletedStoreSetup: boolean;
     storeType?: StoreType;
     items: FormEntry[];
+    itemCategories: ItemCategory[];
 }
 
 export enum StoreType {

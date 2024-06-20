@@ -12,8 +12,8 @@ using TheBigDay.DBContext;
 namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240603093509_extrafields")]
-    partial class extrafields
+    [Migration("20240619190211_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -458,6 +458,9 @@ namespace TheBigDay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("FormId")
                         .HasColumnType("uniqueidentifier");
 
@@ -487,11 +490,13 @@ namespace TheBigDay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Desctiption")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("ItemCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -508,33 +513,27 @@ namespace TheBigDay.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AddressLine1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AfterHoursContactName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AfterHoursContactNum")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNum")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HasCompletedStoreSetup")
@@ -556,23 +555,44 @@ namespace TheBigDay.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postcode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StoreType")
                         .HasColumnType("int");
 
                     b.Property<string>("Suburb")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Store");
+                });
+
+            modelBuilder.Entity("TheBigDay.Models.StoreItemCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ItemCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ItemGategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemCategoryId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("StoreItemCategory");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.User", b =>
@@ -763,7 +783,7 @@ namespace TheBigDay.Migrations
                         .HasForeignKey("FormId");
 
                     b.HasOne("TheBigDay.Models.ItemCategory", "ItemCategory")
-                        .WithMany("Forms")
+                        .WithMany()
                         .HasForeignKey("ItemCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -783,6 +803,25 @@ namespace TheBigDay.Migrations
                     b.HasOne("TheBigDay.Models.ItemCategory", null)
                         .WithMany("SubCategories")
                         .HasForeignKey("ItemCategoryId");
+                });
+
+            modelBuilder.Entity("TheBigDay.Models.StoreItemCategory", b =>
+                {
+                    b.HasOne("TheBigDay.Models.ItemCategory", "ItemCategory")
+                        .WithMany("StoreItemCategories")
+                        .HasForeignKey("ItemCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TheBigDay.Models.Store", "Store")
+                        .WithMany("StoreItemCategories")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ItemCategory");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.User", b =>
@@ -820,7 +859,7 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.ItemCategory", b =>
                 {
-                    b.Navigation("Forms");
+                    b.Navigation("StoreItemCategories");
 
                     b.Navigation("SubCategories");
                 });
@@ -828,6 +867,8 @@ namespace TheBigDay.Migrations
             modelBuilder.Entity("TheBigDay.Models.Store", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("StoreItemCategories");
 
                     b.Navigation("Users");
                 });

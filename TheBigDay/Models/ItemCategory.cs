@@ -10,8 +10,10 @@ namespace TheBigDay.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-		public required string Name { get; set; }
+		public string? Name { get; set; }
+		public string? Desctiption { get; set; }
 		public List<ItemCategory>? SubCategories { get; set; }
+
+		public List<StoreItemCategory>? StoreItemCategories { get; set; }
 	}
 }
-

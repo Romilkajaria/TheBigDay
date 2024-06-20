@@ -9,6 +9,7 @@ namespace TheBigDay.Models
         public Store() 
         {
             Users = new List<User>();
+            StoreItemCategories = new List<StoreItemCategory>();
         }
 
         [Key]
@@ -17,16 +18,16 @@ namespace TheBigDay.Models
         public string? Name { get; set; }
         public string? Description { get; set; }
         public int OperatingRadius { get; set; }
-        public string AddressLine1 { get; set; }
+        public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
-        public string Suburb { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
-        public string Postcode { get; set; }
-        public string ContactNum { get; set; }
-        public string AfterHoursContactName { get; set; }
-        public string AfterHoursContactNum { get; set; }
-        public string Email { get; set; }
+        public string? Suburb { get; set; }
+        public string? State { get; set; }
+        public string? Country { get; set; }
+        public string? Postcode { get; set; }
+        public string? ContactNum { get; set; }
+        public string? AfterHoursContactName { get; set; }
+        public string? AfterHoursContactNum { get; set; }
+        public string? Email { get; set; }
         public string? PhotoPath { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
@@ -37,6 +38,7 @@ namespace TheBigDay.Models
         // navigation
         public List<FormEntry>? Items { get; set; }
         public List<User> Users { get; } = new List<User> { };
+        public List<StoreItemCategory> StoreItemCategories { get; set; }
     }
     public enum StoreType
     {

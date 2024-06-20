@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TheBigDay.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,7 +42,8 @@ namespace TheBigDay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Desctiption = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ItemCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -63,16 +64,16 @@ namespace TheBigDay.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OperatingRadius = table.Column<int>(type: "int", nullable: false),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AfterHoursContactName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AfterHoursContactNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Suburb = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AfterHoursContactName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AfterHoursContactNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -213,6 +214,32 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StoreItemCategory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemGategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StoreItemCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StoreItemCategory_ItemCategory_ItemCategoryId",
+                        column: x => x.ItemCategoryId,
+                        principalTable: "ItemCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StoreItemCategory_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FormField",
                 columns: table => new
                 {
@@ -220,6 +247,7 @@ namespace TheBigDay.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Placeholder = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Required = table.Column<bool>(type: "bit", nullable: false),
                     FormId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -323,20 +351,20 @@ namespace TheBigDay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false),
-                    IsCreator = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    IsCreator = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EventCustomers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventCustomers_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_EventCustomers_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EventCustomers_Event_EventId",
                         column: x => x.EventId,
@@ -461,14 +489,14 @@ namespace TheBigDay.Migrations
                 column: "EventTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EventCustomers_CustomerId",
+                table: "EventCustomers",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EventCustomers_EventId",
                 table: "EventCustomers",
                 column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventCustomers_UserId",
-                table: "EventCustomers",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventItem_EventId",
@@ -514,6 +542,16 @@ namespace TheBigDay.Migrations
                 name: "IX_ItemCategory_ItemCategoryId",
                 table: "ItemCategory",
                 column: "ItemCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoreItemCategory_ItemCategoryId",
+                table: "StoreItemCategory",
+                column: "ItemCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoreItemCategory_StoreId",
+                table: "StoreItemCategory",
+                column: "StoreId");
         }
 
         /// <inheritdoc />
@@ -539,6 +577,9 @@ namespace TheBigDay.Migrations
 
             migrationBuilder.DropTable(
                 name: "EventItem");
+
+            migrationBuilder.DropTable(
+                name: "StoreItemCategory");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
