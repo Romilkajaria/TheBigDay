@@ -16,7 +16,7 @@ namespace TheBigDay.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 		public Guid StoreId { get; set; }
-		public Guid ItemGategoryId { get; set; }
+		public Guid ItemCategoryId { get; set; }
 
 		//nav
 		public Store Store { get; set; }

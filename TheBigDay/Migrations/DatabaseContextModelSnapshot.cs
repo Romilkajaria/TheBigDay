@@ -577,9 +577,6 @@ namespace TheBigDay.Migrations
                     b.Property<Guid>("ItemCategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ItemGategoryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("StoreId")
                         .HasColumnType("uniqueidentifier");
 

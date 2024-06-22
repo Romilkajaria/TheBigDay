@@ -1,11 +1,12 @@
-﻿using Azure.Identity;
-using Microsoft.AspNetCore.Authorization;
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Graph.TermStore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Mono.TextTemplating;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security;
 using System.Security.Claims;
 using System.Text;
 using TheBigDay.DBContext;
@@ -161,6 +162,22 @@ namespace TheBigDay.Controllers
         public async Task<IActionResult> RegisterGodAdmin([FromBody] Register model)
         {
             return Ok(await _userService.RegisterAdminAsync(model, UserRoles.AppAdmin));
+        }
+
+        [HttpPost]
+        [Route("seed-god-admin")]
+        public async Task<IActionResult> SeedGodAdmin()
+        {
+            var user = new RegisterUser 
+            {
+                FirstName = "TBD",
+                LastName = "Admin",
+                Password = "RomAndZealReallyLikeThierBusiness1.",
+                Email = "admin@thebigggday.com"
+                
+            };
+
+            return Ok(await _userService.RegisterAdminAsync(new Models.AuthModels.Register { User = user}, UserRoles.AppAdmin));
         }
 #endif
         [HttpPut]

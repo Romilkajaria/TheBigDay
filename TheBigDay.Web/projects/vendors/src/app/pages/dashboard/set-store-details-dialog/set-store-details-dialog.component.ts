@@ -15,6 +15,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {MultiSelectModule} from "primeng/multiselect";
 import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'store-set-store-details-dialog',
@@ -38,11 +39,11 @@ export class SetStoreDetailsDialogComponent implements OnInit {
     public itemCategories?: ItemCategory[];
     public stepIndex = 0;
     private loading = false;
-    private ref: any;
 
     constructor(private storeService: StoreService,
                 private authService: AuthorizeService,
                 private messageService: MessageService,
+                private ref: DynamicDialogRef,
                 itemCategoryService: ItemCategoryService) {
         itemCategoryService.getCategories().subscribe((ic) => this.itemCategories = ic)
     }

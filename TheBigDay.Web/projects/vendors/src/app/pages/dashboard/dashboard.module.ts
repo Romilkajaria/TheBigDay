@@ -40,9 +40,6 @@ import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-sto
         BadgeModule,
         MessageModule,
         RippleModule,
-        SetUserProfileDialogComponent,
-        SetStoreTypeDialogComponent,
-        SetStoreDetailsDialogComponent,
     ],
     declarations: [DashboardComponent]
 })

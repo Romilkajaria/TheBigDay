@@ -37,7 +37,5 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Services\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ export interface Store {
     hasCompletedStoreSetup: boolean;
     storeType?: StoreType;
     items: FormEntry[];
-    itemCategories: ItemCategory[];
+    storeItemCategories: ItemCategory[];
 }
 
 export enum StoreType {
