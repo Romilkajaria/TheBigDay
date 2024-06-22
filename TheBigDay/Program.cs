@@ -89,7 +89,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddScoped<IStoreService, StoreService>();
+        //builder.Services.AddScoped<IStoreService, StoreService>();
 
         var app = builder.Build();
 

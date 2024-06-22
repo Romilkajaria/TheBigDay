@@ -19,17 +19,14 @@ namespace TheBigDay.Controllers
         private readonly ILogger<StoreController> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly UserManager<User> _userManager;
-        private readonly IStoreService _storeService;
 
         public StoreController(ILogger<StoreController> logger, 
             IServiceProvider serviceProvider, 
-            UserManager<User> userManager,
-            IStoreService storeService)
+            UserManager<User> userManager)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
             _userManager = userManager;
-            _storeService = storeService;
         }
 
         [HttpGet]
@@ -97,7 +94,19 @@ namespace TheBigDay.Controllers
         {
             try
             {
-                _storeService.UpdateStore(id, store);
+                using (var context = new DatabaseContext(
+               _serviceProvider.GetRequiredService<
+                   DbContextOptions<DatabaseContext>>()))
+                {
+                    var sourceStore = context.Store.FirstOrDefault((c) => c.Id.ToString() == id);
+
+                    if (sourceStore != null)
+                    {
+                        sourceStore = store;
+                        context.SaveChanges();
+                    }
+
+                }
             }
             catch (Exception ex)
             {
