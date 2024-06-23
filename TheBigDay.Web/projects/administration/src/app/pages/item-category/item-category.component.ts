@@ -13,12 +13,6 @@ export class ItemCategoryComponent {
     public itemCategories: ItemCategory[] = [];
     public selectedCategory?: ItemCategory;
 
-    public readonly newCategory: ItemCategory = {
-        name: '',
-        id: undefined,
-        subCategories: undefined
-    }
-
     constructor(private categoryService: ItemCategoryService, private confirmationService: ConfirmationService) {
         this.updateData();
     }
@@ -28,7 +22,11 @@ export class ItemCategoryComponent {
     }
 
     createNew() {
-        this.selectedCategory = this.newCategory;
+        this.selectedCategory = {
+            name: '',
+            id: undefined,
+            subCategories: undefined
+        };
     }
 
     addOrUpdate() {

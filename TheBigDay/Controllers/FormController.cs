@@ -53,7 +53,36 @@ namespace TheBigDay.Controllers
                     DbContextOptions<DatabaseContext>>());
                 if (form.ItemCategory != null)
                 {
-                    context.Entry(form.ItemCategory).State = EntityState.Unchanged;
+                    // Ensure the ItemCategory is tracked only once
+                    var existingItemCategory = context.ItemCategory.Find(form.ItemCategory.Id);
+                    if (existingItemCategory != null)
+                    {
+                        form.ItemCategory = existingItemCategory;
+                    }
+                    else
+                    {
+                        context.ItemCategory.Attach(form.ItemCategory);
+                    }
+
+                    if (form.SubForms != null && form.SubForms.Count > 0)
+                    {
+                        form.SubForms.ForEach(sf =>
+                        {
+                            if (sf.ItemCategory != null)
+                            {
+                                var subFormItemCategory = context.ItemCategory.Find(sf.ItemCategory.Id);
+                                if (subFormItemCategory != null)
+                                {
+                                    sf.ItemCategory = subFormItemCategory;
+                                }
+                                else
+                                {
+                                    context.ItemCategory.Attach(sf.ItemCategory);
+                                }
+                            }
+                        });
+                    }
+
                     context.Form.Add(form);
                     context.SaveChanges();
 
@@ -74,10 +103,44 @@ namespace TheBigDay.Controllers
                 using var context = new DatabaseContext(
                 _serviceProvider.GetRequiredService<
                     DbContextOptions<DatabaseContext>>());
+                if (form.ItemCategory != null)
+                {
+                    // Ensure the ItemCategory is tracked only once
+                    var existingItemCategory = context.ItemCategory.Find(form.ItemCategory.Id);
+                    if (existingItemCategory != null)
+                    {
+                        form.ItemCategory = existingItemCategory;
+                    }
+                    else
+                    {
+                        context.ItemCategory.Attach(form.ItemCategory);
+                    }
 
-                context.Form.Update(form);
-                context.SaveChanges();
-                return Ok();
+                    if (form.SubForms != null && form.SubForms.Count > 0)
+                    {
+                        form.SubForms.ForEach(sf =>
+                        {
+                            if (sf.ItemCategory != null)
+                            {
+                                var subFormItemCategory = context.ItemCategory.Find(sf.ItemCategory.Id);
+                                if (subFormItemCategory != null)
+                                {
+                                    sf.ItemCategory = subFormItemCategory;
+                                }
+                                else
+                                {
+                                    context.ItemCategory.Attach(sf.ItemCategory);
+                                }
+                            }
+                        });
+                    }
+
+                    context.Form.Update(form);
+                    context.SaveChanges();
+                    return Ok();
+                }
+                throw new Exception("Failed to attach item category: " + form.ItemCategoryId);
+
             }
             catch (Exception ex)
             {

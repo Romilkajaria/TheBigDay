@@ -14,7 +14,7 @@ namespace TheBigDay.Models.Form_Models
         public ItemType ItemType { get; set; }
         public Guid ItemCategoryId { get; internal set; }
         public FormLevel FormLevel { get; set; }
-        //public Guid? ParentFormId { get; set; }
+        public Guid? FormId { get; set; }
         public bool IsDeleted { get; set; }
 
         // navigation

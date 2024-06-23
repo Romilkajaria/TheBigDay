@@ -20,6 +20,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {AccordionModule} from "primeng/accordion";
 import {DividerModule} from "primeng/divider";
 import {BadgeModule} from "primeng/badge";
+import {EditorModule} from "primeng/editor";
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {BadgeModule} from "primeng/badge";
         AccordionModule,
         DividerModule,
         BadgeModule,
+        EditorModule,
     ]
 })
 export class FormsModule { }

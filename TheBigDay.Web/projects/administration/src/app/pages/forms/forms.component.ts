@@ -16,7 +16,6 @@ import {FormService} from "./form.service";
 import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
 import {forkJoin} from "rxjs";
 import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
-import {DropdownChangeEvent} from "primeng/dropdown";
 
 @Component({
   selector: 'administration-forms',
@@ -80,7 +79,7 @@ export class FormsComponent {
     updateData() {
         forkJoin([this.formService.getForms(), this.itemCategoryService.getCategories()]).subscribe(
             ([forms, categories]) => {
-                this.forms = forms;
+                this.forms = forms.filter(f => !f.formId);
                 this.itemCategories = categories;
             }
         )
@@ -100,11 +99,6 @@ export class FormsComponent {
     }
 
     createNewSubForm(form: Form) {
-        const subForm = {...this.newForm}
-        subForm.itemCategory = form.itemCategory;
-        subForm.itemCategoryId = form.itemCategoryId;
-        subForm.formLevel = form.formLevel;
-        subForm.itemType = form.itemType;
         form.subForms!.push({
             id: undefined,
             name: '',
@@ -120,10 +114,34 @@ export class FormsComponent {
         });
     }
 
-    createNewField() {
+    rootFormItemTypeChanged() {
         if(this.selectedForm) {
-            this.selectedForm.fields!.push({...this.newField})
+            if(this.selectedForm.subForms && this.selectedForm.subForms.length > 0) {
+                this.selectedForm.subForms.forEach(sf => sf.itemType = this.selectedForm!.itemType)
+            }
         }
+    }
+
+    rootFormLevelChanged() {
+        if(this.selectedForm) {
+            if(this.selectedForm.subForms && this.selectedForm.subForms.length > 0) {
+                this.selectedForm.subForms.forEach(sf => sf.formLevel = this.selectedForm!.formLevel)
+            }
+        }
+    }
+    rootFormItemCategoryChanged() {
+        if(this.selectedForm) {
+            if(this.selectedForm.subForms && this.selectedForm.subForms.length > 0) {
+                this.selectedForm.subForms.forEach(sf => {
+                    sf.itemCategory = this.selectedForm!.itemCategory;
+                    sf.itemCategoryId = this.selectedForm!.itemCategoryId;
+                })
+            }
+        }
+    }
+
+    createNewField(form: Form) {
+        form.fields!.push({...this.newField})
     }
 
     deleteConfirmation() {

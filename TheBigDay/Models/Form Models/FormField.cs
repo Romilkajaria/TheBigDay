@@ -18,7 +18,7 @@ namespace TheBigDay.Models.Form_Models
 
     public enum FieldTypes
     {
-        STRING,
+        STRING = 1,
         INT32,
         INT64,
         CHECKBOX,

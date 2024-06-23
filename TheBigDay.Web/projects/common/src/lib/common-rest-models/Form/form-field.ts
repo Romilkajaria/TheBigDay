@@ -9,7 +9,7 @@ export class FormField {
 
 export enum FieldType
 {
-    STRING,
+    STRING = 1,
     INT32,
     INT64,
     CHECKBOX,
