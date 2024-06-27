@@ -20,6 +20,7 @@ namespace TheBigDay.DBContext
         public DbSet<FormField> FormField { get; set; }
         public DbSet<ItemCategory> ItemCategory { get; set; }
         public DbSet<Store> Store { get; set; }
+        public DbSet<StoreItemCategory> StoreItemCategory { get; set; }
 
     }
 }

@@ -57,6 +57,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>());
                 var store = context.Store
+                    .Include("StoreItemCategories")
                     .FirstOrDefault((c) => c.Id.ToString() == id);
 
                 return store;
@@ -90,7 +91,7 @@ namespace TheBigDay.Controllers
 
         // PUT api/<StoreController>/5
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] Store store)
+        public IActionResult Put(string id, [FromBody] Store store)
         {
             try
             {
@@ -102,9 +103,26 @@ namespace TheBigDay.Controllers
 
                     if (sourceStore != null)
                     {
-                        sourceStore = store;
+                        // Update properties of the existing entity with the values from the input entity
+                        context.Entry(sourceStore).CurrentValues.SetValues(store);
+
+                        if(store.StoreItemCategories != null)
+                        {
+                            var existingStoreItemCategories = context.StoreItemCategory.Where(sic => sic.StoreId == store.Id);
+
+                            if (existingStoreItemCategories != null)
+                            {
+                                context.StoreItemCategory.RemoveRange(existingStoreItemCategories);
+                            }
+
+                            context.StoreItemCategory.AddRange(store.StoreItemCategories);
+                        }
+
                         context.SaveChanges();
+                        return Ok();
                     }
+
+                    throw new Exception("store not found");
 
                 }
             }

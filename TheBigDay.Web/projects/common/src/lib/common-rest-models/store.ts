@@ -20,8 +20,19 @@ export interface Store {
     hasCompletedStoreSetup: boolean;
     storeType?: StoreType;
     items: FormEntry[];
-    storeItemCategories: ItemCategory[];
+    storeItemCategories: StoreItemCategory[];
 }
+
+export interface StoreItemCategory {
+    id?: string,
+    storeId: string,
+    itemCategoryId: string,
+
+    //nav
+    itemCategory?: ItemCategory
+    store?: Store
+}
+
 
 export enum StoreType {
     INDIVIDUAL,

@@ -12,7 +12,7 @@ import {EditorModule} from "primeng/editor";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {NgForOf, NgIf} from "@angular/common";
-import {MultiSelectModule} from "primeng/multiselect";
+import {MultiSelectChangeEvent, MultiSelectModule} from "primeng/multiselect";
 import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
@@ -36,20 +36,26 @@ import {DynamicDialogRef} from "primeng/dynamicdialog";
 })
 export class SetStoreDetailsDialogComponent implements OnInit {
     public store?: Store
-    public itemCategories?: ItemCategory[];
+    public itemCategories: ItemCategory[] = [];
     public stepIndex = 0;
     private loading = false;
+    selectedItemCategories: ItemCategory[] = [];
 
     constructor(private storeService: StoreService,
                 private authService: AuthorizeService,
                 private messageService: MessageService,
                 private ref: DynamicDialogRef,
-                itemCategoryService: ItemCategoryService) {
-        itemCategoryService.getCategories().subscribe((ic) => this.itemCategories = ic)
+                private itemCategoryService: ItemCategoryService) {
     }
 
     public ngOnInit() {
         this.store = this.authService.current?.store;
+        this.itemCategoryService.getCategories().subscribe((ic) => {
+            this.itemCategories = ic;
+            if (this.store && this.store.storeItemCategories) {
+                this.selectedItemCategories = this.itemCategories.filter(ic => this.store!.storeItemCategories.some(sic => sic.itemCategoryId === ic.id));
+            }
+        })
     }
 
     save() {
@@ -77,5 +83,17 @@ export class SetStoreDetailsDialogComponent implements OnInit {
 
     close(toastMessage?: Message) {
         this.ref.close(toastMessage);
+    }
+
+    categorySelected($event: MultiSelectChangeEvent) {
+        if (this.store) {
+            this.store!.storeItemCategories = ($event.value as ItemCategory[]).map(ic => {
+                return {
+                    itemCategoryId: ic.id!,
+                    storeId: this.store!.id
+                }
+            })
+        }
+
     }
 }

@@ -8,8 +8,6 @@ namespace TheBigDay.Models
 	{
 		public StoreItemCategory()
 		{
-			Store = new Store();
-			ItemCategory = new ItemCategory();
 		}
 
         [Key]
@@ -19,8 +17,8 @@ namespace TheBigDay.Models
 		public Guid ItemCategoryId { get; set; }
 
 		//nav
-		public Store Store { get; set; }
-		public ItemCategory ItemCategory { get; set; }
+		public Store? Store { get; } = null;
+		public ItemCategory? ItemCategory { get; } = null;
     }
 }
 

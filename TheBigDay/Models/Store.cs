@@ -8,8 +8,6 @@ namespace TheBigDay.Models
     {
         public Store() 
         {
-            Users = new List<User>();
-            StoreItemCategories = new List<StoreItemCategory>();
         }
 
         [Key]
@@ -37,8 +35,8 @@ namespace TheBigDay.Models
 
         // navigation
         public List<FormEntry>? Items { get; set; }
-        public List<User> Users { get; } = new List<User> { };
-        public List<StoreItemCategory> StoreItemCategories { get; set; }
+        public List<User> Users { get; } = new List<User>();
+        public List<StoreItemCategory>? StoreItemCategories { get; set; }
     }
     public enum StoreType
     {
