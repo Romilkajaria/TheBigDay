@@ -174,6 +174,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private startSettingStoreDetailWizard() {
         this.dialogService.open(SetStoreDetailsDialogComponent, {header: 'Set store details', data: this.store, width: '50rem'})
+            .onClose
+            .pipe(
+                tap((message?: Message) => {
+                    if(message) {
+                        this.messageService.add(message);
+                    }
+                }),
+                switchMap(() => this.storeService.getVendor(this.store!.id)))
+            .subscribe((store) => {
+                this.store = store;
+                this.setMessages();
+            })
     }
 }
 

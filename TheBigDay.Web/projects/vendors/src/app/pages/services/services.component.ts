@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {
   CommonServicesService
 } from "../../../../../common/src/lib/common-rest-services/services/common-services-service.service";
@@ -8,8 +8,8 @@ import {TableRowSelectEvent} from "primeng/table";
 import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/lib/helpers/tbd-item-table-column";
 import {AddServicesFormComponent} from "./add-services-form/add-services-form.component";
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
-import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
+import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 
 @Component({
   selector: 'app-services',
@@ -18,6 +18,7 @@ import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-e
   providers: [DialogService, MessageService],
 })
 export class ServicesComponent  implements OnInit{
+    @Input() store: Store | undefined;
   loading = true;
   services?: FormEntry[];
   ref = new DynamicDialogRef();
@@ -26,8 +27,7 @@ export class ServicesComponent  implements OnInit{
 
   constructor(private servicesService: CommonServicesService,
               private dialogService: DialogService,
-              private messageService: MessageService,
-              public auth: AuthorizeService) {
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {

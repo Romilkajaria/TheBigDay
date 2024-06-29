@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TableRowSelectEvent} from "primeng/table";
 import {
   CommonProductsService
@@ -10,6 +10,7 @@ import {TBDItemColumnMap, TBDItemColumnNames} from "../../../../../common/src/li
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
 import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
+import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 
 
 @Component({
@@ -19,6 +20,7 @@ import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-e
   providers: [DialogService, MessageService],
 })
 export class ProductsComponent implements OnInit {
+    @Input() store: Store | undefined;
   products?: FormEntry[];
   loading: boolean = true;
   ref = new DynamicDialogRef();

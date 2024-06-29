@@ -119,6 +119,27 @@ namespace TheBigDay.Controllers
                         }
 
                         context.SaveChanges();
+
+                        sourceStore = context.Store.FirstOrDefault((c) => c.Id.ToString() == id);
+
+                        if (sourceStore != null
+                            && !string.IsNullOrEmpty(sourceStore.Name)
+                            && !string.IsNullOrEmpty(sourceStore.Email)
+                            && !string.IsNullOrEmpty(sourceStore.AddressLine1)
+                            && !string.IsNullOrEmpty(sourceStore.Suburb)
+                            && !string.IsNullOrEmpty(sourceStore.State)
+                            && !string.IsNullOrEmpty(sourceStore.Country)
+                            && !string.IsNullOrEmpty(sourceStore.Postcode)
+                            && !string.IsNullOrEmpty(sourceStore.ContactNum)
+                            && !string.IsNullOrEmpty(sourceStore.AfterHoursContactNum)
+                            && !string.IsNullOrEmpty(sourceStore.Description)
+                            && sourceStore.StoreItemCategories != null
+                            && sourceStore.StoreItemCategories.Count > 0)
+                        {
+                            sourceStore.HasCompletedStoreSetup = true;
+                            context.SaveChanges();
+                        }
+
                         return Ok();
                     }
 

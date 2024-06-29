@@ -13,7 +13,7 @@ export interface Store {
     country: string;
     postcode: string;
     contactNum: string;
-    afterHoursMobile: string;
+    afterHoursContactNum: string;
     email: string;
     photoPath?: string;
     isDeleted: boolean;

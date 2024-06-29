@@ -2,10 +2,10 @@
   <div class="col-12">
       <div class="flex justify-content-between align-items-center">
           <h5>Products</h5>
-          <button [disabled]="!auth.current?.hasCompletedProfile || !auth.current?.store?.hasCompletedStoreSetup || !auth.current?.store?.storeType" pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createProduct()"></button>
+          <button [disabled]=" !store?.hasCompletedStoreSetup || store?.storeType === undefined" pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createProduct()"></button>
       </div>
     <div class="card" *ngIf="products && products.length > 0">
-      <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="productColumns" [value]="products" [tableStyle]="{ 'min-width': '50rem' }" p-datatable-striped>
+      <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="productColumns" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th *ngFor="let col of columns">
