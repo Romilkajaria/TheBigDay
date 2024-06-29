@@ -1,9 +1,9 @@
 import {
     BaseCommonRestService
-} from "../../../../../common/src/lib/common-rest-services/base-common-rest-service.service";
-import {environment} from "../../../../../common/src/lib/environments/environment";
+} from "../../common-rest-services/base-common-rest-service.service";
+import {environment} from "../../environments/environment";
 import {Injectable, Injector} from "@angular/core";
-import {Form} from 'projects/common/src/lib/common-rest-models/Form/form';
+import {Form} from './form';
 
 @Injectable({
     providedIn: "root"
@@ -17,6 +17,10 @@ export class FormService extends BaseCommonRestService {
 
     public getForms() {
         return this.get<Form[]>(this.baseUrl);
+    }
+
+    public getStoreForms(itemCategoryIds: string[]) {
+        return this.post<Form[]>(`${this.baseUrl}/storeforms`, itemCategoryIds)
     }
 
     public add(form: Form) {

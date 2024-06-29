@@ -6,6 +6,7 @@ using TheBigDay.Models;
 using Microsoft.Identity.Web.Resource;
 using Microsoft.AspNetCore.Identity;
 using TheBigDay.Interfaces;
+using TheBigDay.Models.Form_Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

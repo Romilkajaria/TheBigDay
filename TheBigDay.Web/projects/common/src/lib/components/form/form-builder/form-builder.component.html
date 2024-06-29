@@ -1,0 +1,6 @@
+<div *ngIf="form">
+<p>{{form.description}}</p>
+    <div *ngIf="form.subForms && form.subForms.length > 0">
+        <div *ngFor="let subform of form.subForms"> - {{subform.name}}</div>
+    </div>
+</div>

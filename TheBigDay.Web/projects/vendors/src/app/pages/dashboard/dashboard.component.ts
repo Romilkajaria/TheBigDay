@@ -13,7 +13,9 @@ import {
 import {User} from "../../../../../common/src/lib/common-rest-models/user";
 import {SetUserProfileDialogComponent} from "./set-user-profile-dialog/set-user-profile-dialog.component";
 import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-store-details-dialog.component";
-// import {SetProfileDialogComponent} from "./set-profile-diallog/set-profile-dialog.component";
+import {FormService} from "../../../../../common/src/lib/common-rest-models/Form/form.service";
+import { Form } from 'projects/common/src/lib/common-rest-models/Form/form';
+import {FormBuilderComponent} from "../../../../../common/src/lib/components/form/form-builder/form-builder.component";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -22,10 +24,6 @@ import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-sto
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     products!: FormEntry[];
-
-    chartData: any;
-
-    chartOptions: any;
 
     subscription!: Subscription;
 
@@ -39,7 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                  auth: AuthorizeService,
                  private dialogService: DialogService,
                  private messageService: MessageService,
-                 private storeService: StoreService) {
+                 private storeService: StoreService,
+                 private formService: FormService) {
         this.store = auth.current?.store;
     }
 
@@ -47,64 +46,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.setMessages();
     }
 
-    initChart() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-        this.chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    tension: .4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--green-600'),
-                    borderColor: documentStyle.getPropertyValue('--green-600'),
-                    tension: .4
-                }
-            ]
-        };
-
-        this.chartOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
-        };
-    }
     public get activeMessageCount() {
         return this.messages.filter(m => !m.hide ).length;
     }
@@ -149,20 +90,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private setMessages() {
         this.messages = [
-            { severity: 'info', summary: 'Are you an individual or a business?',
+            {
+                severity: 'info',
+                summary: 'Are you an individual or a business?',
                 hide: this.store?.storeType != undefined,
                 timeToFinish: '< 1 min',
                 actionButtonText: 'Set store type',
                 onButtonClick: () => this.setStoreType(),
             },
-            { severity: 'info',
+            {
+                severity: 'info',
                 summary: 'Finish off setting up your personal profile',
                 hide: this.user?.hasCompletedProfile,
                 timeToFinish: '< 5 mins',
                 actionButtonText: 'Setup profile',
                 onButtonClick: () => this.setProfile(),
             },
-            { severity: 'info',
+            {
+                severity: 'info',
                 summary: 'Start setting up your store',
                 hide: this.store?.hasCompletedStoreSetup,
                 timeToFinish: '< 5 mins',
@@ -170,6 +115,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 onButtonClick: () => this.startSettingStoreDetailWizard()
             }
         ]
+        if(this.store?.storeType !== undefined && this.store.hasCompletedStoreSetup) {
+            this.formService.getStoreForms(this.store.storeItemCategories.map(ic => ic.itemCategoryId)).subscribe(
+                (form) => {
+                form.forEach(f => {
+                    this.messages.push({
+                        severity: 'info',
+                        summary: f.name,
+                        timeToFinish: "10 mins",
+                        actionButtonText: "Start",
+                        onButtonClick: () => this.openForm(f),
+                    })
+                })
+            })
+        }
     }
 
     private startSettingStoreDetailWizard() {
@@ -186,6 +145,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.store = store;
                 this.setMessages();
             })
+    }
+
+    private openForm(form: Form) {
+        this.dialogService.open(FormBuilderComponent, {header: form.name, data: form})
     }
 }
 

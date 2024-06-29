@@ -15,7 +15,7 @@ export class BaseCommonRestService {
     return this.http.get<T>(path, );
   }
 
-  protected post<T>(path: string, payload: T) {
+  protected post<T>(path: string, payload: any) {
     return this.http.post<T>(path, payload);
   }
 

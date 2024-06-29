@@ -37,7 +37,6 @@ import {DynamicDialogRef} from "primeng/dynamicdialog";
 export class SetStoreDetailsDialogComponent implements OnInit {
     public store?: Store
     public itemCategories: ItemCategory[] = [];
-    public stepIndex = 0;
     private loading = false;
     selectedItemCategories: ItemCategory[] = [];
 

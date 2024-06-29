@@ -9,7 +9,7 @@ using TheBigDay.Models.Form_Models;
 
 namespace TheBigDay.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer", Roles = UserRoles.AppAdmin)]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class FormController : ControllerBase
@@ -44,6 +44,7 @@ namespace TheBigDay.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.AppAdmin)]
         public IActionResult CreateFormAsync(Form form)
         {
             try
@@ -96,6 +97,7 @@ namespace TheBigDay.Controllers
             }
         }
         [HttpPut]
+        [Authorize(Roles = UserRoles.AppAdmin)]
         public IActionResult UpdateForm(Form form)
         {
             try
@@ -147,39 +149,36 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to update form: " + form.Name, ex);
             }
         }
-        //[HttpPost("field")]
-        //public async Task<IActionResult> AddField(FormField formField)
-        //{
-        //    try
-        //    {
-        //        using (var context = new DatabaseContext(
-        //        _serviceProvider.GetRequiredService<
-        //            DbContextOptions<DatabaseContext>>()))
-        //        {
-        //            return Ok(await context.FormField.AddAsync(formField).ConfigureAwait(false));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Failed to create field: " + formField.Label, ex);
-        //    }
-        //}
-        //[HttpPut("field")]
-        //public IActionResult UpdateField(FormField formField)
-        //{
-        //    try
-        //    {
-        //        using (var context = new DatabaseContext(
-        //        _serviceProvider.GetRequiredService<
-        //            DbContextOptions<DatabaseContext>>()))
-        //        {
-        //            return Ok(context.FormField.Update(formField));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Failed to update field: " + formField.Label, ex);
-        //    }
-        //}
+
+        [HttpPost]
+        [Route("storeforms")]
+        public List<Form> GetStoreForms(List<Guid> itemCategoryIds)
+        {
+            try
+            {
+                // context this request to 
+                using var context = new DatabaseContext(
+                    _serviceProvider.GetRequiredService<
+                        DbContextOptions<DatabaseContext>>());
+                var forms = new List<Form>();
+
+                itemCategoryIds.ForEach(id =>
+                {
+                    // only getting root level forms. we know that from FormId being set.
+                    var itemCategoryForms = context.Form.Include("SubForms").Include("Fields").Where(f => f.ItemCategoryId == id && f.FormLevel == FormLevel.STORE && f.FormId == null);
+
+                    if (itemCategoryForms != null)
+                    {
+                        itemCategoryForms.ToList().ForEach(f => forms.Add(f));
+                    }
+                });
+
+                return forms;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to get Store", ex);
+            }
+        }
     }
 }
