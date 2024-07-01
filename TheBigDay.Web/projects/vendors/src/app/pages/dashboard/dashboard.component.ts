@@ -148,7 +148,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     private openForm(form: Form) {
-        this.dialogService.open(FormBuilderComponent, {header: form.name, data: form})
+        this.dialogService.open(FormBuilderComponent, {header: form.name, data: form, width: '60%', height: '80%'})
     }
 }
 
