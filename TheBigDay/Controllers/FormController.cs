@@ -165,7 +165,11 @@ namespace TheBigDay.Controllers
                 itemCategoryIds.ForEach(id =>
                 {
                     // only getting root level forms. we know that from FormId being set.
-                    var itemCategoryForms = context.Form.Include("SubForms").Include("Fields").Where(f => f.ItemCategoryId == id && f.FormLevel == FormLevel.STORE && f.FormId == null);
+                    var itemCategoryForms = context.Form
+                    .Include("SubForms")
+                    .Include("Fields")
+                    .Include("SubForms.Fields")
+                    .Where(f => f.ItemCategoryId == id && f.FormLevel == FormLevel.STORE && f.FormId == null);
 
                     if (itemCategoryForms != null)
                     {

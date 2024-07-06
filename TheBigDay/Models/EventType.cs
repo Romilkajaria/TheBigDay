@@ -11,6 +11,7 @@ namespace TheBigDay.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public required string Name { get; set; }
+        public required string Description { get; set; }
 
         // navigation
         public List<Event>? Events { get; set; }

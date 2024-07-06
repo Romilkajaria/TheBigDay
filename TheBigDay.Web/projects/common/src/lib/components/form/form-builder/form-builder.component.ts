@@ -1,9 +1,10 @@
-import {Component, Input, OnInit, signal} from '@angular/core';
-import {DynamicDialogConfig} from "primeng/dynamicdialog";
+import {Component, Input, OnInit} from '@angular/core';
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Form} from "../../../common-rest-models/Form/form";
 import {NgForOf, NgIf} from "@angular/common";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'lib-form-builder',
@@ -23,7 +24,8 @@ export class FormBuilderComponent  implements OnInit{
   currentSubFormIndex = 0;
 
 
-  constructor(private dialogConfig: DynamicDialogConfig<Form>) {
+  constructor(private dialogConfig: DynamicDialogConfig<Form>,
+              private ref: DynamicDialogRef) {
 
   }
     previousSubForm() {
@@ -40,9 +42,13 @@ export class FormBuilderComponent  implements OnInit{
          //do nothing
       }
       else {
-          this.currentSubFormIndex++;
+          this.currentSubFormIndex = this.currentSubFormIndex + 1;
       }
         this.currentSubForm = this.form.subForms![this.currentSubFormIndex];
+    }
+
+    close(toastMessage?: Message) {
+        this.ref.close(toastMessage);
     }
 
   public ngOnInit() {

@@ -6,10 +6,16 @@
                 Please read the questions carefully and be accurate as possible when answering</p>
             <div *ngFor="let subform of form.subForms"> - {{subform.name}}</div>
         </ng-container>
+        <ng-container *ngIf="currentSubForm">
+            <div *ngFor="let field of currentSubForm.fields">
+                {{field.label}} - {{field.type}}
+            </div>
+        </ng-container>
 
         <div class="flex align-items-center justify-content-between">
             <button *ngIf="currentSubForm" class="me-2" pButton pRipple label="Previous" (click)="previousSubForm()"></button>
-            <button *ngIf="(currentSubFormIndex - 1) !== form.subForms.length" class="me-2" pButton pRipple label="Next" (click)="nextSubForm()"></button>
+            <button *ngIf="currentSubFormIndex < (form.subForms.length - 1)" class="me-2" pButton pRipple label="Next" (click)="nextSubForm()"></button>
+            <button *ngIf="currentSubFormIndex >= (form.subForms.length - 1)" class="me-2" pButton pRipple label="Finish" (click)="close()"></button>
         </div>
     </div>
 </div>
