@@ -4,18 +4,64 @@
         <ng-container *ngIf="!currentSubForm">
             <p>There are {{form.subForms.length}} steps to complete on this form.
                 Please read the questions carefully and be accurate as possible when answering</p>
-            <div *ngFor="let subform of form.subForms"> - {{subform.name}}</div>
+            <p>{{form.description}}</p>
+            <ul>
+                <li *ngFor="let subform of form.subForms">{{subform.name}}</li>
+            </ul>
         </ng-container>
         <ng-container *ngIf="currentSubForm">
-            <div *ngFor="let field of currentSubForm.fields">
-                {{field.label}} - {{field.type}}
+            <p>{{currentSubForm.description}}</p>
+            <div *ngFor="let field of currentSubForm.fields" class="flex flex-column gap-1">
+                <div>
+                    <label class="block text-900 text-xl font-medium mb-2">{{field.label}}</label>
+                    <ng-container [ngSwitch]="field.type">
+                        <ng-container *ngSwitchCase="FieldType.STRING">
+                            <input type="text" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.INT32">
+                            <input type="number" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem"/>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.INT64">
+                            <input type="number" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.RICH_TEXT">
+                            <p-editor [style]="{ height: '320px' }" class="w-full mb-5"></p-editor>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.DATE_PICKER">
+                            <div class="flex-auto p-fluid mb-5">
+                                <p-calendar [required]="field.required" [iconDisplay]="'input'" [showIcon]="true"></p-calendar>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.COLOR_PICKER">
+                            <p-colorPicker class="mb-5"/>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.CHECKBOX">
+                            <p-checkbox class="mb-5"/>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.RADIO">
+                            Radio button label - NOT YET IMPLEMENTED
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.EMAIL">
+                            <input type="email" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.FILE_UPLOAD">
+                            <input type="file" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.DROPDOWN">
+                            Dropdown input- NOT YET IMPLEMENTED
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldType.DROPDOWN_MULTISELECT">
+                            Dropdown multiselect input- NOT YET IMPLEMENTED
+                        </ng-container>
+                    </ng-container>
+                </div>
             </div>
         </ng-container>
 
         <div class="flex align-items-center justify-content-between">
             <button *ngIf="currentSubForm" class="me-2" pButton pRipple label="Previous" (click)="previousSubForm()"></button>
-            <button *ngIf="currentSubFormIndex < (form.subForms.length - 1)" class="me-2" pButton pRipple label="Next" (click)="nextSubForm()"></button>
-            <button *ngIf="currentSubFormIndex >= (form.subForms.length - 1)" class="me-2" pButton pRipple label="Finish" (click)="close()"></button>
+            <button *ngIf="!isOnLastStep(currentSubForm?.id)" class="me-2" pButton pRipple label="Next" (click)="nextSubForm()"></button>
+            <button *ngIf="isOnLastStep(currentSubForm?.id)" class="me-2" pButton pRipple label="Finish" (click)="close()"></button>
         </div>
     </div>
 </div>

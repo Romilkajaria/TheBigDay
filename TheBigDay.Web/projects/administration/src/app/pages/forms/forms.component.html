@@ -26,8 +26,7 @@
                 *ngIf="forms.length > 0; else noForms"
                 [options]="forms"
                 [(ngModel)]="selectedForm"
-                optionLabel="name"
-                [listStyle]="{'max-height': '220px'}"/>
+                optionLabel="name"/>
         </div>
     </ng-template>
     <ng-template pTemplate>

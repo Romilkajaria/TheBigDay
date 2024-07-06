@@ -1,10 +1,19 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Form} from "../../../common-rest-models/Form/form";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {Message} from "primeng/api";
+import {FieldType} from "../../../common-rest-models/Form/form-field";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
+import {EditorModule} from "primeng/editor";
+import {InputNumberModule} from "primeng/inputnumber";
+import {CalendarModule} from "primeng/calendar";
+import {ColorPickerModule} from "primeng/colorpicker";
+import {CheckboxModule} from "primeng/checkbox";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @Component({
   selector: 'lib-form-builder',
@@ -13,10 +22,22 @@ import {Message} from "primeng/api";
         NgIf,
         NgForOf,
         ButtonModule,
-        RippleModule
+        RippleModule,
+        NgSwitch,
+        NgSwitchCase,
+        FormsModule,
+        InputTextModule,
+        EditorModule,
+        InputNumberModule,
+        CalendarModule,
+        ColorPickerModule,
+        CheckboxModule,
+        RadioButtonModule,
+        ReactiveFormsModule
     ],
   templateUrl: './form-builder.component.html',
-  styleUrl: './form-builder.component.css'
+  styleUrl: './form-builder.component.css',
+    providers: []
 })
 export class FormBuilderComponent  implements OnInit{
   @Input() form: Form | undefined;
@@ -32,7 +53,8 @@ export class FormBuilderComponent  implements OnInit{
       if (this.currentSubFormIndex === 0) {
           this.currentSubForm = undefined;
       } else {
-          this.currentSubForm = this.form!.subForms![this.currentSubFormIndex--];
+          this.currentSubFormIndex = this.currentSubFormIndex - 1;
+          this.currentSubForm = this.form!.subForms![this.currentSubFormIndex];
       }
     }
 
@@ -47,6 +69,12 @@ export class FormBuilderComponent  implements OnInit{
         this.currentSubForm = this.form.subForms![this.currentSubFormIndex];
     }
 
+    isOnLastStep(id: string | undefined) {
+      if (!id || !this.currentSubForm || !this.form || !this.form?.subForms) return false;
+      const lastStep = this.form.subForms[this.form.subForms.length - 1];
+      return this.currentSubForm.id === lastStep.id;
+    }
+
     close(toastMessage?: Message) {
         this.ref.close(toastMessage);
     }
@@ -56,4 +84,6 @@ export class FormBuilderComponent  implements OnInit{
       this.form = this.dialogConfig.data;
     }
   }
+
+    protected readonly FieldType = FieldType;
 }
