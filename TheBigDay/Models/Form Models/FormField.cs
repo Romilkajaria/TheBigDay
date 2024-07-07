@@ -14,6 +14,8 @@ namespace TheBigDay.Models.Form_Models
         public string? Placeholder { get; set; }
         public string? Description { get; set; } 
         public bool Required { get; set; }
+        //used for radio and dropdonw filed types. concatinated with ", ".
+        public string? Options { get; set; }
     }
 
     public enum FieldTypes

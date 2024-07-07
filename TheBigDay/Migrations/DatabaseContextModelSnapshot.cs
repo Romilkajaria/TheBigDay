@@ -358,6 +358,10 @@ namespace TheBigDay.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -463,6 +467,9 @@ namespace TheBigDay.Migrations
 
                     b.Property<string>("Label")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Options")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Placeholder")
@@ -801,21 +808,17 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.StoreItemCategory", b =>
                 {
-                    b.HasOne("TheBigDay.Models.ItemCategory", "ItemCategory")
+                    b.HasOne("TheBigDay.Models.ItemCategory", null)
                         .WithMany("StoreItemCategories")
                         .HasForeignKey("ItemCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TheBigDay.Models.Store", "Store")
+                    b.HasOne("TheBigDay.Models.Store", null)
                         .WithMany("StoreItemCategories")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ItemCategory");
-
-                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.User", b =>
