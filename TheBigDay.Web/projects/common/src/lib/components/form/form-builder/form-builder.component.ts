@@ -14,6 +14,9 @@ import {CalendarModule} from "primeng/calendar";
 import {ColorPickerModule} from "primeng/colorpicker";
 import {CheckboxModule} from "primeng/checkbox";
 import {RadioButtonModule} from "primeng/radiobutton";
+import {MultiSelectModule} from "primeng/multiselect";
+import {ListHelpers} from "../../../helpers/list-helpers";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'lib-form-builder',
@@ -33,7 +36,9 @@ import {RadioButtonModule} from "primeng/radiobutton";
         ColorPickerModule,
         CheckboxModule,
         RadioButtonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MultiSelectModule,
+        DropdownModule
     ],
   templateUrl: './form-builder.component.html',
   styleUrl: './form-builder.component.css',
@@ -86,4 +91,6 @@ export class FormBuilderComponent  implements OnInit{
   }
 
     protected readonly FieldType = FieldType;
+    protected readonly ListHelpers = ListHelpers;
+    testRadioValue: any;
 }

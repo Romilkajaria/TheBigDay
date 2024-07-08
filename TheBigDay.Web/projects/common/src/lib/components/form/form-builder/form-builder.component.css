@@ -1,0 +1,5 @@
+.radio-grid {
+    grid-template-columns: auto auto;
+    padding: 1rem;
+    display: grid;
+}

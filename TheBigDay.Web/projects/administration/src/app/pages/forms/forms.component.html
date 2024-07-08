@@ -124,6 +124,11 @@
                             </ng-template>
                         </p-dropdown>
 
+                        <ng-container *ngIf="field.type === FieldType.DROPDOWN || field.type === FieldType.DROPDOWN_MULTISELECT || field.type === FieldType.RADIO">
+                            <label class="block text-900 font-medium text-xl my-2">Options</label>
+                            <input type="text" pInputText class="mb-5" [(ngModel)]="field.options" placeholder="e.g. a, b, c, d, e" style="padding:1rem"/>
+                        </ng-container>
+
                         <div class="flex align-items-center gap-1">
                             <label class="block text-900 font-medium text-xl my-2">Required</label>
                             <p-checkbox [(ngModel)]="field.required" [binary]="true" />

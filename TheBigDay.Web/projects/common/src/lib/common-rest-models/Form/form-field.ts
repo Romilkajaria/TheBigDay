@@ -4,6 +4,7 @@ export class FormField {
     label!: string;
     placeholder?: string;
     required!: boolean;
+    options?: string
 }
 
 

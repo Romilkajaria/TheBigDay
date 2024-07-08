@@ -16,16 +16,16 @@
                     <label class="block text-900 text-xl font-medium mb-2">{{field.label}}</label>
                     <ng-container [ngSwitch]="field.type">
                         <ng-container *ngSwitchCase="FieldType.STRING">
-                            <input type="text" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                            <input type="text" [placeholder]="field.placeholder" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.INT32">
-                            <input type="number" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem"/>
+                            <input type="number" [placeholder]="field.placeholder" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem"/>
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.INT64">
-                            <input type="number" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                            <input type="number" [placeholder]="field.placeholder" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.RICH_TEXT">
-                            <p-editor [style]="{ height: '320px' }" class="w-full mb-5"></p-editor>
+                            <p-editor [placeholder]="field.placeholder" [style]="{ height: '320px' }" class="w-full mb-5"></p-editor>
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.DATE_PICKER">
                             <div class="flex-auto p-fluid mb-5">
@@ -39,19 +39,29 @@
                             <p-checkbox class="mb-5"/>
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.RADIO">
-                            Radio button label - NOT YET IMPLEMENTED
+                            <div class="radio-grid">
+                                <div *ngFor="let radioValue of ListHelpers.mapToList(field.options)" class="field-checkbox">
+                                    <p-radioButton
+                                        [inputId]="radioValue"
+                                        [value]="radioValue"
+                                    [(ngModel)]="testRadioValue"/>
+                                    <label [for]="radioValue" class="ml-2">
+                                        {{ radioValue }}
+                                    </label>
+                                </div>
+                            </div>
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.EMAIL">
-                            <input type="email" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                            <input type="email" [placeholder]="field.placeholder" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.FILE_UPLOAD">
-                            <input type="file" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
+                            <input type="file" [placeholder]="field.placeholder" [required]="field.required" pInputText class="w-full mb-5" style="padding:1rem">
                         </ng-container>
                         <ng-container *ngSwitchCase="FieldType.DROPDOWN">
-                            Dropdown input- NOT YET IMPLEMENTED
-                        </ng-container>
+                            <p-dropdown [options]="ListHelpers.mapToList(field.options)" [placeholder]="field.placeholder"/>
+                            </ng-container>
                         <ng-container *ngSwitchCase="FieldType.DROPDOWN_MULTISELECT">
-                            Dropdown multiselect input- NOT YET IMPLEMENTED
+                            <p-multiSelect [style]="{'width':'100%'}" class="w-full mb-5" [options]="ListHelpers.mapToList(field.options)" [placeholder]="field.placeholder"/>
                         </ng-container>
                     </ng-container>
                 </div>
