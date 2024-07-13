@@ -1,16 +1,13 @@
 <div *ngIf="form">
-<p>{{form.description}}</p>
     <div *ngIf="form.subForms && form.subForms.length > 0">
         <ng-container *ngIf="!currentSubForm">
-            <p>There are {{form.subForms.length}} steps to complete on this form.
-                Please read the questions carefully and be accurate as possible when answering</p>
-            <p>{{form.description}}</p>
+            <div [innerHtml]="form.description"></div>
             <ul>
                 <li *ngFor="let subform of form.subForms">{{subform.name}}</li>
             </ul>
         </ng-container>
         <ng-container *ngIf="currentSubForm">
-            <p>{{currentSubForm.description}}</p>
+            <div [innerHtml]="currentSubForm.description"></div>
             <div *ngFor="let field of currentSubForm.fields" class="flex flex-column gap-1">
                 <div>
                     <label class="block text-900 text-xl font-medium mb-2">{{field.label}}</label>
