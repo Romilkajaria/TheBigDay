@@ -55,7 +55,7 @@ namespace TheBigDay.Controllers
                 var requestOrigin = Request.Headers["Origin"].ToString();
 
                 // If the origin is "https://localhost:4203", apply the Admin role restriction
-                if (requestOrigin == "http://localhost:4203" && !userRoles.Contains("AppAdmin"))
+                if ((requestOrigin == "http://localhost:4203" || requestOrigin == "https://yellow-cliff-06f37ab00.5.azurestaticapps.net") && !userRoles.Contains("AppAdmin"))
                 {
                     return Unauthorized(new Response { Status = "Error", Message = "You do not have sufficent permissions for this app." });
                 }
