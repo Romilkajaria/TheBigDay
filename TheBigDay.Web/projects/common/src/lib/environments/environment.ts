@@ -2,11 +2,10 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {AuthConfig} from "@auth0/auth0-angular";
-
 export const environment = {
     production: false,
-    apiUrl: 'https://localhost:44320/api/',
+    // apiUrl: 'https://localhost:44320/api/',
+    apiUrl: 'https://tbdvendor.azurewebsites.net/api/',
 };
 
 /*
