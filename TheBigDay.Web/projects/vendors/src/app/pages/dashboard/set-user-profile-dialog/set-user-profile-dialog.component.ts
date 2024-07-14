@@ -16,7 +16,6 @@ import {RippleModule} from "primeng/ripple";
 @Component({
   selector: 'store-set-user-profile-dialog',
   templateUrl: './set-user-profile-dialog.component.html',
-  styleUrl: './set-user-profile-dialog.component.scss',
     standalone: true,
     imports: [
         FormsModule,

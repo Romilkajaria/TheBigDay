@@ -13,7 +13,6 @@ import {RippleModule} from "primeng/ripple";
 @Component({
   selector: 'store-set-store-type-dialog',
   templateUrl: './set-store-type-dialog.component.html',
-  styleUrl: './set-user-profile-dialog.component.scss',
     standalone: true,
     imports: [
         ButtonModule,
