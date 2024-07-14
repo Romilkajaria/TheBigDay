@@ -70,7 +70,7 @@ public class Program
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost4202", builder => builder
-                .WithOrigins("http://localhost:4201", "http://localhost:4202", "http://localhost:4203", "https://jolly-coast-0dc81a210.4.azurestaticapps.net", "https://nice-field-0936efc10.4.azurestaticapps.net")
+                .WithOrigins("https://jolly-coast-0dc81a210.4.azurestaticapps.net", "https://nice-field-0936efc10.4.azurestaticapps.net", "https://yellow-cliff-06f37ab00.5.azurestaticapps.net/")
                 .AllowAnyHeader()
                 .AllowAnyMethod());
         });
