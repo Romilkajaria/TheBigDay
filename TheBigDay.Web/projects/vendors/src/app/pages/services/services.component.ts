@@ -10,6 +10,8 @@ import {AddServicesFormComponent} from "./add-services-form/add-services-form.co
 import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/helpers/toastMessages";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 import {Store} from "../../../../../common/src/lib/common-rest-models/store";
+import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
+import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
 
 @Component({
   selector: 'app-services',
@@ -19,6 +21,8 @@ import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 })
 export class ServicesComponent  implements OnInit{
     @Input() store: Store | undefined;
+    @Input() categoryId!: string
+    itemCategory?: ItemCategory;
   loading = true;
   services?: FormEntry[];
   ref = new DynamicDialogRef();
@@ -27,16 +31,18 @@ export class ServicesComponent  implements OnInit{
 
   constructor(private servicesService: CommonServicesService,
               private dialogService: DialogService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private itemCategoryService: ItemCategoryService) {
   }
 
   ngOnInit(): void {
+      this.itemCategoryService.getCategories().subscribe(
+          (ic) => this.itemCategory = ic.find((i) => i.id === this.categoryId));
     this.updateData();
-
   }
 
   createService() {
-    this.ref = this.dialogService.open(AddServicesFormComponent, {header: 'New Service', width: '50rem', maximizable: true, });
+    this.ref = this.dialogService.open(AddServicesFormComponent, {header: `New ${this.itemCategory ? this.itemCategory.name.toLowerCase() : ''} Service`, width: '50rem', maximizable: true, });
     this.onCloseSubscribe();
   }
 

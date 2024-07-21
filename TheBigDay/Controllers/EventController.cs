@@ -41,25 +41,6 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to get Events", ex);
             }
         }
-        // GET api/<EventController>/5
-        [HttpGet("{id}")]
-        public Event? Get(Guid id)
-        {
-            try
-            {
-                using (var context = new DatabaseContext(
-                    _serviceProvider.GetRequiredService<
-                        DbContextOptions<DatabaseContext>>()))
-                {
-                    return context.Event.FirstOrDefault((c) => c.Id == id);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to get Event", ex);
-            }
-
-        }
 
         // POST api/<EventController>
         [HttpPost]        

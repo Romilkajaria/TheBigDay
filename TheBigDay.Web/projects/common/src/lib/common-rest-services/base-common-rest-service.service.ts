@@ -11,8 +11,8 @@ export class BaseCommonRestService {
     this.http = injector.get(HttpClient);
   }
 
-  protected get<T>(path: string) {
-    return this.http.get<T>(path, );
+  protected get<T>(path: string, params?: {[key: string]: string}) {
+    return this.http.get<T>(path, {params} );
   }
 
   protected post<T>(path: string, payload: any) {

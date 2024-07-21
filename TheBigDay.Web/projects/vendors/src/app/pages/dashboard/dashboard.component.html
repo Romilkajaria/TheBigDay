@@ -167,17 +167,21 @@
 
 
 
-
-    <div class="col-12 xl:col-6">
-        <div class="card">
-            <app-products [store]="store"></app-products>
+<ng-container *ngIf="store && store.storeItemCategories.length">
+    <ng-container *ngFor="let category of store.storeItemCategories">
+        <div class="col-12 xl:col-6">
+            <div class="card">
+                <app-products [store]="store" [categoryId]="category.itemCategoryId!"></app-products>
+            </div>
         </div>
-    </div>
 
-    <div class="col-12 xl:col-6">
-        <div class="card">
-            <app-services [store]="store"></app-services>
+        <div class="col-12 xl:col-6">
+            <div class="card">
+                <app-services [store]="store" [categoryId]="category.itemCategoryId!"></app-services>
+            </div>
         </div>
-    </div>
+    </ng-container>
+</ng-container>
+
 </div>
 

@@ -11,11 +11,11 @@ import {
     FieldType,
     FieldTypeLabelRecord,
     FormField
-} from "../../../../../common/src/lib/common-rest-models/Form/form-field";
-import {FormService} from "../../../../../common/src/lib/common-rest-models/Form/form.service";
-import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
+} from "projects/common/src/lib/common-rest-models/Form/form-field";
+import {FormService} from "projects/common/src/lib/common-rest-models/Form/form.service";
+import {ItemCategory} from "projects/common/src/lib/common-rest-models/item-category";
 import {forkJoin} from "rxjs";
-import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
+import {ItemCategoryService} from "projects/common/src/lib/common-rest-services/item-category.service";
 
 @Component({
   selector: 'administration-forms',

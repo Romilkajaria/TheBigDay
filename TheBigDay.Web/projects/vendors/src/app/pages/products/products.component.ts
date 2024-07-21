@@ -11,6 +11,9 @@ import {getToastMessage, ToastMessageType} from "../../../../../common/src/lib/h
 import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 import {Store} from "../../../../../common/src/lib/common-rest-models/store";
+import {FormService} from "../../../../../common/src/lib/common-rest-models/Form/form.service";
+import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
+import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
 
 
 @Component({
@@ -21,6 +24,8 @@ import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 })
 export class ProductsComponent implements OnInit {
     @Input() store: Store | undefined;
+    @Input() categoryId!: string;
+    itemCategory?: ItemCategory;
   products?: FormEntry[];
   loading: boolean = true;
   ref = new DynamicDialogRef();
@@ -30,14 +35,18 @@ export class ProductsComponent implements OnInit {
   constructor(private productsService: CommonProductsService,
               private dialogService: DialogService,
               private messageService: MessageService,
-              public auth: AuthorizeService,) {
+              private formService: FormService,
+              public auth: AuthorizeService,
+              private itemCategoryService: ItemCategoryService) {
   }
   ngOnInit(): void {
-    this.updateData();
+      this.itemCategoryService.getCategories().subscribe(
+          (ic) => this.itemCategory = ic.find((i) => i.id === this.categoryId));
+      this.updateData();
   }
 
   createProduct() {
-    this.ref = this.dialogService.open(AddProductFormComponent, {header: 'New product', width: '50rem', maximizable: true, });
+    this.ref = this.dialogService.open(AddProductFormComponent, {header: `New ${this.itemCategory ? this.itemCategory.name.toLowerCase() : ''} product`, width: '50rem', maximizable: true, });
     this.onCloseSubscribe();
   }
 

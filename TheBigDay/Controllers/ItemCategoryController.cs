@@ -37,6 +37,24 @@ namespace TheBigDay.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ItemCategory? Get(string id)
+        {
+            try
+            {
+                using (var context = new DatabaseContext(
+                _serviceProvider.GetRequiredService<
+                    DbContextOptions<DatabaseContext>>()))
+                {
+                    return context.ItemCategory.FirstOrDefault(ic => ic.Id.ToString() == id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to get item categories", ex);
+            }
+        }
+
         [HttpPut("{id}")]
         public IActionResult Update(ItemCategory category)
         {

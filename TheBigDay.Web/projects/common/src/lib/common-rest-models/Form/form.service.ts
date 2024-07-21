@@ -23,6 +23,13 @@ export class FormService extends BaseCommonRestService {
         return this.post<Form[]>(`${this.baseUrl}/storeforms`, itemCategoryIds)
     }
 
+    public getProductForms(itemCategoryId: string) {
+        return this.get<Form[]>(`${this.baseUrl}/productForms`, {itemCategoryId: itemCategoryId})
+    }
+    public getServiceForms(itemCategoryId: string) {
+        return this.get<Form[]>(`${this.baseUrl}/serviceForms`, {itemCategoryId: itemCategoryId})
+    }
+
     public add(form: Form) {
         return this.post<Form>(this.baseUrl, form);
     }

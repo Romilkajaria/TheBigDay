@@ -1,7 +1,7 @@
 <div class="grid" *ngIf="!loading">
   <div class="col-12">
       <div class="flex justify-content-between align-items-center">
-          <h5>Products</h5>
+          <h5>{{itemCategory?.name}} Products</h5>
           <button [disabled]=" !store?.hasCompletedStoreSetup || store?.storeType === undefined" pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createProduct()"></button>
       </div>
     <div class="card" *ngIf="products && products.length > 0">

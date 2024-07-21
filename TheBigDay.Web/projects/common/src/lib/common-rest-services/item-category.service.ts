@@ -15,6 +15,9 @@ export class ItemCategoryService extends BaseCommonRestService {
         super(injector);
     }
 
+    public getItemCategory(id: string) {
+        return this.get<ItemCategory>(this.baseUrl, {id});
+    }
     public getCategories() {
         return this.get<ItemCategory[]>(this.baseUrl);
     }
