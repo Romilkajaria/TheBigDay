@@ -82,9 +82,10 @@ public class Program
 #if DEBUG
         // uncomment this for windows.DO NOT COMMIT THIS. uncommenting this will break other dev environments on mac.
         // our primary dev env is set up for mac with sql server in a docker container.
-        //builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=TheBigDay;Integrated Security=True"));
+        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=(localdb)\\ProjectsV13;Initial Catalog=TheBigDay;Integrated Security=True"));
 
-        builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=TheBigDay;TrustServerCertificate=True;User ID=sa;Password=dockerStrongPwd123"));
+        //for mac
+        //builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=TheBigDay;TrustServerCertificate=True;User ID=sa;Password=dockerStrongPwd123"));
 #else
 
         builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=tcp:thebigggdaydbserver.database.windows.net,1433;Initial Catalog=TheBigDay-dev;Persist Security Info=False;User ID=tabadmin;Password=Romilk01.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));

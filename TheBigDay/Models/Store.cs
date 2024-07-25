@@ -31,6 +31,9 @@ namespace TheBigDay.Models
         public bool IsActive { get; set; }
         public bool HasCompletedStoreSetup { get; set; }
         public StoreType? StoreType { get; set; }
+        //store payment preferences
+        public double? DepositPercentage { get; set; }
+        public int? FullPaymentPrecedingEventDays { get; set; }
 
 
         // navigation

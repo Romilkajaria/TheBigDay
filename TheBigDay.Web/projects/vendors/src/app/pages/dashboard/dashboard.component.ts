@@ -6,16 +6,19 @@ import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {AuthorizeService} from "../../../../../common/src/lib/components/auth/login/authorize.service";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
 import {DialogService} from "primeng/dynamicdialog";
-import {SetStoreTypeDialogComponent} from "./set-store-type-dialog/set-store-type-dialog.component";
+import {SetStoreTypeDialogComponent} from "./initial-store-message-dialogs/set-store-type-dialog/set-store-type-dialog.component";
 import {
     StoreService
 } from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
 import {User} from "../../../../../common/src/lib/common-rest-models/user";
-import {SetUserProfileDialogComponent} from "./set-user-profile-dialog/set-user-profile-dialog.component";
-import {SetStoreDetailsDialogComponent} from "./set-store-details-dialog/set-store-details-dialog.component";
+import {SetUserProfileDialogComponent} from "./initial-store-message-dialogs/set-user-profile-dialog/set-user-profile-dialog.component";
+import {SetStoreDetailsDialogComponent} from "./initial-store-message-dialogs/set-store-details-dialog/set-store-details-dialog.component";
 import {FormService} from "../../../../../common/src/lib/common-rest-models/Form/form.service";
 import { Form } from 'projects/common/src/lib/common-rest-models/Form/form';
 import {FormBuilderComponent} from "../../../../../common/src/lib/components/form/form-builder/form-builder.component";
+import {
+    SetStorePaymentPreferencesDialogComponent
+} from "./initial-store-message-dialogs/set-store-payment-preferences-dialog/set-store-payment-preferences-dialog.component";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -91,28 +94,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private setMessages() {
         this.messages = [
             {
-                severity: 'info',
+                severity: 'warn',
                 summary: 'Are you an individual or a business?',
                 hide: this.store?.storeType != undefined,
                 timeToFinish: '< 1 min',
                 actionButtonText: 'Set store type',
                 onButtonClick: () => this.setStoreType(),
-            },
-            {
-                severity: 'info',
+            }, {
+                severity: 'warn',
                 summary: 'Finish off setting up your personal profile',
                 hide: this.user?.hasCompletedProfile,
                 timeToFinish: '< 5 mins',
                 actionButtonText: 'Setup profile',
                 onButtonClick: () => this.setProfile(),
-            },
-            {
-                severity: 'info',
+            }, {
+                severity: 'warn',
                 summary: 'Start setting up your store',
                 hide: this.store?.hasCompletedStoreSetup,
                 timeToFinish: '< 5 mins',
                 actionButtonText: "Start",
                 onButtonClick: () => this.startSettingStoreDetailWizard()
+            }, {
+                severity: 'warn',
+                summary: 'Set your payment preferences',
+                hide: this.store?.depositPercentage !== undefined && this.store?.fullPaymentPrecedingEventDays !== undefined,
+                timeToFinish: '< 5 mins',
+                actionButtonText: "Set preferences",
+                onButtonClick: () => this.setStorePaymentPreferences()
             }
         ]
         if(this.store?.storeType !== undefined && this.store.hasCompletedStoreSetup) {
@@ -120,7 +128,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 (form) => {
                 form.forEach(f => {
                     this.messages.push({
-                        severity: 'info',
+                        severity: 'warn',
                         summary: f.name,
                         timeToFinish: "10 mins",
                         actionButtonText: "Start",
@@ -132,7 +140,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     private startSettingStoreDetailWizard() {
-        this.dialogService.open(SetStoreDetailsDialogComponent, {header: 'Set store details', data: this.store, width: '50rem'})
+        this.dialogService.open(SetStoreDetailsDialogComponent, {header: 'Set store details', data: this.store, width: '60rem', height: '60rem'})
             .onClose
             .pipe(
                 tap((message?: Message) => {
@@ -149,6 +157,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private openForm(form: Form) {
         this.dialogService.open(FormBuilderComponent, {header: form.name, data: form, width: '60%', height: '80%'})
+    }
+
+    private setStorePaymentPreferences() {
+        this.dialogService.open(SetStorePaymentPreferencesDialogComponent, {header: 'Set store payment preference', data: this.store, width: '60rem', height: '60rem'})
+            .onClose
+            .pipe(
+                tap((message?: Message) => {
+                    if(message) {
+                        this.messageService.add(message);
+                    }
+                }),
+                switchMap(() => this.storeService.getVendor(this.store!.id)))
+            .subscribe((store) => {
+                this.store = store;
+                this.setMessages();
+            })
     }
 }
 

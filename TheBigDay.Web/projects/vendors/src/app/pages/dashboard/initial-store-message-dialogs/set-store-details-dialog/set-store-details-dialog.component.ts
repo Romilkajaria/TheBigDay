@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from "../../../../../../common/src/lib/common-rest-models/store";
-import {ItemCategory} from "../../../../../../common/src/lib/common-rest-models/item-category";
+import {Store} from "../../../../../../../common/src/lib/common-rest-models/store";
+import {ItemCategory} from "../../../../../../../common/src/lib/common-rest-models/item-category";
 import {
     StoreService
-} from "../../../../../../common/src/lib/common-rest-services/store/store-service.service";
-import {AuthorizeService} from "../../../../../../common/src/lib/components/auth/login/authorize.service";
-import {ItemCategoryService} from "../../../../../../common/src/lib/common-rest-services/item-category.service";
+} from "../../../../../../../common/src/lib/common-rest-services/store/store-service.service";
+import {AuthorizeService} from "../../../../../../../common/src/lib/components/auth/login/authorize.service";
+import {ItemCategoryService} from "../../../../../../../common/src/lib/common-rest-services/item-category.service";
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
 import {EditorModule} from "primeng/editor";
@@ -13,7 +13,7 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {NgForOf, NgIf} from "@angular/common";
 import {MultiSelectChangeEvent, MultiSelectModule} from "primeng/multiselect";
-import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
+import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
 

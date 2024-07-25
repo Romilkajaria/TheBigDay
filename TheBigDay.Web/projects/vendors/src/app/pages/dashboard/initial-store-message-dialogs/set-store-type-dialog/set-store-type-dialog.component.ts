@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {DialogConfig} from "@angular/cdk/dialog";
-import {Store, StoreType} from "../../../../../../common/src/lib/common-rest-models/store";
+import {Store, StoreType} from "../../../../../../../common/src/lib/common-rest-models/store";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {
     StoreService
-} from "../../../../../../common/src/lib/common-rest-services/store/store-service.service";
-import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
+} from "../../../../../../../common/src/lib/common-rest-services/store/store-service.service";
+import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 
