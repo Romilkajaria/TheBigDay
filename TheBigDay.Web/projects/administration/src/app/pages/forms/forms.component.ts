@@ -72,7 +72,9 @@ export class FormsComponent {
     ];
     itemCategories: ItemCategory[] = [];
 
-    public constructor(private formService: FormService, private itemCategoryService: ItemCategoryService) {
+    public constructor(private formService: FormService,
+                       private itemCategoryService: ItemCategoryService,
+                       private confirmationService: ConfirmationService) {
         this.updateData();
     }
 
@@ -145,7 +147,21 @@ export class FormsComponent {
     }
 
     deleteConfirmation() {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete this form?',
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon:"pi pi-times",
+            rejectIcon:"none",
+            acceptLabel: 'Delete',
+            rejectLabel: 'Cancel',
+            accept: () => this.deleteForm(),
+        })
+    }
 
+    private deleteForm() {
+        if(this.selectedForm && this.selectedForm.id) {
+            this.formService.deleteForm(this.selectedForm.id).subscribe(() => this.updateData())
+        }
     }
 
     addOrUpdate() {

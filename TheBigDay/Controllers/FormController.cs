@@ -184,5 +184,43 @@ namespace TheBigDay.Controllers
                 throw new Exception("Failed to get Store", ex);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeteleForm(Guid id)
+        {
+            using var context = new DatabaseContext(
+    _serviceProvider.GetRequiredService<
+        DbContextOptions<DatabaseContext>>());
+
+            var form = context.Form.Include("SubForms").Include("Fields").Include("SubForms.Fields").FirstOrDefault(f => f.Id == id);
+
+            if (form == null)
+            {
+                throw new Exception("failed to delete form: unable to find form");
+            }
+
+            if(form.Fields.Count > 0)
+            {
+                context.FormField.RemoveRange(form.Fields);
+            }
+
+            if(form.SubForms.Count > 0)
+            {
+                form.SubForms.ForEach(sf =>
+                {
+                    if (sf.Fields.Count > 0)
+                    {
+                        context.FormField.RemoveRange(sf.Fields);
+                    }
+                });
+
+                context.Form.RemoveRange(form.SubForms);
+            }
+            context.Form.Remove(form);
+            context.SaveChanges();
+
+            return Ok();
+
+        }
     }
 }
