@@ -17,9 +17,6 @@ import {AvatarModule} from "primeng/avatar";
 import {BadgeModule} from "primeng/badge";
 import {MessageModule} from "primeng/message";
 import {RippleModule} from "primeng/ripple";
-import {SetUserProfileDialogComponent} from "./initial-store-message-dialogs/set-user-profile-dialog/set-user-profile-dialog.component";
-import {SetStoreTypeDialogComponent} from "./initial-store-message-dialogs/set-store-type-dialog/set-store-type-dialog.component";
-import {SetStoreDetailsDialogComponent} from "./initial-store-message-dialogs/set-store-details-dialog/set-store-details-dialog.component";
 
 @NgModule({
     imports: [
