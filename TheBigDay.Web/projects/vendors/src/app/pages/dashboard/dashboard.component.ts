@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }, {
                 severity: 'warn',
                 summary: 'Set your payment preferences',
-                hide: this.store?.depositPercentage !== undefined && this.store?.fullPaymentPrecedingEventDays !== undefined,
+                hide: this.store?.depositPercentage !== null && this.store?.fullPaymentPrecedingEventDays !== null,
                 timeToFinish: '< 5 mins',
                 actionButtonText: "Set preferences",
                 onButtonClick: () => this.setStorePaymentPreferences()

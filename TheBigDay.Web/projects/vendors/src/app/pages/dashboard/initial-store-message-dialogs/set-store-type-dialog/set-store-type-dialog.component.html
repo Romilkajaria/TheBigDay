@@ -4,8 +4,8 @@
 <div class="flex flex-column align-items-center w-full">
     So, what type of business are you?
     <div class="d-lg-flex gap-2 ">
-        <button pButton pRipple label="Individual" class="m-2" (click)="setStoreType(StoreType.INDIVIDUAL)"></button>
-        <button pButton pRipple label="Business" class="m-2" (click)="setStoreType(StoreType.BUSINESS)"></button>
+        <button pButton pRipple label="Individual" [outlined]="store!.storeType === StoreType.BUSINESS" class="m-2" (click)="setStoreType(StoreType.INDIVIDUAL)"></button>
+        <button pButton pRipple label="Business" class="m-2" [outlined]="store!.storeType === StoreType.INDIVIDUAL" (click)="setStoreType(StoreType.BUSINESS)"></button>
     </div>
 </div>
 

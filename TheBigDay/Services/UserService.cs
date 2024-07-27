@@ -115,9 +115,9 @@ namespace TheBigDay.Services
                 }
 
             }
-            catch (Exception ex) { }
-
-            return new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." };
+            catch (Exception ex) {
+                throw new Exception("User creation failed! Please check user details and try again.", ex);
+            };
         }
     }
 }

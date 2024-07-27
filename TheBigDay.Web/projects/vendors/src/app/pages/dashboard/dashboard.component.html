@@ -7,18 +7,20 @@
                     <p-badge [value]="activeMessageCount.toString()" class="ml-2 mr-2" />
                 </div>
             </ng-template>
-            <p-messages *ngFor="let message of messages" [severity]="message.severity" class="w-full message">
-                <ng-container *ngIf="!message.hide">
+            <p-messages *ngFor="let message of messages" [severity]="message.hide ? 'success' : message.severity" class="w-full message">
+                <ng-container>
                     <ng-template pTemplate>
-            <span class="flex align-items-center justify-content-between w-full">
-                <span>{{message.summary}}</span>
-                <div class="flex align-items-center">
-                    <p-badge *ngIf="message.timeToFinish" [value]="message.timeToFinish" class="ml-2 mr-2" />
-                    <button *ngIf="message.actionButtonText && message.onButtonClick" class="me-2" pButton pRipple [label]="message.actionButtonText" (click)="message.onButtonClick()"></button>
-
-                </div>
-
-            </span>
+                    <span class="flex align-items-center justify-content-between w-full">
+                        <div>
+                            <i *ngIf="message.hide" class="pi pi-check-circle mr-2"></i>
+                            <span>{{message.summary}}</span>
+                        </div>
+                        <div class="flex align-items-center" *ngIf="!message.hide">
+                            <p-badge *ngIf="message.timeToFinish" [value]="message.timeToFinish" class="ml-2 mr-2" />
+                            <button *ngIf="message.actionButtonText && message.onButtonClick" class="me-2" pButton pRipple [label]="message.actionButtonText" (click)="message.onButtonClick()"></button>
+                        </div>
+                        <i *ngIf="message.hide && message.actionButtonText && message.onButtonClick" class="py-3 pr-2 pi pi-pencil mr-2" (click)="message.onButtonClick()"></i>
+                    </span>
                     </ng-template>
                 </ng-container>
             </p-messages>

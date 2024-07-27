@@ -9,6 +9,7 @@ import {
 import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'store-set-store-type-dialog',
@@ -16,28 +17,30 @@ import {RippleModule} from "primeng/ripple";
     standalone: true,
     imports: [
         ButtonModule,
-        RippleModule
+        RippleModule,
+        NgClass
     ],
     providers: [DialogConfig, MessageService, ConfirmationService]
 })
 export class SetStoreTypeDialogComponent {
     public loading = false;
+    public store: Store | undefined;
+    public readonly StoreType = StoreType;
 
-    constructor(private dialogConfig: DynamicDialogConfig<Store>,
+    constructor(public dialogConfig: DynamicDialogConfig<Store>,
                 private storeService: StoreService,
                 private messageService: MessageService,
                 private ref: DynamicDialogRef) {
+        this.store = this.dialogConfig.data;
     }
 
-    protected readonly StoreType = StoreType;
-
     setStoreType(storeType: StoreType) {
-        this.dialogConfig.data!.storeType = storeType;
+        this.store!.storeType = storeType;
     }
 
     save() {
         this.loading = true
-        this.storeService.updateVendor(this.dialogConfig.data!).subscribe({
+        this.storeService.updateVendor(this.store!).subscribe({
             next: () => {
                 this.confirmation("store type saved");
             },
