@@ -19,6 +19,8 @@ import {FormBuilderComponent} from "../../../../../common/src/lib/components/for
 import {
     SetStorePaymentPreferencesDialogComponent
 } from "./initial-store-message-dialogs/set-store-payment-preferences-dialog/set-store-payment-preferences-dialog.component";
+import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
+import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -31,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     subscription!: Subscription;
 
     loading = true
-
+    itemCategories?: ItemCategory[];
     store?: Store;
     messages: MessageConfig[] = [];
     user?: User;
@@ -41,12 +43,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
                  private dialogService: DialogService,
                  private messageService: MessageService,
                  private storeService: StoreService,
-                 private formService: FormService) {
+                 private formService: FormService,
+                 private itemCategoryService: ItemCategoryService) {
         this.store = auth.current?.store;
     }
 
     ngOnInit() {
         this.setMessages();
+        this.itemCategoryService.getCategories().subscribe((ic) => this.itemCategories = ic)
     }
 
     public get activeMessageCount() {
@@ -173,6 +177,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.store = store;
                 this.setMessages();
             })
+    }
+
+    public showVenues() {
+        if(this.store?.storeItemCategories.length && this.itemCategories?.length) {
+            const target = this.itemCategories.find((ic) => ic.name === 'Venue')
+            return this.store.storeItemCategories.some((ic) => ic.itemCategoryId === target?.id);
+        }
+        return false;
     }
 }
 

@@ -1,0 +1,31 @@
+<div class="grid" >
+  <div class="col-12">
+      <div class="flex justify-content-between align-items-center">
+          <h5>{{itemCategory?.name}} Venues</h5>
+          <button [disabled]=" !store?.hasCompletedStoreSetup || store?.storeType === undefined" pButton pRipple label="Add" icon="pi pi-plus" class="mb-3" (click)="createVenue()"></button>
+      </div>
+    <div class="card" *ngIf="venues &&venues.length > 0">
+      <p-table selectionMode="single" (onRowSelect)="onRowSelect($event)" [columns]="productColumns" [value]="venues" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col.key }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+<!--              {{ col.key === ProductColumnNames.PRICE_TYPE ? getPriceTypeCellData(rowData[col.value]) : rowData[col.value] }}-->
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>
+<div *ngIf="loading" class="flex justify-content-center">
+    <app-loading [showLoading]="loading"></app-loading>
+</div>

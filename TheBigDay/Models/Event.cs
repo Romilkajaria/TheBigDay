@@ -25,8 +25,9 @@ namespace TheBigDay.Models
         public required EventType EventType { get; set; }
         public bool IsDeleted { get; set; }
 
-        //dependancies 
+        #region navigation
         public List<EventItem>? EventItems { get; set; }
         public List<EventCustomer>? EventCustomer { get; set; }
+        #endregion
     }
 }

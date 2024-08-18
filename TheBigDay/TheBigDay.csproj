@@ -33,9 +33,13 @@
     <None Remove="Authentication\" />
     <None Remove="Services\" />
     <None Remove="Interfaces\" />
+    <None Remove="Models\Item Category Models\" />
+    <None Remove="Models\Item Category Models\Generic Models\" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Models\Item Category Models\" />
+    <Folder Include="Models\Item Category Models\Generic Models\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TheBigDay.Models.ItemCategoryModels;
 
 namespace TheBigDay.Models
 {
@@ -37,7 +38,10 @@ namespace TheBigDay.Models
 
 
         // navigation
-        public List<FormEntry>? Items { get; set; }
+        //public List<FormEntry>? Items { get; set; }
+        public List<Venue>? Venues { get; set; }
+        //public List<Caterer> Caterers { get; set; }
+        // public List<DiskJockey> Diskjockey { get; set; }
         public List<User> Users { get; } = new List<User>();
         public List<StoreItemCategory>? StoreItemCategories { get; set; }
     }

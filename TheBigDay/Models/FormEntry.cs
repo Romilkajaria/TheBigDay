@@ -10,8 +10,8 @@ namespace TheBigDay.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid FormId { get; set; }
-        public Guid FormFieldId { get; set; }
-        public Guid StoreId { get; set; }
+        //public Guid FormFieldId { get; set; }
+        //public Guid StoreId { get; set; }
         public bool IsDeleted { get; set; }
 
         // custom form fields
@@ -22,9 +22,9 @@ namespace TheBigDay.Models
         public string? LinkValue { get; set; }
 
         // navigation
-        public required Form Form { get; set; }
-        public required Store Store { get; set; }
-        public required FormField FormField { get; set; }
-        public List<EventItem>? EventItems { get; set; }
+        //public required Form Form { get; set; }
+        //public required Store Store { get; set; }
+        //public required FormField FormField { get; set; }
+        //public List<EventItem>? EventItems { get; set; }
     }
 }

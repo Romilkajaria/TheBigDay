@@ -34,7 +34,9 @@ namespace TheBigDay.Controllers
 
                     if(stores != null)
                     {
-                        return Ok(stores.Select((store) => store.Items));
+                        return Ok(
+                            //stores.Select((store) => store.Items)
+                            );
                     }
 
                     return Ok();

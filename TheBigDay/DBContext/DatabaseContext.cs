@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TheBigDay.Models;
 using TheBigDay.Models.Form_Models;
+using TheBigDay.Models.ItemCategoryModels;
 
 namespace TheBigDay.DBContext
 {
@@ -15,12 +16,13 @@ namespace TheBigDay.DBContext
         public DbSet<EventCustomer> EventCustomer { get; set; }
         public DbSet<EventItem> EventItem { get; set; }
         public DbSet<EventType> EventType { get; set; }
-        public DbSet<Form> Form { get; set; }
-        public DbSet<FormEntry> FormEntry { get; set; }
-        public DbSet<FormField> FormField { get; set; }
+        //public DbSet<Form> Form { get; set; }
+        //public DbSet<FormEntry> FormEntry { get; set; }
+        //public DbSet<FormField> FormField { get; set; }
         public DbSet<ItemCategory> ItemCategory { get; set; }
         public DbSet<Store> Store { get; set; }
         public DbSet<StoreItemCategory> StoreItemCategory { get; set; }
+        public DbSet<Venue> Venue { get; set; }
 
     }
 }

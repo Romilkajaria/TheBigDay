@@ -8,7 +8,7 @@ namespace TheBigDay.Models.Form_Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid FieldId { get; set; }
+        public Guid Id { get; set; }
         public required FieldTypes Type { get; set; }
         public required string Label { get; set; }
         public string? Placeholder { get; set; }

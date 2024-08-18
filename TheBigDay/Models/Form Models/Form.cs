@@ -18,8 +18,8 @@ namespace TheBigDay.Models.Form_Models
         public bool IsDeleted { get; set; }
 
         // navigation
-        public List<FormField> Fields { get; set; } = new List<FormField>();
-        public List<Form> SubForms { get; set; } = new List<Form>();
+        //public List<FormField> Fields { get; set; } = new List<FormField>();
+        //public List<Form> SubForms { get; set; } = new List<Form>();
         // the cate gory this form is set against
         public ItemCategory? ItemCategory { get; set; }
 

@@ -1,48 +1,49 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DialogConfig} from "@angular/cdk/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {
     CommonProductsService
-} from "../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
-import {ConfirmationService, Message, MessageService} from "primeng/api";
-import {getToastMessage, ToastMessageType} from "../../../../../../common/src/lib/helpers/toastMessages";
-import {AuthorizeService} from "../../../../../../common/src/lib/components/auth/login/authorize.service";
-import {FormEntry} from "../../../../../../common/src/lib/common-rest-models/form-entry";
+} from "../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
+import {AuthorizeService} from "../../../../../../../common/src/lib/components/auth/login/authorize.service";
+import {Venue} from "../../../../../../../common/src/lib/common-rest-models/venue";
+import {VenueService} from "../../../../../../../common/src/lib/common-rest-services/venue/venue.service";
+import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 
 @Component({
     selector: 'app-add-venue',
-    templateUrl: './add-product-form.component.html',
-    styleUrls: ['./add-product-form.component.scss'],
+    templateUrl: './add-venue.component.html',
+    styleUrls: ['./add-venue.component.scss'],
     providers: [DialogConfig, MessageService, ConfirmationService]
 })
-export class AddProductFormComponent implements OnInit{
-    product?: FormEntry
+export class AddVenueComponent implements OnInit{
     @Output() onClose = new EventEmitter<void>();
+    venue?: Venue;
     loading = false;
 
-    constructor(private dialogConfig: DynamicDialogConfig<FormEntry>,
-                private productService: CommonProductsService,
+    constructor(private dialogConfig: DynamicDialogConfig<Venue>,
+                private venueService: VenueService,
                 private ref: DynamicDialogRef,
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
                 private auth: AuthorizeService
     ) {
         if(dialogConfig && dialogConfig.data) {
-            this.product = dialogConfig.data;
+            this.venue = dialogConfig.data;
         }
     }
 
     ngOnInit(): void {
-        if(this.product && this.product.storeId === "" && this.auth.current && this.auth.current.storeId) {
-            this.product.storeId = this.auth.current.storeId;
+        if(this.venue && this.venue.storeId === "" && this.auth.current && this.auth.current.storeId) {
+            this.venue.storeId = this.auth.current.storeId;
         }
     }
 
     save() {
         this.loading = true;
-        if(!this.product) return;
-        if (this.product.id) {
-            this.productService.updateProduct(this.product).subscribe({
+        if(!this.venue) return;
+        if (this.venue.id) {
+            this.venueService.updateVenue(this.venue).subscribe({
                 next: () => {
                     this.confirmation("Product updated");
                 },
@@ -51,7 +52,7 @@ export class AddProductFormComponent implements OnInit{
                 }
             });
         } else {
-            this.productService.addProduct(this.product).subscribe({
+            this.venueService.addVenue(this.venue).subscribe({
                 next: () => {
                     this.confirmation("Product added");
                 },
@@ -77,7 +78,7 @@ export class AddProductFormComponent implements OnInit{
 
     delete() {
         this.loading = true;
-        this.productService.deleteProduct(this.product!.id).subscribe({
+        this.venueService.deleteVenue(this.venue!.id).subscribe({
             next: () => {
                 this.confirmation("product deleted");
             },

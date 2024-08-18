@@ -6,9 +6,6 @@ namespace TheBigDay.Models
 {
 	public class StoreItemCategory
 	{
-		public StoreItemCategory()
-		{
-		}
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

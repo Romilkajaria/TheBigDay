@@ -167,23 +167,11 @@
         </p-table>
     </div></div>
 
-
-
-<ng-container *ngIf="store && store.storeItemCategories.length">
-    <ng-container *ngFor="let category of store.storeItemCategories">
-        <div class="col-12 xl:col-6">
-            <div class="card">
-                <app-products [store]="store" [categoryId]="category.itemCategoryId!"></app-products>
-            </div>
+    <div *ngIf="showVenues()" class="col-12">
+        <div class="card">
+            <app-venue [store]="store"></app-venue>
         </div>
-
-        <div class="col-12 xl:col-6">
-            <div class="card">
-                <app-services [store]="store" [categoryId]="category.itemCategoryId!"></app-services>
-            </div>
-        </div>
-    </ng-container>
-</ng-container>
+    </div>
 
 </div>
 

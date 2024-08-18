@@ -17,6 +17,7 @@ import {AvatarModule} from "primeng/avatar";
 import {BadgeModule} from "primeng/badge";
 import {MessageModule} from "primeng/message";
 import {RippleModule} from "primeng/ripple";
+import {VenueModule} from "../vendor-categories/venue/venue.module";
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import {RippleModule} from "primeng/ripple";
         BadgeModule,
         MessageModule,
         RippleModule,
+        VenueModule,
     ],
     declarations: [DashboardComponent]
 })

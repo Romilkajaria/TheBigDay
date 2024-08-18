@@ -13,7 +13,7 @@ namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20240622174820_second")]
-    partial class second
+    partial class Second
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
