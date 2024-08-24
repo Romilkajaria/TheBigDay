@@ -47,7 +47,7 @@ export class VenueComponent implements OnInit {
   }
 
   createVenue() {
-    this.ref = this.dialogService.open(AddVenueComponent, {header: `New venues`, width: '50rem', maximizable: true, });
+    this.ref = this.dialogService.open(AddVenueComponent, {header: `New venue`, width: '50rem', maximizable: true, });
     this.onCloseSubscribe();
   }
 

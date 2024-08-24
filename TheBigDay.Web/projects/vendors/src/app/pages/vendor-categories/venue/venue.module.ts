@@ -20,6 +20,7 @@ import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
 import {LoadingModule} from "../../../../../../common/src/lib/components/loading/loading/loading.module";
+import {StepsModule} from "primeng/steps";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {LoadingModule} from "../../../../../../common/src/lib/components/loading
         ToastModule,
         ConfirmDialogModule,
         LoadingModule,
-        RippleModule
+        RippleModule,
+        StepsModule
     ]
 })
 export class VenueModule { }

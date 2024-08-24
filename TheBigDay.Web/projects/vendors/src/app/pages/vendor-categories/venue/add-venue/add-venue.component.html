@@ -1,5 +1,83 @@
-<div class="w-full" *ngIf="venue">
+<div class="w-100">
+    <ng-container [ngSwitch]="stepIndex">
+        <ng-container *ngSwitchCase="0">
+            <ng-container *ngTemplateOutlet="step0"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="1">
+            <ng-container *ngTemplateOutlet="step1"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="2">
+            <ng-container *ngTemplateOutlet="step2"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="3">
+            <ng-container *ngTemplateOutlet="step3"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="4">
+            <ng-container *ngTemplateOutlet="step4"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="5">
+            <ng-container *ngTemplateOutlet="step5"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="6">
+            <ng-container *ngTemplateOutlet="step6"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="7">
+            <ng-container *ngTemplateOutlet="step7"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="8">
+            <ng-container *ngTemplateOutlet="step8"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="9">
+            <ng-container *ngTemplateOutlet="step9"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="10">
+            <ng-container *ngTemplateOutlet="step10"></ng-container>
+        </ng-container>
+    </ng-container>
+
+    <div [ngClass]="stepIndex > 0 ? 'justify-content-between' : 'justify-content-end'" class="flex w-100">
+        <p-button *ngIf="stepIndex > 0" label="back" class="mb-3" (click)="stepIndex = stepIndex - 1"></p-button>
+        <p-button *ngIf="stepIndex < maxSteps" label="next" class="mb-3" (click)="stepIndex = stepIndex + 1"></p-button>
+        <p-button *ngIf="stepIndex == maxSteps" label="finish" class="mb-3" (click)="confirmation('New venue saved:' + venue?.title)"></p-button>
+    </div>
 </div>
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 
+<ng-template #step0>
+    <h2>Hi, {{auth.current?.firstName}}</h2>
+    <h5>Add your listing & start earning</h5>
+    <ul>
+        <li *ngFor="let step of steps">{{step.label}}</li>
+    </ul>
+</ng-template>
+<ng-template #step1>
+    <h5>{{steps[0].label}}</h5>
+</ng-template>
+<ng-template #step2>
+    <h5>{{steps[1].label}}</h5>
+</ng-template>
+<ng-template #step3>
+    <h5>{{steps[2].label}}</h5>
+</ng-template>
+<ng-template #step4>
+    <h5>{{steps[3].label}}</h5>
+</ng-template>
+<ng-template #step5>
+    <h5>{{steps[4].label}}</h5>
+</ng-template>
+<ng-template #step6>
+    <h5>{{steps[5].label}}</h5>
+</ng-template>
+<ng-template #step7>
+    <h5>{{steps[6].label}}</h5>
+</ng-template>
+<ng-template #step8>
+    <h5>{{steps[7].label}}</h5>
+</ng-template>
+<ng-template #step9>
+    <h5>{{steps[8].label}}</h5>
+</ng-template>
+<ng-template #step10>
+    <h5>{{steps[9].label}}</h5>
+</ng-template>

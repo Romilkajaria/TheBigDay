@@ -1,32 +1,55 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DialogConfig} from "@angular/cdk/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {ConfirmationService, Message, MessageService} from "primeng/api";
-import {
-    CommonProductsService
-} from "../../../../../../../common/src/lib/common-rest-services/products/common-products-service.service";
+import {ConfirmationService, MenuItem, Message, MessageService} from "primeng/api";
 import {AuthorizeService} from "../../../../../../../common/src/lib/components/auth/login/authorize.service";
 import {Venue} from "../../../../../../../common/src/lib/common-rest-models/venue";
 import {VenueService} from "../../../../../../../common/src/lib/common-rest-services/venue/venue.service";
 import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 
+
+const steps: MenuItem[] = [{
+    label: 'Property Details',
+    icon: 'pi-circle'
+}, {
+    label: 'Event details'
+}, {
+    label: 'Location'
+}, {
+    label: 'Amenities'
+}, {
+    label: 'Photos'
+}, {
+    label: 'Description & title'
+}, {
+    label: 'Booking settings'
+}, {
+    label: 'Calendar & availability'
+}, {
+    label: 'Pricing & security'
+}, {
+    label: 'Review'
+}]
 @Component({
     selector: 'app-add-venue',
     templateUrl: './add-venue.component.html',
     styleUrls: ['./add-venue.component.scss'],
     providers: [DialogConfig, MessageService, ConfirmationService]
 })
-export class AddVenueComponent implements OnInit{
+export class AddVenueComponent implements OnInit {
     @Output() onClose = new EventEmitter<void>();
     venue?: Venue;
     loading = false;
+    steps = steps;
+    stepIndex = 0;
+    readonly maxSteps = steps.length
 
     constructor(private dialogConfig: DynamicDialogConfig<Venue>,
                 private venueService: VenueService,
                 private ref: DynamicDialogRef,
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
-                private auth: AuthorizeService
+                public auth: AuthorizeService
     ) {
         if(dialogConfig && dialogConfig.data) {
             this.venue = dialogConfig.data;
@@ -45,19 +68,19 @@ export class AddVenueComponent implements OnInit{
         if (this.venue.id) {
             this.venueService.updateVenue(this.venue).subscribe({
                 next: () => {
-                    this.confirmation("Product updated");
+                    this.confirmation("Venue updated");
                 },
                 error: (er) => {
-                    this.confirmation("Failed to update product", er.message);
+                    this.confirmation("Failed to update venue", er.message);
                 }
             });
         } else {
             this.venueService.addVenue(this.venue).subscribe({
                 next: () => {
-                    this.confirmation("Product added");
+                    this.confirmation("Venue added");
                 },
                 error: (er) => {
-                    this.confirmation("Failed to add product", er.message);
+                    this.confirmation("Failed to add venue", er.message);
                 },
             })
         }
@@ -80,17 +103,17 @@ export class AddVenueComponent implements OnInit{
         this.loading = true;
         this.venueService.deleteVenue(this.venue!.id).subscribe({
             next: () => {
-                this.confirmation("product deleted");
+                this.confirmation("Venue deleted");
             },
             error: (er) => {
-                this.confirmation("failed to delete product", er.message);
+                this.confirmation("failed to delete venue", er.message);
             },
         })
     }
 
     deleteConfirmation() {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to delete this product?',
+            message: 'Are you sure that you want to delete this venue?',
             icon: 'pi pi-exclamation-triangle',
             acceptIcon:"pi pi-times",
             rejectIcon:"none",
