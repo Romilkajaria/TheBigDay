@@ -1,4 +1,4 @@
-import { EventType } from "./event";
+import {EventType} from "./event";
 
 export interface AvailabilityDateRange {
     id: string;
@@ -44,7 +44,7 @@ export interface Venue {
     LocationLandmark: string;
     Amenities: string;
     SoundRestrictions: boolean;
-    WhatIsAround: string ;
+    WhatIsAround: string;
     DaysNoticeNeededBeforeGuestArrives: number;
     DaysInAdvanceCanGuestsBook: number; // 0 is same day onwards
     CheckinTime: Date;
@@ -67,8 +67,7 @@ export interface EventRequirements {
     approvedEventTypes: EventType[];
 }
 
-enum PropertyType
-{
+export enum PropertyType {
     FLAT,
     BOUTIQUE_HOTEL,
     EXCLUSIVE,
@@ -77,14 +76,12 @@ enum PropertyType
     RESTAURANT
 }
 
-enum SpaceType
-{
+export enum SpaceType {
     ENTIRE_SPACE,
     PRIVATE_ROOM,
 }
 
-enum VenueVisitsOptions
-{
+enum VenueVisitsOptions {
     ONE,
     TWO,
     THREE_OR_MORE,

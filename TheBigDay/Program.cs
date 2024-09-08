@@ -19,16 +19,7 @@ public class Program
 
         // Configure services
         builder.Services.AddControllers();
-        //builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-        //    .AddIdentityCookies()
-        //    .ApplicationCookie!.Configure(opt => opt.Events = new CookieAuthenticationEvents()
-        //    {
-        //        OnRedirectToLogin = ctx =>
-        //        {
-        //            ctx.Response.StatusCode = 401;
-        //            return Task.CompletedTask;
-        //        },
-        //    });
+        builder.Services.AddSingleton<BlobStorageService>();
 
         builder.Services.AddAuthentication(options =>
         {
@@ -94,17 +85,16 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddScoped<IUserService, UserService>();
-        //builder.Services.AddScoped<IStoreService, StoreService>();
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline
-        //if (app.Environment.IsDevelopment())
-        //{
-        app.UseDeveloperExceptionPage();
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        //}
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         //Enable CORS
         app.UseCors("AllowLocalhost4202");

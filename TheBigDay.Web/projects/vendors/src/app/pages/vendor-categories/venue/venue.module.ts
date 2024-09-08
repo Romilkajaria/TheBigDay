@@ -6,7 +6,6 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {TableModule} from "primeng/table";
 import {MultiSelectModule} from "primeng/multiselect";
-import {DropdownModule} from "primeng/dropdown";
 import {SliderModule} from "primeng/slider";
 import {ProgressBarModule} from "primeng/progressbar";
 import {FormsModule} from "@angular/forms";
@@ -21,6 +20,9 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
 import {LoadingModule} from "../../../../../../common/src/lib/components/loading/loading/loading.module";
 import {StepsModule} from "primeng/steps";
+import {NumberInputModule} from "../../../../../../common/src/lib/components/uikit/number-input/number-input.module";
+import {CommonDropdownModule} from "../../../../../../common/src/lib/components/uikit/dropdown/dropdown.module";
+import {RadioButtonsModule} from "../../../../../../common/src/lib/components/uikit/radiobuttons/radiobuttons.module";
 
 
 @NgModule({
@@ -39,7 +41,6 @@ import {StepsModule} from "primeng/steps";
         InputTextModule,
         TableModule,
         MultiSelectModule,
-        DropdownModule,
         SliderModule,
         ProgressBarModule,
         FormsModule,
@@ -52,7 +53,12 @@ import {StepsModule} from "primeng/steps";
         ConfirmDialogModule,
         LoadingModule,
         RippleModule,
-        StepsModule
+        StepsModule,
+        NumberInputModule,
+        CommonDropdownModule,
+        RadioButtonsModule,
+        FormsModule
     ]
 })
-export class VenueModule { }
+export class VenueModule {
+}

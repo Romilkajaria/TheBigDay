@@ -1,0 +1,33 @@
+<div>
+    <h2>Upload Image</h2>
+    <p-fileUpload
+        (uploadHandler)="onFileSelected($event)"
+        [maxFileSize]="1000000"
+        accept="image/*"
+        chooseLabel="Select Image"
+        customUpload="true"
+        mode="basic"
+        name="file">
+    </p-fileUpload>
+
+    <div *ngIf="progress">
+        <p>Upload Progress: {{ progress }}%</p>
+    </div>
+
+    <h2>Download Image</h2>
+    <div class="p-field">
+        <label for="fileName">File Name</label>
+        <input [(ngModel)]="fileName" id="fileName" pInputText placeholder="Enter file name">
+    </div>
+
+    <button (click)="downloadImage()" icon="pi pi-download" label="Download Image" pButton type="button"></button>
+
+    <div *ngIf="imageUrl">
+        <h3>Downloaded Image</h3>
+        <img [src]="imageUrl" alt="Downloaded Image" width="200px">
+    </div>
+
+    <div *ngIf="errorMessage" style="color: red;">
+        {{ errorMessage }}
+    </div>
+</div>

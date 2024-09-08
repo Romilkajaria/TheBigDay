@@ -10,9 +10,6 @@ import {VendorAuthGuard} from "./VendorAuthGuard";
                 path: '', component: VendorPageShellComponent, canActivate: [VendorAuthGuard],
                 children: [
                     { path: '', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    { path: 'uikit', loadChildren: () => import('../../../common/src/lib/components/uikit/uikit.module').then(m => m.UIkitModule) },
-                    { path: 'utilities', loadChildren: () => import('../../../common/src/lib/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
-                    { path: 'documentation', loadChildren: () => import('../../../common/src/lib/components/documentation/documentation.module').then(m => m.DocumentationModule) },
                     { path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) }
                 ]
             },

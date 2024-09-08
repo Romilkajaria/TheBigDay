@@ -27,6 +27,7 @@
     <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="2.17.0" />
     <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.24.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
   </ItemGroup>
 
   <ItemGroup>

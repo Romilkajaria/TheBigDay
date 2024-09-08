@@ -1,9 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
-import {DOCUMENT} from "@angular/common";
-import { AuthorizeService } from "projects/common/src/lib/components/auth/login/authorize.service";
-import {Router} from "@angular/router";
-import {catchError, interval, map, switchMap, timer} from "rxjs";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -11,13 +6,7 @@ import {catchError, interval, map, switchMap, timer} from "rxjs";
 })
 export class AppComponent implements OnInit {
 
-    public isSignedIn: boolean = false;
-
-    constructor(@Inject(DOCUMENT) private document: Document,
-                private router: Router,
-                private authService: AuthorizeService,
-                private primengConfig: PrimeNGConfig) {
-        this.primengConfig.ripple = true;
+    constructor() {
     }
 
     public ngOnInit(): void {

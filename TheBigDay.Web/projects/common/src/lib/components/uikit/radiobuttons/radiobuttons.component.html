@@ -1,0 +1,16 @@
+<div class="flex flex-column gap-3">
+    <label>{{ label }}</label>
+    <small *ngIf="subLabel">{{ subLabel }}</small>
+    <div *ngFor="let item of items" class="field-checkbox">
+        <p-radioButton
+            (ngModelChange)="onSelectionChanged()"
+            [(ngModel)]="selectedItem"
+            [inputId]="item.title"
+            [value]="item"/>
+        <div class="flex flex-column ml-2">
+            <label [for]="item.title">{{ item.title }}</label>
+            <small>{{ item.description }}</small>
+        </div>
+
+    </div>
+</div>

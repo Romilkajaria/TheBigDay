@@ -36,48 +36,60 @@
     </ng-container>
 
     <div [ngClass]="stepIndex > 0 ? 'justify-content-between' : 'justify-content-end'" class="flex w-100">
-        <p-button *ngIf="stepIndex > 0" label="back" class="mb-3" (click)="stepIndex = stepIndex - 1"></p-button>
-        <p-button *ngIf="stepIndex < maxSteps" label="next" class="mb-3" (click)="stepIndex = stepIndex + 1"></p-button>
-        <p-button *ngIf="stepIndex == maxSteps" label="finish" class="mb-3" (click)="confirmation('New venue saved:' + venue?.title)"></p-button>
+        <p-button (click)="stepIndex = stepIndex - 1" *ngIf="stepIndex > 0" class="mb-3" label="back"></p-button>
+        <p-button (click)="stepIndex = stepIndex + 1" *ngIf="stepIndex < maxSteps" class="mb-3" label="next"></p-button>
+        <p-button (click)="confirmation('New venue saved:' + venue?.title)" *ngIf="stepIndex == maxSteps" class="mb-3"
+                  label="finish"></p-button>
     </div>
 </div>
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 
 <ng-template #step0>
-    <h2>Hi, {{auth.current?.firstName}}</h2>
+    <h2>Hi, {{ auth.current?.firstName }}</h2>
     <h5>Add your listing & start earning</h5>
     <ul>
-        <li *ngFor="let step of steps">{{step.label}}</li>
+        <li *ngFor="let step of steps">{{ step.label }}</li>
     </ul>
 </ng-template>
 <ng-template #step1>
-    <h5>{{steps[0].label}}</h5>
+    <h5>{{ steps[0].label }}</h5>
+    <div class="flex flex-column gap-3">
+        <lib-dropdown class="w-75" label="Choose the property type" placeholder="Select property type"></lib-dropdown>
+        <lib-radioButtons [items]="guestHaveOptions" label="What will guests have?"></lib-radioButtons>
+        <!--                <lib-radioButtons [items]="setupDedicatedOptions" label="Is this set up as a dedicated"></lib-radioButtons>-->
+        <lib-number-input advisoryText="square" label="Approximate size"></lib-number-input>
+        <lib-number-input advisoryText="PAX"
+                          label="How many people can this venue comforatbly accomodate"
+                          subLabel="Based on seating arrangements"></lib-number-input>
+        <!--                <lib-radioButtons [items]="listingPartOfCompanyOptions" label="Are you listing as part of a company?"-->
+        <!--                                  subLabel="This helps you get the right features for how you host – it won’t show up to guests or affect how you show up in search."></lib-radioButtons>-->
+    </div>
 </ng-template>
 <ng-template #step2>
-    <h5>{{steps[1].label}}</h5>
+    <h5>{{ steps[1].label }}</h5>
 </ng-template>
 <ng-template #step3>
-    <h5>{{steps[2].label}}</h5>
+    <h5>{{ steps[2].label }}</h5>
 </ng-template>
 <ng-template #step4>
-    <h5>{{steps[3].label}}</h5>
+    <h5>{{ steps[3].label }}</h5>
 </ng-template>
 <ng-template #step5>
-    <h5>{{steps[4].label}}</h5>
+    <h5>{{ steps[4].label }}</h5>
 </ng-template>
 <ng-template #step6>
-    <h5>{{steps[5].label}}</h5>
+    <h5>{{ steps[5].label }}</h5>
 </ng-template>
 <ng-template #step7>
-    <h5>{{steps[6].label}}</h5>
+    <h5>{{ steps[6].label }}</h5>
 </ng-template>
 <ng-template #step8>
-    <h5>{{steps[7].label}}</h5>
+    <h5>{{ steps[7].label }}</h5>
 </ng-template>
 <ng-template #step9>
-    <h5>{{steps[8].label}}</h5>
+    <h5>{{ steps[8].label }}</h5>
 </ng-template>
 <ng-template #step10>
-    <h5>{{steps[9].label}}</h5>
+    <h5>{{ steps[9].label }}</h5>
 </ng-template>

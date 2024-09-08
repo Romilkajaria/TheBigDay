@@ -3,9 +3,9 @@ import {ActivatedRoute} from "@angular/router";
 import {
     StoreService
 } from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
-import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
 import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
+import {IDashboardCard} from "../../../../../common/src/lib/components/uikit/dashboard-card/dashboard-card.component";
 
 @Component({
     selector: 'app-vendor-store',
