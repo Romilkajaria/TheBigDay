@@ -52,9 +52,9 @@
         <li *ngFor="let step of steps">{{ step.label }}</li>
     </ul>
 </ng-template>
-<ng-template #step1>
+<ng-template #step1 class="">
     <h5>{{ steps[0].label }}</h5>
-    <div class="flex flex-column gap-3">
+    <div class="flex flex-column gap-3 p-2">
         <lib-dropdown class="w-75" label="Choose the property type" placeholder="Select property type"></lib-dropdown>
         <lib-radioButtons [items]="guestHaveOptions" label="What will guests have?"></lib-radioButtons>
         <!--                <lib-radioButtons [items]="setupDedicatedOptions" label="Is this set up as a dedicated"></lib-radioButtons>-->
@@ -62,8 +62,8 @@
         <lib-number-input advisoryText="PAX"
                           label="How many people can this venue comforatbly accomodate"
                           subLabel="Based on seating arrangements"></lib-number-input>
-        <!--                <lib-radioButtons [items]="listingPartOfCompanyOptions" label="Are you listing as part of a company?"-->
-        <!--                                  subLabel="This helps you get the right features for how you host – it won’t show up to guests or affect how you show up in search."></lib-radioButtons>-->
+        <lib-radioButtons [items]="listingPartOfCompanyOptions" label="Are you listing as part of a company?"
+                          subLabel="This helps you get the right features for how you host – it won’t show up to guests or affect how you show up in search."></lib-radioButtons>
     </div>
 </ng-template>
 <ng-template #step2>

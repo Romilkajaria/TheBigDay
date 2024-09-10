@@ -1,6 +1,6 @@
-<div class="flex flex-column gap-3">
+<div class="flex flex-column">
     <label>{{ label }}</label>
-    <small *ngIf="subLabel">{{ subLabel }}</small>
+    <small *ngIf="subLabel" class="mb-1">{{ subLabel }}</small>
     <div *ngFor="let item of items" class="field-checkbox">
         <p-radioButton
             (ngModelChange)="onSelectionChanged()"
