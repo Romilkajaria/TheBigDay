@@ -38,7 +38,6 @@ export class SetStoreDetailsDialogComponent implements OnInit {
     public store?: Store
     public itemCategories: ItemCategory[] = [];
     private loading = false;
-    selectedItemCategories: ItemCategory[] = [];
 
     constructor(private storeService: StoreService,
                 private authService: AuthorizeService,
@@ -51,9 +50,6 @@ export class SetStoreDetailsDialogComponent implements OnInit {
         this.store = this.authService.current?.store;
         this.itemCategoryService.getCategories().subscribe((ic) => {
             this.itemCategories = ic;
-            if (this.store && this.store.storeItemCategories) {
-                this.selectedItemCategories = this.itemCategories.filter(ic => this.store!.storeItemCategories.some(sic => sic.itemCategoryId === ic.id));
-            }
         })
     }
 
@@ -86,12 +82,7 @@ export class SetStoreDetailsDialogComponent implements OnInit {
 
     categorySelected($event: MultiSelectChangeEvent) {
         if (this.store) {
-            this.store!.storeItemCategories = ($event.value as ItemCategory[]).map(ic => {
-                return {
-                    itemCategoryId: ic.id!,
-                    storeId: this.store!.id
-                }
-            })
+            this.store!.itemCategories = ($event.value as ItemCategory[])
         }
 
     }

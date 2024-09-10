@@ -16,7 +16,7 @@ namespace TheBigDay.Models.ItemCategoryModels.GenericModels
         public Guid Id { get; set; }
         public bool ExternalVendorsApproved { get; set; }
 		public string? TypesOfExtrenalVendors { get; set; }
-		public List<EventType> ApprovedEventTypes { get; set; }
+		public virtual List<EventType> ApprovedEventTypes { get; set; } = [];
 	}
 }
 

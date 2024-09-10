@@ -15,8 +15,9 @@ namespace TheBigDay.Models
         public bool IsFinalisedByStore { get; set; }
         public double FinalPriceByStore { get; set; }
 
-        // navigation 
+        #region navigation
         public required Event Event {  get; set; }
         //public required FormEntry FormEntry { get; set; }
+        #endregion
     }
 }

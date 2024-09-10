@@ -11,6 +11,7 @@ namespace TheBigDay.Models.ItemCategoryModels
             BookingRequirements = new BookingRequirements();
             PricingDetails = new PricingDetail();
             AvailablityDateRanges = new List<AvailabilityDateRange>();
+            EventRequirements = new EventRequirements();
         }
 
         [Key]
@@ -38,6 +39,7 @@ namespace TheBigDay.Models.ItemCategoryModels
         public int HoursPriorToVendorCheckin { get; set; }
         public bool AdditionalPermissionsRequiredWhenCheckin { get; set; }
         public string? RestrictionsRelatedToSetup { get; set; }
+        public EventRequirements EventRequirements { get; set; }
         public BookingRequirements BookingRequirements { get; set; }
         public PricingDetail PricingDetails { get; set; }
         public List<AvailabilityDateRange> AvailablityDateRanges { get; set; }

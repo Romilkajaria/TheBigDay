@@ -58,7 +58,7 @@ namespace TheBigDay.Controllers
                     _serviceProvider.GetRequiredService<
                         DbContextOptions<DatabaseContext>>());
                 var store = context.Store
-                    .Include("StoreItemCategories")
+                    .Include(i => i.ItemCategories)
                     .FirstOrDefault((c) => c.Id.ToString() == id);
 
                 return store;
@@ -100,44 +100,44 @@ namespace TheBigDay.Controllers
                _serviceProvider.GetRequiredService<
                    DbContextOptions<DatabaseContext>>()))
                 {
-                    var sourceStore = context.Store.FirstOrDefault((c) => c.Id.ToString() == id);
+                    var destStore = context.Store.Include(i => i.ItemCategories).FirstOrDefault((c) => c.Id.ToString() == id);
 
-                    if (sourceStore != null)
+                    if (destStore != null)
                     {
                         // Update properties of the existing entity with the values from the input entity
-                        context.Entry(sourceStore).CurrentValues.SetValues(store);
+                        context.Entry(destStore).CurrentValues.SetValues(store);
 
-                        if(store.StoreItemCategories != null)
+                        if(store.ItemCategories != null)
                         {
-                            var existingStoreItemCategories = context.StoreItemCategory.Where(sic => sic.StoreId == store.Id);
-
-                            if (existingStoreItemCategories != null)
+                            foreach (var category in store.ItemCategories)
                             {
-                                context.StoreItemCategory.RemoveRange(existingStoreItemCategories);
+                                if(!destStore.ItemCategories.Any(ic => ic.Id == category.Id))
+                                {
+                                    destStore.ItemCategories.Add(category);
+                                }
                             }
 
-                            context.StoreItemCategory.AddRange(store.StoreItemCategories);
                         }
 
                         context.SaveChanges();
 
-                        sourceStore = context.Store.FirstOrDefault((c) => c.Id.ToString() == id);
+                        destStore = context.Store.FirstOrDefault((c) => c.Id.ToString() == id);
 
-                        if (sourceStore != null
-                            && !string.IsNullOrEmpty(sourceStore.Name)
-                            && !string.IsNullOrEmpty(sourceStore.Email)
-                            && !string.IsNullOrEmpty(sourceStore.AddressLine1)
-                            && !string.IsNullOrEmpty(sourceStore.Suburb)
-                            && !string.IsNullOrEmpty(sourceStore.State)
-                            && !string.IsNullOrEmpty(sourceStore.Country)
-                            && !string.IsNullOrEmpty(sourceStore.Postcode)
-                            && !string.IsNullOrEmpty(sourceStore.ContactNum)
-                            && !string.IsNullOrEmpty(sourceStore.AfterHoursContactNum)
-                            && !string.IsNullOrEmpty(sourceStore.Description)
-                            && sourceStore.StoreItemCategories != null
-                            && sourceStore.StoreItemCategories.Count > 0)
+                        if (destStore != null
+                            && !string.IsNullOrEmpty(destStore.Name)
+                            && !string.IsNullOrEmpty(destStore.Email)
+                            && !string.IsNullOrEmpty(destStore.AddressLine1)
+                            && !string.IsNullOrEmpty(destStore.Suburb)
+                            && !string.IsNullOrEmpty(destStore.State)
+                            && !string.IsNullOrEmpty(destStore.Country)
+                            && !string.IsNullOrEmpty(destStore.Postcode)
+                            && !string.IsNullOrEmpty(destStore.ContactNum)
+                            && !string.IsNullOrEmpty(destStore.AfterHoursContactNum)
+                            && !string.IsNullOrEmpty(destStore.Description)
+                            && destStore.ItemCategories != null
+                            && destStore.ItemCategories.Count > 0)
                         {
-                            sourceStore.HasCompletedStoreSetup = true;
+                            destStore.HasCompletedStoreSetup = true;
                             context.SaveChanges();
                         }
 

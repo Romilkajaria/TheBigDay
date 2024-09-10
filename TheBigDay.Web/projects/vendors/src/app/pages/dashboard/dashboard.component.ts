@@ -68,12 +68,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     public showVenues() {
-        if (this.store?.storeItemCategories.length && this.itemCategories?.length) {
-            const target = this.itemCategories.find((ic) => ic.name === 'Venue')
-            return this.store.storeItemCategories.some((ic) => ic.itemCategoryId === target?.id);
-        }
-        return false;
+        return this.store?.itemCategories.length
+            && this.itemCategories?.length
+            && this.store.itemCategories.some((ic) => ic.name === 'Venue')
     }
+
 
     private setStoreType() {
         this.dialogService.open(SetStoreTypeDialogComponent, {
@@ -148,7 +147,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
         ]
         if (this.store?.storeType !== undefined && this.store.hasCompletedStoreSetup) {
-            // this.formService.getStoreForms(this.store.storeItemCategories.map(ic => ic.itemCategoryId)).subscribe(
+            // this.formService.getStoreForms(this.store.itemCategories.map(ic => ic.itemCategoryId)).subscribe(
             //     (form) => {
             //     form.forEach(f => {
             //         this.messages.push({

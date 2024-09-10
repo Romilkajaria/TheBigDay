@@ -20,21 +20,11 @@ export interface Store {
     hasCompletedStoreSetup: boolean;
     storeType?: StoreType;
     items: FormEntry[];
-    storeItemCategories: StoreItemCategory[];
+    itemCategories: ItemCategory[];
     //store payment preference
     depositPercentage?: number;
     // if 0, then payment on the day. TODO: ask Zeal how this works? should thee payment be done before or after the event.
     fullPaymentPrecedingEventDays?: number;
-}
-
-export interface StoreItemCategory {
-    id?: string,
-    storeId: string,
-    itemCategoryId: string,
-
-    //nav
-    itemCategory?: ItemCategory
-    store?: Store
 }
 
 

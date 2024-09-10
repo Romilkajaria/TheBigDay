@@ -21,10 +21,11 @@ namespace TheBigDay.Models
         public int? IntValue { get; set; }
         public string? LinkValue { get; set; }
 
-        // navigation
+        #region navigation
         //public required Form Form { get; set; }
         //public required Store Store { get; set; }
         //public required FormField FormField { get; set; }
         //public List<EventItem>? EventItems { get; set; }
+        #endregion
     }
 }

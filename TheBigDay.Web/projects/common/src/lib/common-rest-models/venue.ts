@@ -33,31 +33,52 @@ export interface BookingRequirements {
 export interface Venue {
     id: string;
     storeId: string;
-    title: string;
-    description: string;
+
+    //property details
     propertyType: PropertyType;
     SpaceType: SpaceType;
     Size: number; // in square meters
     MaxNumOfGuests: number;
     ListingAsCompany: boolean;
-    Location: string;
-    LocationLandmark: string;
-    Amenities: string;
-    SoundRestrictions: boolean;
-    WhatIsAround: string;
-    DaysNoticeNeededBeforeGuestArrives: number;
-    DaysInAdvanceCanGuestsBook: number; // 0 is same day onwards
-    CheckinTime: Date;
-    CheckoutTime: Date;
+
+    // event details
+    eventRequirements: EventRequirements
     NumOfGuestsToQualifyAsExtendedStay: number;
     VenueVisitsOptions: VenueVisitsOptions;
     NumOfPeopleInVisit: number;
     HoursPriorToVendorCheckin: number;
     AdditionalPermissionsRequiredWhenCheckin: boolean;
     RestrictionsRelatedToSetup: string;
+
+    // location
+    Location: string;
+    LocationLandmark: string;
+
+    // amenities
+    Amenities: string;
+    SoundRestrictions: boolean;
+
+    // Photos
+    WhatIsAround: string;
+
+    // description & title
+    title: string;
+    description: string;
+
+    //booking requirements
     BookingRequirements: BookingRequirements;
-    PricingDetails: PricingDetail;
+
+    // calendar
     AvailabilityDateRanges: AvailabilityDateRange[];
+    DaysNoticeNeededBeforeGuestArrives: number;
+    DaysInAdvanceCanGuestsBook: number; // 0 is same day onwards
+    CheckinTime: Date;
+    CheckoutTime: Date;
+
+    // pricing
+    PricingDetails: PricingDetail;
+
+
 }
 
 export interface EventRequirements {

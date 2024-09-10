@@ -37,13 +37,14 @@ namespace TheBigDay.Models
         public int? FullPaymentPrecedingEventDays { get; set; }
 
 
-        // navigation
+        #region navigation
         //public List<FormEntry>? Items { get; set; }
-        public List<Venue>? Venues { get; set; }
+        public virtual List<Venue>? Venues { get; set; }
         //public List<Caterer> Caterers { get; set; }
         // public List<DiskJockey> Diskjockey { get; set; }
-        public List<User> Users { get; } = new List<User>();
-        public List<StoreItemCategory>? StoreItemCategories { get; set; }
+        public virtual List<User> Users { get; } = new List<User>();
+        public virtual List<ItemCategory> ItemCategories { get; set; } = [];
+        #endregion
     }
     public enum StoreType
     {

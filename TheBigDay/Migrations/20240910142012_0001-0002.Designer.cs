@@ -12,8 +12,8 @@ using TheBigDay.DBContext;
 namespace TheBigDay.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240818165430_Venue")]
-    partial class Venue
+    [Migration("20240910142012_0001-0002")]
+    partial class _00010002
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace TheBigDay.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EventRequirementsEventType", b =>
+                {
+                    b.Property<Guid>("ApprovedEventTypesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EventRequirementsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ApprovedEventTypesId", "EventRequirementsId");
+
+                    b.HasIndex("EventRequirementsId");
+
+                    b.ToTable("EventRequirementsEventType");
+                });
+
+            modelBuilder.Entity("ItemCategoryStore", b =>
+                {
+                    b.Property<Guid>("ItemCategoriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StoresId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ItemCategoriesId", "StoresId");
+
+                    b.HasIndex("StoresId");
+
+                    b.ToTable("ItemCategoryStore");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -445,7 +475,24 @@ namespace TheBigDay.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("AvailabilityDateRange");
+                    b.ToTable("AvailabilityDateRanges");
+                });
+
+            modelBuilder.Entity("TheBigDay.Models.ItemCategoryModels.GenericModels.EventRequirements", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("ExternalVendorsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TypesOfExtrenalVendors")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventRequirements");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.ItemCategoryModels.GenericModels.PricingDetail", b =>
@@ -477,7 +524,7 @@ namespace TheBigDay.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PricingDetail");
+                    b.ToTable("PricingDetails");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.ItemCategoryModels.Venue", b =>
@@ -495,11 +542,11 @@ namespace TheBigDay.Migrations
                     b.Property<Guid>("BookingRequirementsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<TimeSpan>("CheckinTime")
-                        .HasColumnType("time");
+                    b.Property<string>("CheckinTime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("CheckoutTime")
-                        .HasColumnType("time");
+                    b.Property<string>("CheckoutTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DaysInAdvanceCanGuestsBook")
                         .HasColumnType("int");
@@ -509,6 +556,9 @@ namespace TheBigDay.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("EventRequirementsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("HoursPriorToVendorCheckin")
                         .HasColumnType("int");
@@ -549,7 +599,7 @@ namespace TheBigDay.Migrations
                     b.Property<int>("SpaceType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("StoreId")
+                    b.Property<Guid>("StoreId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -564,6 +614,8 @@ namespace TheBigDay.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BookingRequirementsId");
+
+                    b.HasIndex("EventRequirementsId");
 
                     b.HasIndex("PricingDetailsId");
 
@@ -643,27 +695,6 @@ namespace TheBigDay.Migrations
                     b.ToTable("Store");
                 });
 
-            modelBuilder.Entity("TheBigDay.Models.StoreItemCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ItemCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemCategoryId");
-
-                    b.HasIndex("StoreId");
-
-                    b.ToTable("StoreItemCategory");
-                });
-
             modelBuilder.Entity("TheBigDay.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -716,6 +747,36 @@ namespace TheBigDay.Migrations
                     b.HasIndex("StoreId");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("EventRequirementsEventType", b =>
+                {
+                    b.HasOne("TheBigDay.Models.EventType", null)
+                        .WithMany()
+                        .HasForeignKey("ApprovedEventTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TheBigDay.Models.ItemCategoryModels.GenericModels.EventRequirements", null)
+                        .WithMany()
+                        .HasForeignKey("EventRequirementsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ItemCategoryStore", b =>
+                {
+                    b.HasOne("TheBigDay.Models.ItemCategory", null)
+                        .WithMany()
+                        .HasForeignKey("ItemCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TheBigDay.Models.Store", null)
+                        .WithMany()
+                        .HasForeignKey("StoresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -832,6 +893,12 @@ namespace TheBigDay.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TheBigDay.Models.ItemCategoryModels.GenericModels.EventRequirements", "EventRequirements")
+                        .WithMany()
+                        .HasForeignKey("EventRequirementsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TheBigDay.Models.ItemCategoryModels.GenericModels.PricingDetail", "PricingDetails")
                         .WithMany()
                         .HasForeignKey("PricingDetailsId")
@@ -840,26 +907,15 @@ namespace TheBigDay.Migrations
 
                     b.HasOne("TheBigDay.Models.Store", null)
                         .WithMany("Venues")
-                        .HasForeignKey("StoreId");
-
-                    b.Navigation("BookingRequirements");
-
-                    b.Navigation("PricingDetails");
-                });
-
-            modelBuilder.Entity("TheBigDay.Models.StoreItemCategory", b =>
-                {
-                    b.HasOne("TheBigDay.Models.ItemCategory", null)
-                        .WithMany("StoreItemCategories")
-                        .HasForeignKey("ItemCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TheBigDay.Models.Store", null)
-                        .WithMany("StoreItemCategories")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BookingRequirements");
+
+                    b.Navigation("EventRequirements");
+
+                    b.Navigation("PricingDetails");
                 });
 
             modelBuilder.Entity("TheBigDay.Models.User", b =>
@@ -885,8 +941,6 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.ItemCategory", b =>
                 {
-                    b.Navigation("StoreItemCategories");
-
                     b.Navigation("SubCategories");
                 });
 
@@ -897,8 +951,6 @@ namespace TheBigDay.Migrations
 
             modelBuilder.Entity("TheBigDay.Models.Store", b =>
                 {
-                    b.Navigation("StoreItemCategories");
-
                     b.Navigation("Users");
 
                     b.Navigation("Venues");

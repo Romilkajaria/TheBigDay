@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TheBigDay.Models.ItemCategoryModels.GenericModels;
 
 namespace TheBigDay.Models
 {
@@ -10,10 +11,12 @@ namespace TheBigDay.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        // navigation
-        public List<Event>? Events { get; set; }
+        #region navigation
+        public virtual List<Event>? Events { get; set; }
+        public virtual List<EventRequirements> EventRequirements { get; set; } = [];
+        #endregion
     }
 }

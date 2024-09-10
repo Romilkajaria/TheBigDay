@@ -14,8 +14,9 @@ namespace TheBigDay.Models
         public bool IsAdmin { get; set; }
         public bool IsCreator { get; set; }
 
-        // navigation
+        #region navigation
         public required User Customer { get; set; }
         public required Event Event { get; set; }
+        #endregion
     }
 }

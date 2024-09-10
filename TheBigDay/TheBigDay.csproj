@@ -40,7 +40,5 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Models\Item Category Models\" />
-    <Folder Include="Models\Item Category Models\Generic Models\" />
   </ItemGroup>
 </Project>

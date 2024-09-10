@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TheBigDay.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class _00010002 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,11 +26,44 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookingRequirements",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmailAdderss = table.Column<bool>(type: "bit", nullable: false),
+                    PhoneNumber = table.Column<bool>(type: "bit", nullable: false),
+                    PaymentInformation = table.Column<bool>(type: "bit", nullable: false),
+                    PropertyRules = table.Column<bool>(type: "bit", nullable: false),
+                    VendorDetails = table.Column<bool>(type: "bit", nullable: false),
+                    VendorRules = table.Column<bool>(type: "bit", nullable: false),
+                    BookingDetails2DaysPrior = table.Column<bool>(type: "bit", nullable: false),
+                    IsDisabled = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingRequirements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventRequirements",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExternalVendorsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    TypesOfExtrenalVendors = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventRequirements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EventType",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,6 +90,24 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PricingDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BasePrice = table.Column<double>(type: "float", nullable: false),
+                    MinimumPrice = table.Column<double>(type: "float", nullable: false),
+                    MaximumPrice = table.Column<double>(type: "float", nullable: true),
+                    NumOfGuestsToQualifyAsBulkBooking = table.Column<int>(type: "int", nullable: false),
+                    SecurityDeposit = table.Column<double>(type: "float", nullable: false),
+                    DepositPreference = table.Column<int>(type: "int", nullable: false),
+                    BillingCountry = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PricingDetails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Store",
                 columns: table => new
                 {
@@ -78,7 +129,9 @@ namespace TheBigDay.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     HasCompletedStoreSetup = table.Column<bool>(type: "bit", nullable: false),
-                    StoreType = table.Column<int>(type: "int", nullable: true)
+                    StoreType = table.Column<int>(type: "int", nullable: true),
+                    DepositPercentage = table.Column<double>(type: "float", nullable: true),
+                    FullPaymentPrecedingEventDays = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -139,30 +192,25 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Form",
+                name: "EventRequirementsEventType",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ItemType = table.Column<int>(type: "int", nullable: false),
-                    ItemCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FormLevel = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    FormId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ApprovedEventTypesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventRequirementsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Form", x => x.Id);
+                    table.PrimaryKey("PK_EventRequirementsEventType", x => new { x.ApprovedEventTypesId, x.EventRequirementsId });
                     table.ForeignKey(
-                        name: "FK_Form_Form_FormId",
-                        column: x => x.FormId,
-                        principalTable: "Form",
-                        principalColumn: "Id");
+                        name: "FK_EventRequirementsEventType_EventRequirements_EventRequirementsId",
+                        column: x => x.EventRequirementsId,
+                        principalTable: "EventRequirements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Form_ItemCategory_ItemCategoryId",
-                        column: x => x.ItemCategoryId,
-                        principalTable: "ItemCategory",
+                        name: "FK_EventRequirementsEventType_EventType_ApprovedEventTypesId",
+                        column: x => x.ApprovedEventTypesId,
+                        principalTable: "EventType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -214,25 +262,84 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StoreItemCategory",
+                name: "ItemCategoryStore",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ItemGategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ItemCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ItemCategoriesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StoresId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StoreItemCategory", x => x.Id);
+                    table.PrimaryKey("PK_ItemCategoryStore", x => new { x.ItemCategoriesId, x.StoresId });
                     table.ForeignKey(
-                        name: "FK_StoreItemCategory_ItemCategory_ItemCategoryId",
-                        column: x => x.ItemCategoryId,
+                        name: "FK_ItemCategoryStore_ItemCategory_ItemCategoriesId",
+                        column: x => x.ItemCategoriesId,
                         principalTable: "ItemCategory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StoreItemCategory_Store_StoreId",
+                        name: "FK_ItemCategoryStore_Store_StoresId",
+                        column: x => x.StoresId,
+                        principalTable: "Store",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Venue",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PropertyType = table.Column<int>(type: "int", nullable: false),
+                    SpaceType = table.Column<int>(type: "int", nullable: false),
+                    Size = table.Column<double>(type: "float", nullable: false),
+                    MaxNumOfGuests = table.Column<int>(type: "int", nullable: false),
+                    ListingAsCompany = table.Column<bool>(type: "bit", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocationLandmark = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Amenities = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SoundRestrictions = table.Column<bool>(type: "bit", nullable: false),
+                    WhatIsAround = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DaysNoticeNeededBeforeGuestArrives = table.Column<int>(type: "int", nullable: false),
+                    DaysInAdvanceCanGuestsBook = table.Column<int>(type: "int", nullable: false),
+                    CheckinTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CheckoutTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumOfGuestsToQualifyAsExtendedStay = table.Column<int>(type: "int", nullable: false),
+                    VenueVisitsOptions = table.Column<int>(type: "int", nullable: false),
+                    NumOfPeopleInVisit = table.Column<int>(type: "int", nullable: false),
+                    HoursPriorToVendorCheckin = table.Column<int>(type: "int", nullable: false),
+                    AdditionalPermissionsRequiredWhenCheckin = table.Column<bool>(type: "bit", nullable: false),
+                    RestrictionsRelatedToSetup = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventRequirementsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookingRequirementsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PricingDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Venue", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Venue_BookingRequirements_BookingRequirementsId",
+                        column: x => x.BookingRequirementsId,
+                        principalTable: "BookingRequirements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Venue_EventRequirements_EventRequirementsId",
+                        column: x => x.EventRequirementsId,
+                        principalTable: "EventRequirements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Venue_PricingDetails_PricingDetailsId",
+                        column: x => x.PricingDetailsId,
+                        principalTable: "PricingDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Venue_Store_StoreId",
                         column: x => x.StoreId,
                         principalTable: "Store",
                         principalColumn: "Id",
@@ -240,25 +347,24 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FormField",
+                name: "EventItem",
                 columns: table => new
                 {
-                    FieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Placeholder = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Required = table.Column<bool>(type: "bit", nullable: false),
-                    FormId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsFinalisedByCustomer = table.Column<bool>(type: "bit", nullable: false),
+                    IsFinalisedByStore = table.Column<bool>(type: "bit", nullable: false),
+                    FinalPriceByStore = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FormField", x => x.FieldId);
+                    table.PrimaryKey("PK_EventItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FormField_Form_FormId",
-                        column: x => x.FormId,
-                        principalTable: "Form",
-                        principalColumn: "Id");
+                        name: "FK_EventItem_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -374,69 +480,22 @@ namespace TheBigDay.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FormEntry",
+                name: "AvailabilityDateRanges",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FormId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FormFieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    StringValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BooleanValue = table.Column<bool>(type: "bit", nullable: true),
-                    LongValue = table.Column<long>(type: "bigint", nullable: true),
-                    IntValue = table.Column<int>(type: "int", nullable: true),
-                    LinkValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VenueId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FormEntry", x => x.Id);
+                    table.PrimaryKey("PK_AvailabilityDateRanges", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FormEntry_FormField_FormFieldId",
-                        column: x => x.FormFieldId,
-                        principalTable: "FormField",
-                        principalColumn: "FieldId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FormEntry_Form_FormId",
-                        column: x => x.FormId,
-                        principalTable: "Form",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FormEntry_Store_StoreId",
-                        column: x => x.StoreId,
-                        principalTable: "Store",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EventItem",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FormEntryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsFinalisedByCustomer = table.Column<bool>(type: "bit", nullable: false),
-                    IsFinalisedByStore = table.Column<bool>(type: "bit", nullable: false),
-                    FinalPriceByStore = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventItem", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventItem_Event_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Event",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventItem_FormEntry_FormEntryId",
-                        column: x => x.FormEntryId,
-                        principalTable: "FormEntry",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_AvailabilityDateRanges_Venue_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "Venue",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -484,6 +543,11 @@ namespace TheBigDay.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AvailabilityDateRanges_VenueId",
+                table: "AvailabilityDateRanges",
+                column: "VenueId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Event_EventTypeId",
                 table: "Event",
                 column: "EventTypeId");
@@ -504,39 +568,9 @@ namespace TheBigDay.Migrations
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventItem_FormEntryId",
-                table: "EventItem",
-                column: "FormEntryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Form_FormId",
-                table: "Form",
-                column: "FormId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Form_ItemCategoryId",
-                table: "Form",
-                column: "ItemCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FormEntry_FormFieldId",
-                table: "FormEntry",
-                column: "FormFieldId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FormEntry_FormId",
-                table: "FormEntry",
-                column: "FormId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FormEntry_StoreId",
-                table: "FormEntry",
-                column: "StoreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FormField_FormId",
-                table: "FormField",
-                column: "FormId");
+                name: "IX_EventRequirementsEventType_EventRequirementsId",
+                table: "EventRequirementsEventType",
+                column: "EventRequirementsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemCategory_ItemCategoryId",
@@ -544,13 +578,28 @@ namespace TheBigDay.Migrations
                 column: "ItemCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StoreItemCategory_ItemCategoryId",
-                table: "StoreItemCategory",
-                column: "ItemCategoryId");
+                name: "IX_ItemCategoryStore_StoresId",
+                table: "ItemCategoryStore",
+                column: "StoresId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StoreItemCategory_StoreId",
-                table: "StoreItemCategory",
+                name: "IX_Venue_BookingRequirementsId",
+                table: "Venue",
+                column: "BookingRequirementsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venue_EventRequirementsId",
+                table: "Venue",
+                column: "EventRequirementsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venue_PricingDetailsId",
+                table: "Venue",
+                column: "PricingDetailsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Venue_StoreId",
+                table: "Venue",
                 column: "StoreId");
         }
 
@@ -573,16 +622,25 @@ namespace TheBigDay.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AvailabilityDateRanges");
+
+            migrationBuilder.DropTable(
                 name: "EventCustomers");
 
             migrationBuilder.DropTable(
                 name: "EventItem");
 
             migrationBuilder.DropTable(
-                name: "StoreItemCategory");
+                name: "EventRequirementsEventType");
+
+            migrationBuilder.DropTable(
+                name: "ItemCategoryStore");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Venue");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
@@ -591,22 +649,22 @@ namespace TheBigDay.Migrations
                 name: "Event");
 
             migrationBuilder.DropTable(
-                name: "FormEntry");
+                name: "ItemCategory");
 
             migrationBuilder.DropTable(
-                name: "EventType");
+                name: "BookingRequirements");
 
             migrationBuilder.DropTable(
-                name: "FormField");
+                name: "EventRequirements");
+
+            migrationBuilder.DropTable(
+                name: "PricingDetails");
 
             migrationBuilder.DropTable(
                 name: "Store");
 
             migrationBuilder.DropTable(
-                name: "Form");
-
-            migrationBuilder.DropTable(
-                name: "ItemCategory");
+                name: "EventType");
         }
     }
 }
