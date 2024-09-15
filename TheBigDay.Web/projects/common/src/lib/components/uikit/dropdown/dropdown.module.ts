@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DropdownComponent} from "./dropdown.component";
-import {DropdownModule as PrimeDropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -10,7 +10,7 @@ import {FormsModule} from "@angular/forms";
     imports: [
         CommonModule,
         FormsModule,
-        PrimeDropdownModule,
+        DropdownModule,
     ],
     exports: [DropdownComponent]
 })

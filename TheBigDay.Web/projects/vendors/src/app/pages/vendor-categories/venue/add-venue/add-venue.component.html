@@ -68,6 +68,22 @@
 </ng-template>
 <ng-template #step2>
     <h5>{{ steps[1].label }}</h5>
+    <lib-checkbox [options]="eventTypes"
+                  label="What type of events are the guests permitted to conduct in this space?"></lib-checkbox>
+    <lib-radioButtons [items]="defaultYesNoOptions"
+                      label="In case of Pre-event setups arrangements, Are other vendors/service providers allowed at your venue?"></lib-radioButtons>
+    <lib-checkbox [options]="vendorTypeOptions"
+                  label="What type of vendors can enter your space?"></lib-checkbox>
+    <lib-checkbox [options]="visitsAllowedOptions"
+                  label="How many visits can you allow?"></lib-checkbox>
+    <lib-number-input advisoryText="PAX"
+                      label="How many people can visit for set-up?"></lib-number-input>
+    <lib-radioButtons [items]="priorCheckinTimeOptions"
+                      label="How much time prior to the event can the vendor check-in for the set up?"></lib-radioButtons>
+    <lib-radioButtons [items]="defaultYesNoOptions"
+                      label="Are additional permissions required for early vendor check-in?"></lib-radioButtons>
+    <lib-checkbox [options]="restrictionRelatedToSetupOptions"
+                  label="Restrictions related to set-up"></lib-checkbox>
 </ng-template>
 <ng-template #step3>
     <h5>{{ steps[2].label }}</h5>

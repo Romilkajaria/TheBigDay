@@ -77,8 +77,6 @@ export interface Venue {
 
     // pricing
     PricingDetails: PricingDetail;
-
-
 }
 
 export interface EventRequirements {

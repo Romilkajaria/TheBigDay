@@ -13,7 +13,6 @@ import {AddVenueComponent} from './add-venue/add-venue.component';
 import {EditorModule} from "primeng/editor";
 import {InputNumberModule} from "primeng/inputnumber";
 import {InputTextareaModule} from "primeng/inputtextarea";
-import {CheckboxModule} from "primeng/checkbox";
 import {InputSwitchModule} from "primeng/inputswitch";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
@@ -23,6 +22,7 @@ import {StepsModule} from "primeng/steps";
 import {NumberInputModule} from "../../../../../../common/src/lib/components/uikit/number-input/number-input.module";
 import {CommonDropdownModule} from "../../../../../../common/src/lib/components/uikit/dropdown/dropdown.module";
 import {RadioButtonsModule} from "../../../../../../common/src/lib/components/uikit/radiobuttons/radiobuttons.module";
+import {CommonCheckboxModule} from "../../../../../../common/src/lib/components/uikit/checkbox/checkbox.module";
 
 
 @NgModule({
@@ -47,7 +47,6 @@ import {RadioButtonsModule} from "../../../../../../common/src/lib/components/ui
         EditorModule,
         InputNumberModule,
         InputTextareaModule,
-        CheckboxModule,
         InputSwitchModule,
         ToastModule,
         ConfirmDialogModule,
@@ -57,7 +56,8 @@ import {RadioButtonsModule} from "../../../../../../common/src/lib/components/ui
         NumberInputModule,
         CommonDropdownModule,
         RadioButtonsModule,
-        FormsModule
+        FormsModule,
+        CommonCheckboxModule
     ]
 })
 export class VenueModule {

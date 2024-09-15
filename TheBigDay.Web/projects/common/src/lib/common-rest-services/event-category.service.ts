@@ -1,10 +1,8 @@
 import {Injectable, Injector} from "@angular/core";
-import {
-    BaseCommonRestService
-} from "../../../../../common/src/lib/common-rest-services/base-common-rest-service.service";
-import {environment} from "../../../../../common/src/lib/environments/environment";
-import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
-import {EventCategory} from "../../../../../common/src/lib/common-rest-models/event.category";
+import {BaseCommonRestService} from "./base-common-rest-service.service";
+import {environment} from "../environments/environment";
+import {ItemCategory} from "../common-rest-models/item-category";
+import {EventCategory} from "../common-rest-models/event.category";
 
 @Injectable({
     providedIn: "root",
@@ -12,6 +10,7 @@ import {EventCategory} from "../../../../../common/src/lib/common-rest-models/ev
 export class EventCategoryService extends BaseCommonRestService {
 
     private readonly baseUrl = environment.apiUrl + "EventCategory";
+
     constructor(injector: Injector) {
         super(injector);
     }

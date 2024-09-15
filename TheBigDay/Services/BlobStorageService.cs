@@ -29,5 +29,34 @@ namespace TheBigDay.Services
             var downloadInfo = await blobClient.DownloadAsync();
             return downloadInfo.Value.Content;
         }
+
+        public async Task<string> CreateFolderAsync(string folderName)
+        {
+            var folderBlobClient = _containerClient.GetBlobClient($"{folderName}/placeholder.txt");
+
+            // Create a zero-length file to represent the folder
+            using (var stream = new MemoryStream())
+            {
+                await folderBlobClient.UploadAsync(stream);
+            }
+
+            return $"Folder '{folderName}' created.";
+        }
+
+        public async Task<List<string>> GetBlobsInFolderAsync(string folderName)
+        {
+            var blobItems = _containerClient.GetBlobsAsync(prefix: folderName + "/");
+
+            var blobNames = new List<string>();
+
+            await foreach (var blobItem in blobItems)
+            {
+                blobNames.Add(blobItem.Name);
+            }
+
+            return blobNames;
+        }
+
+
     }
 }

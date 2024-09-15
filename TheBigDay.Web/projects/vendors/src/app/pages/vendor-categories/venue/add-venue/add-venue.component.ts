@@ -9,6 +9,10 @@ import {getToastMessage, ToastMessageType} from "../../../../../../../common/src
 import {
     RadioButtonConfig
 } from "../../../../../../../common/src/lib/components/uikit/radiobuttons/radiobuttons.component";
+import {EventCategoryService} from "../../../../../../../common/src/lib/common-rest-services/event-category.service";
+
+import {CheckboxConfig} from 'projects/common/src/lib/components/uikit/checkbox/checkbox.component';
+import {EventCategory} from "../../../../../../../common/src/lib/common-rest-models/event.category";
 
 
 const steps: MenuItem[] = [{
@@ -33,6 +37,13 @@ const steps: MenuItem[] = [{
     label: 'Review'
 }]
 
+export enum VendorTypes {
+    VENUE = 'Venue',
+    CATERER = 'Caterer',
+    EVENT_STYLIST = 'Event Stylist',
+    EVENT_PLANNERS = 'Event Planner',
+}
+
 @Component({
     selector: 'app-add-venue',
     templateUrl: './add-venue.component.html',
@@ -46,6 +57,7 @@ export class AddVenueComponent implements OnInit {
     steps = steps;
     stepIndex = 0;
     readonly maxSteps = steps.length
+    eventTypes: CheckboxConfig<EventCategory>[] = [];
     guestHaveOptions: RadioButtonConfig<SpaceType>[] = [{
         title: "Entire Space",
         description: "Guests have the whole place to themselves. This usually includes a bedroom, a bathroom, and a kitchen.",
@@ -64,13 +76,65 @@ export class AddVenueComponent implements OnInit {
         title: "I'm hosting as an registered business",
         value: true,
     }];
+    defaultYesNoOptions: RadioButtonConfig<boolean>[] = [{
+        title: "Yes",
+        value: true,
+    }, {
+        title: "No",
+        value: false,
+    }];
+
+    priorCheckinTimeOptions: RadioButtonConfig<number>[] = [{
+        title: "12 Hours prior",
+        value: 12,
+    }, {
+        title: "24 hours prior",
+        value: 24,
+    }];
+
+    visitsAllowedOptions: RadioButtonConfig<number>[] = [{
+        title: "One",
+        value: 1,
+    }, {
+        title: "Two",
+        value: 2,
+    }, {
+        title: "Three or more",
+        value: 3,
+    }];
+
+    restrictionRelatedToSetupOptions: RadioButtonConfig<number>[] = [{
+        title: "Guests or their vendors should not use any form of adhesives on the walls",
+        value: 1,
+    }, {
+        title: "Guests or their vendors cannot bring combustible / hazardous items - gas cylinders, generators, etc",
+        value: 2,
+    }, {
+        title: "Drug abuse is an offense - any type of drugs are strictly prohibited in the premises.",
+        value: 3,
+    }];
+
+    vendorTypeOptions: RadioButtonConfig<VendorTypes>[] = [{
+        title: VendorTypes.VENUE,
+        value: VendorTypes.VENUE,
+    }, {
+        title: VendorTypes.CATERER,
+        value: VendorTypes.CATERER,
+    }, {
+        title: VendorTypes.EVENT_STYLIST,
+        value: VendorTypes.EVENT_STYLIST,
+    }, {
+        title: VendorTypes.EVENT_PLANNERS,
+        value: VendorTypes.EVENT_PLANNERS
+    }];
 
     constructor(private dialogConfig: DynamicDialogConfig<Venue>,
                 private venueService: VenueService,
                 private ref: DynamicDialogRef,
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
-                public auth: AuthorizeService
+                public auth: AuthorizeService,
+                public eventCategoryService: EventCategoryService
     ) {
         if (dialogConfig && dialogConfig.data) {
             this.venue = dialogConfig.data;
@@ -81,6 +145,15 @@ export class AddVenueComponent implements OnInit {
         if (this.venue && this.venue.storeId === "" && this.auth.current && this.auth.current.storeId) {
             this.venue.storeId = this.auth.current.storeId;
         }
+        this.eventCategoryService.getEventCategories().subscribe((data) => {
+            this.eventTypes = data.map((d) => {
+                return {
+                    title: d.name,
+                    value: d,
+                    description: d.description
+                } as CheckboxConfig<EventCategory>
+            })
+        })
     }
 
     save() {

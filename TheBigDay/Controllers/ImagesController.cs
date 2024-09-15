@@ -46,6 +46,20 @@ namespace TheBigDay.Controllers
 
             return File(stream, "image/jpeg"); // Adjust content type based on your needs
         }
+
+        [HttpPost("create-folder/{folderName}")]
+        public async Task<IActionResult> CreateFolder(string folderName)
+        {
+            var result = await _blobStorageService.CreateFolderAsync(folderName);
+            return Ok(result);
+        }
+
+        [HttpGet("list-folder/{folderName}")]
+        public async Task<IActionResult> ListFolder(string folderName)
+        {
+            var blobs = await _blobStorageService.GetBlobsInFolderAsync(folderName);
+            return Ok(blobs);
+        }
     }
 
 }

@@ -25,6 +25,7 @@ import {
 } from "./initial-store-message-dialogs/set-store-payment-preferences-dialog/set-store-payment-preferences-dialog.component";
 import {ItemCategoryService} from "../../../../../common/src/lib/common-rest-services/item-category.service";
 import {ItemCategory} from "../../../../../common/src/lib/common-rest-models/item-category";
+import {VendorTypes} from "../vendor-categories/venue/add-venue/add-venue.component";
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -70,7 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public showVenues() {
         return this.store?.itemCategories.length
             && this.itemCategories?.length
-            && this.store.itemCategories.some((ic) => ic.name === 'Venue')
+            && this.store.itemCategories.some((ic) => ic.name === VendorTypes.VENUE)
     }
 
 

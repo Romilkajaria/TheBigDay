@@ -10,7 +10,6 @@ export class RadioButtonsComponent<T> {
     @Input() subLabel?: string;
     @Input() items!: RadioButtonConfig<T>[]
 
-
     @Output() selectedItemChanged = new EventEmitter<RadioButtonConfig<T> | undefined>();
     selectedItem?: RadioButtonConfig<T>;
 
