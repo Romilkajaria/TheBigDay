@@ -1,44 +1,44 @@
-<app-layout [contentTemplate]="user ? contentTemplate : noAuthTemplate" [showSearch]="true" [showCart]="true">
-    <div class="flex align-items-center" *ngIf="selectedEvent">
-<!--        <div>-->
-<!--            <div>{{selectedEvent.name}}</div>-->
-<!--            <div class="font-italic text-color"> {{selectedEvent.addressLine1}}</div>-->
-<!--        </div>-->
+<app-layout [contentTemplate]="user ? contentTemplate : noAuthTemplate" [showCart]="true" [showSearch]="true">
+    <div *ngIf="selectedEvent" class="flex align-items-center">
+        <!--        <div>-->
+        <!--            <div>{{selectedEvent.name}}</div>-->
+        <!--            <div class="font-italic text-color"> {{selectedEvent.addressLine1}}</div>-->
+        <!--        </div>-->
 
-        <button class="p-link layout-topbar-button"
-                (click)="editEventOverlay.toggle($event)">
+        <button (click)="editEventOverlay.toggle($event)"
+                class="p-link layout-topbar-button">
             <i class="pi pi-pencil"></i>
             <span>Edit event</span>
         </button>
     </div>
 
-    <p-overlayPanel #editEventOverlay [style]="{ width: '450px' }" [showCloseIcon]="true">
+    <p-overlayPanel #editEventOverlay [showCloseIcon]="true" [style]="{ width: '450px' }">
         <div class="flex justify-content-between align-content-center my-2">
             <div>Edit event</div>
             <div class="flex">
-                <button pTooltip="New event" tooltipPosition="bottom"
-                    class="p-link layout-topbar-button mx-4">
+                <button class="p-link layout-topbar-button mx-4" pTooltip="New event"
+                        tooltipPosition="bottom">
                     <i class="pi pi-plus"></i>
                 </button>
-                <button pTooltip="Switch event" tooltipPosition="bottom"
-                    class="p-link layout-topbar-button">
+                <button class="p-link layout-topbar-button" pTooltip="Switch event"
+                        tooltipPosition="bottom">
                     <i class="pi pi-sort-alt"></i>
                 </button>
             </div>
         </div>
     </p-overlayPanel>
 
-    <p-overlayPanel #switchEventOverlay >
+    <p-overlayPanel #switchEventOverlay>
         <div class="flex justify-content-between align-items-center my-2">
             <h4>Events</h4>
-            <button pButton pRipple class="p-link layout-topbar-button">
+            <button class="p-link layout-topbar-button" pButton pRipple>
                 <i class="pi pi-plus-circle"></i>
                 <span>Add event</span>
             </button>
         </div>
 
         <ng-template pTemplate="content">
-            <p-listbox [options]="events" [(ngModel)]="selectedEvent" optionLabel="name">
+            <p-listbox [(ngModel)]="selectedEvent" [options]="events" optionLabel="name">
                 <ng-template let-event pTemplate="item">
                     <div>{{event.name}} at {{event.addressLine1}}</div>
                 </ng-template>
@@ -53,19 +53,20 @@
             <ul class="list-none p-3 m-0">
                 <li>
                     <div
+                        class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
+                        enterActiveClass="slidedown"
+                        enterClass="hidden"
+                        leaveActiveClass="slideup"
+                        leaveToClass="hidden"
                         pRipple
                         pStyleClass="@next"
-                        enterClass="hidden"
-                        enterActiveClass="slidedown"
-                        leaveToClass="hidden"
-                        leaveActiveClass="slideup"
-                        class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
                     >
                     </div>
                     <ul class="list-none p-0 m-0 overflow-hidden">
                         <div *ngFor="let menuSections of consumerMenu">
-                            <li app-menuitem *ngFor="let menuItem of menuSections.items">
-                                <a [routerLink]="menuItem.routerLink" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                            <li *ngFor="let menuItem of menuSections.items" app-menuitem>
+                                <a [routerLink]="menuItem.routerLink" class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                                   pRipple>
                                     <i class="pi pi-home mr-2"></i>
                                     <span class="font-medium">{{menuItem.label}}</span>
                                 </a>
@@ -76,22 +77,23 @@
             </ul>
         </div>
         <div *ngIf="user" class="mt-auto">
-            <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-            <a pRipple class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-                <span class="font-bold">{{user.name}}</span>
+            <hr class="mb-3 mx-3 border-top-1 border-none surface-border"/>
+            <a class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+               pRipple>
+                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"/>
+                <span class="font-bold">{{user.firstName}}</span>
             </a>
         </div>
     </div>
 </ng-template>
 
 <ng-template #noAuthTemplate>
-    <div class="p-fluid mb-3">
-        <p-button (click)="auth.loginWithRedirect()" [style]="{background: 'black', color: 'white'}" label="Log in"></p-button>
-    </div>
-    <div class="p-fluid mb-3">
-        <p-button (click)="auth.loginWithRedirect()" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Sign up"></p-button>
-    </div>
+    <!--    <div class="p-fluid mb-3">-->
+    <!--        <p-button (click)="auth.loginWithRedirect()" [style]="{background: 'black', color: 'white'}" label="Log in"></p-button>-->
+    <!--    </div>-->
+    <!--    <div class="p-fluid mb-3">-->
+    <!--        <p-button (click)="auth.loginWithRedirect()" [style]="{background: 'white', color: 'var(&#45;&#45;primary-color)'}" label="Sign up"></p-button>-->
+    <!--    </div>-->
 
 
 </ng-template>

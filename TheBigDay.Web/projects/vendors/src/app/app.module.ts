@@ -8,8 +8,6 @@ import {VendorPageShellComponent} from './vendor-page-shell/vendor-page-shell.co
 import {RippleModule} from "primeng/ripple";
 import {SharedModule} from "primeng/api";
 import {StyleClassModule} from "primeng/styleclass";
-import {AuthGuard, AuthModule, AuthService} from "@auth0/auth0-angular";
-import {environment} from "../environments/environment";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./VendorAuthInterceptor";
 import {Router} from "@angular/router";
@@ -27,7 +25,6 @@ import {AvatarModule} from "primeng/avatar";
         RippleModule,
         SharedModule,
         StyleClassModule,
-        AuthModule.forRoot(environment.auth0),
         CommonModule,
         AvatarModule,
     ],
@@ -38,9 +35,8 @@ import {AvatarModule} from "primeng/avatar";
         },
         multi: true,
         deps: [Router]
-    },
-        AuthGuard,
-        AuthService],
+    }],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

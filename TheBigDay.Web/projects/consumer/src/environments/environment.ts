@@ -2,17 +2,8 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {AuthConfig} from "@auth0/auth0-angular";
-
 export const environment = {
     production: false,
-    auth0: {
-        domain: 'tbdcustdev.au.auth0.com',
-        clientId: 'xfSD5zkXeaawSbjuFcH1Pew7KggPDSAE',
-        authorizationParams: {
-            redirect_uri: "http://localhost:4201",
-        },
-    } as AuthConfig,
     apiUrl: 'https://localhost:44320/api/'
 };
 

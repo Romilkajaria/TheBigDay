@@ -12,7 +12,6 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthInterceptor} from "../../../vendors/src/app/VendorAuthInterceptor";
-import {AuthGuard, AuthService} from "@auth0/auth0-angular";
 
 @NgModule({
     declarations: [
@@ -28,8 +27,6 @@ import {AuthGuard, AuthService} from "@auth0/auth0-angular";
             multi: true,
             deps: [Router]
         },
-        AuthGuard,
-        AuthService
     ],
     imports: [
         SharedModule,

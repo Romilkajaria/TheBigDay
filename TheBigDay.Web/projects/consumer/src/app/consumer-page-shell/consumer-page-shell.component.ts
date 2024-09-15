@@ -3,9 +3,9 @@ import {
     LocalStorageService
 } from "../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
 import {Router} from "@angular/router";
-import {AuthService, User} from "@auth0/auth0-angular";
 import {lastValueFrom} from "rxjs";
 import {LandingComponent} from "../pages/landing/landing.component";
+import {User} from "../../../../common/src/lib/common-rest-models/user";
 
 @Component({
   selector: 'app-consumer-page-shell',
@@ -20,15 +20,11 @@ export class ConsumerPageShellComponent implements OnInit {
     user?: User | null;
 
     constructor(private localStorageService: LocalStorageService,
-                private router: Router,
-                public auth: AuthService) {
+                private router: Router,) {
 
     }
 
     public async ngOnInit() {
-        this.auth.user$.subscribe((a) => {
-            this.user = a;
-        });
         const cachedEvent = this.localStorageService.getItem(LandingComponent.eventKey);
         if(cachedEvent) {
             this.selectedEvent = JSON.parse(cachedEvent) as Event;

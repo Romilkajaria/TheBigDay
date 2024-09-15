@@ -1,9 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizeService} from "../../../../common/src/lib/components/auth/login/authorize.service";
-import {
-    LocalStorageService
-} from "../../../../common/src/lib/common-services/local-storage-service/local-storage.service";
-import {Store} from "../../../../common/src/lib/common-rest-models/store";
 
 @Component({
   selector: 'app-vendor-page-shell',
