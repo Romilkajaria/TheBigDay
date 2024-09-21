@@ -56,6 +56,13 @@ export class AddVenueComponent implements OnInit {
     loading = false;
     steps = steps;
     stepIndex = 0;
+    address!: string;
+    filteredAddresses!: string[];
+    autocompleteService!: google.maps.places.AutocompleteService;
+    geocoder!: google.maps.Geocoder;
+    center: google.maps.LatLngLiteral = {lat: 40.730610, lng: -73.935242}; // Default location (NYC)
+    zoom = 12;
+
     readonly maxSteps = steps.length
     eventTypes: CheckboxConfig<EventCategory>[] = [];
     guestHaveOptions: RadioButtonConfig<SpaceType>[] = [{
@@ -127,6 +134,16 @@ export class AddVenueComponent implements OnInit {
         title: VendorTypes.EVENT_PLANNERS,
         value: VendorTypes.EVENT_PLANNERS
     }];
+    options: google.maps.MapOptions = {
+        // zoomControl: false,
+        // streetViewControl: false,
+        // maxZoom: 12,
+        // minZoom: 12,
+        // disableDoubleClickZoom: true,
+        gestureHandling: 'none',
+        // keyboardShortcuts: false,
+        disableDefaultUI: true,
+    };
 
     constructor(private dialogConfig: DynamicDialogConfig<Venue>,
                 private venueService: VenueService,
@@ -134,17 +151,21 @@ export class AddVenueComponent implements OnInit {
                 private messageService: MessageService,
                 private confirmationService: ConfirmationService,
                 public auth: AuthorizeService,
-                public eventCategoryService: EventCategoryService
+                public eventCategoryService: EventCategoryService,
     ) {
         if (dialogConfig && dialogConfig.data) {
             this.venue = dialogConfig.data;
         }
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         if (this.venue && this.venue.storeId === "" && this.auth.current && this.auth.current.storeId) {
             this.venue.storeId = this.auth.current.storeId;
         }
+        // Initialize the Google Places AutocompleteService and Geocoder
+        this.autocompleteService = new google.maps.places.AutocompleteService();
+        this.geocoder = new google.maps.Geocoder();
+
         this.eventCategoryService.getEventCategories().subscribe((data) => {
             this.eventTypes = data.map((d) => {
                 return {
@@ -154,6 +175,37 @@ export class AddVenueComponent implements OnInit {
                 } as CheckboxConfig<EventCategory>
             })
         })
+    }
+
+    searchAddresses(event: any) {
+        const query = event.query;
+
+        if (query.length > 2) { // Minimum characters for suggestions
+            this.autocompleteService.getPlacePredictions(
+                {input: query, types: ['address'], componentRestrictions: {country: 'au'}},
+                (predictions, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
+                        this.filteredAddresses = predictions.map(prediction => prediction.description);
+                    }
+                }
+            );
+        }
+    }
+
+    onAddressSelect(event: any) {
+        // Geocode the selected address to get its latitude and longitude
+        this.geocoder.geocode({address: event}, (results, status) => {
+            if (status === google.maps.GeocoderStatus.OK && results && results[0].geometry) {
+                const location = results[0].geometry.location;
+
+                // Set the center of the map to the selected location
+                this.center = {
+                    lat: location.lat(),
+                    lng: location.lng(),
+                };
+                this.zoom = 15; // Zoom in on the selected address
+            }
+        });
     }
 
     save() {
@@ -215,5 +267,13 @@ export class AddVenueComponent implements OnInit {
             rejectLabel: 'Cancel',
             accept: () => this.delete(),
         })
+    }
+
+    next() {
+        this.stepIndex = this.stepIndex + 1;
+    }
+
+    previous() {
+        this.stepIndex = this.stepIndex - 1;
     }
 }

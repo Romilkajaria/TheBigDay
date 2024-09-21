@@ -36,8 +36,8 @@
     </ng-container>
 
     <div [ngClass]="stepIndex > 0 ? 'justify-content-between' : 'justify-content-end'" class="flex w-100">
-        <p-button (click)="stepIndex = stepIndex - 1" *ngIf="stepIndex > 0" class="mb-3" label="back"></p-button>
-        <p-button (click)="stepIndex = stepIndex + 1" *ngIf="stepIndex < maxSteps" class="mb-3" label="next"></p-button>
+        <p-button (click)="previous()" *ngIf="stepIndex > 0" class="mb-3" label="back"></p-button>
+        <p-button (click)="next()" *ngIf="stepIndex < maxSteps" class="mb-3" label="next"></p-button>
         <p-button (click)="confirmation('New venue saved:' + venue?.title)" *ngIf="stepIndex == maxSteps" class="mb-3"
                   label="finish"></p-button>
     </div>
@@ -87,6 +87,27 @@
 </ng-template>
 <ng-template #step3>
     <h5>{{ steps[2].label }}</h5>
+    <div class="flex justify-content-center flex-column gap-3">
+        <google-map
+            [center]="center"
+            [options]="options"
+            [zoom]="zoom"
+            height="120px" width="100%">
+            <map-marker [position]="center" [visible]="true"></map-marker>
+        </google-map>
+
+
+        <div class="mb-1 flex flex-column gap-1">
+            <label>Address</label>
+            <p-autoComplete (completeMethod)="searchAddresses($event)" (ngModelChange)="onAddressSelect($event)"
+                            [ngModel]="address"
+                            [suggestions]="filteredAddresses"
+                            class="w-100"
+                            placeholder="Search for an address">
+            </p-autoComplete>
+        </div>
+
+    </div>
 </ng-template>
 <ng-template #step4>
     <h5>{{ steps[3].label }}</h5>

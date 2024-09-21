@@ -23,6 +23,8 @@ import {NumberInputModule} from "../../../../../../common/src/lib/components/uik
 import {CommonDropdownModule} from "../../../../../../common/src/lib/components/uikit/dropdown/dropdown.module";
 import {RadioButtonsModule} from "../../../../../../common/src/lib/components/uikit/radiobuttons/radiobuttons.module";
 import {CommonCheckboxModule} from "../../../../../../common/src/lib/components/uikit/checkbox/checkbox.module";
+import {GoogleMap, MapMarker} from "@angular/google-maps";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 
 @NgModule({
@@ -57,7 +59,10 @@ import {CommonCheckboxModule} from "../../../../../../common/src/lib/components/
         CommonDropdownModule,
         RadioButtonsModule,
         FormsModule,
-        CommonCheckboxModule
+        CommonCheckboxModule,
+        GoogleMap,
+        AutoCompleteModule,
+        MapMarker
     ]
 })
 export class VenueModule {
