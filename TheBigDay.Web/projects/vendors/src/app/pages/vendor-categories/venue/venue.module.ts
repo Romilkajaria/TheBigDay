@@ -25,6 +25,12 @@ import {RadioButtonsModule} from "../../../../../../common/src/lib/components/ui
 import {CommonCheckboxModule} from "../../../../../../common/src/lib/components/uikit/checkbox/checkbox.module";
 import {GoogleMap, MapMarker} from "@angular/google-maps";
 import {AutoCompleteModule} from "primeng/autocomplete";
+import {ImageModule} from "primeng/image";
+import {FileUploadModule} from "primeng/fileupload";
+import {DialogModule} from "primeng/dialog";
+import {TextInputModule} from "../../../../../../common/src/lib/components/uikit/text-input/text-input.module";
+import {LibEditorModule} from "../../../../../../common/src/lib/components/uikit/editor/editor.module";
+import {CalendarModule} from "primeng/calendar";
 
 
 @NgModule({
@@ -62,7 +68,13 @@ import {AutoCompleteModule} from "primeng/autocomplete";
         CommonCheckboxModule,
         GoogleMap,
         AutoCompleteModule,
-        MapMarker
+        MapMarker,
+        ImageModule,
+        FileUploadModule,
+        DialogModule,
+        TextInputModule,
+        LibEditorModule,
+        CalendarModule
     ]
 })
 export class VenueModule {

@@ -1,30 +1,35 @@
 <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="flex flex-column align-items-center justify-content-center">
-        <img src="favicon.ico" alt=" logo" size="200" class="mb-5 ">
+        <img alt=" logo" class="mb-5 " size="200" src="favicon.ico">
 
         <div class="w-full card pt-5 px-5 sm:px-8">
             <div class="text-center mb-5">
-                <div class="text-900 text-3xl font-medium mb-3">{{isSigningUp ? 'Sign up' : 'Log in'}}</div>
-                <span class="text-600 font-medium line-height-3">{{!isSigningUp ? 'Don\'t' : 'Already'}} have an account?</span>
-                <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="toggleSignup()">{{!isSigningUp ? 'Create today!' : 'Log in'}}</a>
+                <div class="text-900 text-3xl font-medium mb-3">{{ isSigningUp ? 'Sign up' : 'Log in' }}</div>
+                <span class="text-600 font-medium line-height-3">{{ !isSigningUp ? 'Don\'t' : 'Already' }} have an account?</span>
+                <a (click)="toggleSignup()"
+                   class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">{{ !isSigningUp ? 'Create today!' : 'Log in' }}</a>
             </div>
 
             <div *ngIf="!isSigningUp; else signupTemplate">
-                <p-messages />
-                <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                <input id="email1" type="text" [(ngModel)]="loginModel.email" pInputText class="w-full mb-5" style="padding:1rem">
+                <p-messages/>
+                <label class="block text-900 text-xl font-medium mb-2" for="email1">Email</label>
+                <input [(ngModel)]="loginModel.email" class="w-full mb-5" id="email1" pInputText style="padding:1rem"
+                       type="text">
 
-                <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
-                <p-password id="password" feedback="false" [(ngModel)]="loginModel.password"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full p-3"></p-password>
+                <label class="block text-900 font-medium text-xl mb-2" for="password">Password</label>
+                <p-password [(ngModel)]="loginModel.password" [toggleMask]="true" feedback="false" id="password"
+                            inputStyleClass="w-full p-3" styleClass="mb-5 w-full"></p-password>
 
                 <div class="flex align-items-center justify-content-between mb-5 gap-5">
                     <div class="flex align-items-center">
-                        <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
+                        <p-checkbox [binary]="true" id="rememberme1" styleClass="mr-2"></p-checkbox>
                         <label for="rememberme1">Remember me</label>
                     </div>
-                    <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
+                    <a class="font-medium no-underline ml-2 text-right cursor-pointer"
+                       style="color: var(--primary-color)">Forgot password?</a>
                 </div>
-                <button *ngIf="!loading" [disabled]="!loginModel.password || !loginModel.email" pButton pRipple label="Log In" class="w-full p-3 text-xl" (click)="login()"></button>
+                <button (click)="login()" *ngIf="!loading" [disabled]="!loginModel.password || !loginModel.email" class="w-full p-3 text-xl"
+                        label="Log In" pButton pRipple></button>
                 <app-loading [showLoading]="loading"></app-loading>
             </div>
         </div>
@@ -33,32 +38,37 @@
 
 <ng-template #signupTemplate>
     <label class="block text-900 text-xl font-medium mb-2">Email</label>
-    <input type="text" [(ngModel)]="registerModel.user.email" pInputText class="w-full mb-5" style="padding:1rem">
+    <input [(ngModel)]="registerModel.user.email" class="w-full mb-5" pInputText style="padding:1rem" type="text">
 
-    <label for="registerPassword" class="block text-900 font-medium text-xl mb-2">Password</label>
-    <p-password id="registerPassword" [(ngModel)]="registerModel.user.password"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full"></p-password>
+    <label class="block text-900 font-medium text-xl mb-2" for="registerPassword">Password</label>
+    <p-password [(ngModel)]="registerModel.user.password" [toggleMask]="true" id="registerPassword"
+                inputStyleClass="w-full" styleClass="mb-5 w-full"></p-password>
 
-    <label for="confirmPassword" class="block text-900 font-medium text-xl mb-2">Confirm password</label>
-    <p-password id="confirmPassword" [(ngModel)]="confirmPassword" feedback="false"  [toggleMask]="true" styleClass="mb-5 w-full" inputStyleClass="w-full"></p-password>
+    <label class="block text-900 font-medium text-xl mb-2" for="confirmPassword">Confirm password</label>
+    <p-password [(ngModel)]="confirmPassword" [toggleMask]="true" feedback="false" id="confirmPassword"
+                inputStyleClass="w-full" styleClass="mb-5 w-full"></p-password>
 
     <label class="block text-900 font-medium text-xl mb-2">First Name</label>
-    <input type="text" [(ngModel)]="registerModel.user.firstName" pInputText  class="w-full mb-5" style="padding:1rem"/>
+    <input [(ngModel)]="registerModel.user.firstName" class="w-full mb-5" pInputText style="padding:1rem" type="text"/>
 
     <label class="block text-900 font-medium text-xl mb-2">Last Name</label>
-    <input type="text" [(ngModel)]="registerModel.user.lastName" pInputText  class="w-full mb-5" style="padding:1rem"/>
+    <input [(ngModel)]="registerModel.user.lastName" class="w-full mb-5" pInputText style="padding:1rem" type="text"/>
 
     <div class="flex gap-1">
-        <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted" />
-        <label class="font-bold block mb-2" for="tcAccepted"> I accept all the Terms & Conditions set out by The Biggg day. </label>
+        <p-checkbox [(ngModel)]="registerModel.user.tcAccepted" [binary]="true" inputId="tcAccepted"/>
+        <label class="font-bold block mb-2" for="tcAccepted"> I accept all the Terms & Conditions set out
+            by {{ APP_NAME }}. </label>
     </div>
 
     <div class="flex gap-1">
-        <p-checkbox [(ngModel)]="registerModel.user.marketingAccepted" [binary]="true" inputId="marketingAccepted" />
-        <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional emails. </label>
+        <p-checkbox [(ngModel)]="registerModel.user.marketingAccepted" [binary]="true" inputId="marketingAccepted"/>
+        <label class="font-bold block mb-2" for="marketingAccepted"> I would like to get marketing and promotional
+            emails. </label>
     </div>
     <div>
-        <button *ngIf="!loading" [disabled]="registerDisabled" class="w-full p-3 text-xl" pButton pRipple label="Register" (click)="register()"></button>
+        <button (click)="register()" *ngIf="!loading" [disabled]="registerDisabled" class="w-full p-3 text-xl" label="Register"
+                pButton pRipple></button>
     </div>
 
-        <app-loading [showLoading]="loading"></app-loading>
+    <app-loading [showLoading]="loading"></app-loading>
 </ng-template>

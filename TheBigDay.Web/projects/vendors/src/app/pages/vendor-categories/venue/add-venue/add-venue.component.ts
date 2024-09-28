@@ -13,6 +13,7 @@ import {EventCategoryService} from "../../../../../../../common/src/lib/common-r
 
 import {CheckboxConfig} from 'projects/common/src/lib/components/uikit/checkbox/checkbox.component';
 import {EventCategory} from "../../../../../../../common/src/lib/common-rest-models/event.category";
+import {APP_NAME} from "../../../../../../../common/src/lib/common.service";
 
 
 const steps: MenuItem[] = [{
@@ -57,11 +58,13 @@ export class AddVenueComponent implements OnInit {
     steps = steps;
     stepIndex = 0;
     address!: string;
+    date?: Date;
     filteredAddresses!: string[];
     autocompleteService!: google.maps.places.AutocompleteService;
     geocoder!: google.maps.Geocoder;
     center: google.maps.LatLngLiteral = {lat: 40.730610, lng: -73.935242}; // Default location (NYC)
     zoom = 12;
+    imagePreview: string = 'https://via.placeholder.com/150';
 
     readonly maxSteps = steps.length
     eventTypes: CheckboxConfig<EventCategory>[] = [];
@@ -99,7 +102,7 @@ export class AddVenueComponent implements OnInit {
         value: 24,
     }];
 
-    visitsAllowedOptions: RadioButtonConfig<number>[] = [{
+    visitsAllowedOptions: CheckboxConfig<number>[] = [{
         title: "One",
         value: 1,
     }, {
@@ -110,7 +113,7 @@ export class AddVenueComponent implements OnInit {
         value: 3,
     }];
 
-    restrictionRelatedToSetupOptions: RadioButtonConfig<number>[] = [{
+    restrictionRelatedToSetupOptions: CheckboxConfig<number>[] = [{
         title: "Guests or their vendors should not use any form of adhesives on the walls",
         value: 1,
     }, {
@@ -121,7 +124,7 @@ export class AddVenueComponent implements OnInit {
         value: 3,
     }];
 
-    vendorTypeOptions: RadioButtonConfig<VendorTypes>[] = [{
+    vendorTypeOptions: CheckboxConfig<VendorTypes>[] = [{
         title: VendorTypes.VENUE,
         value: VendorTypes.VENUE,
     }, {
@@ -135,15 +138,100 @@ export class AddVenueComponent implements OnInit {
         value: VendorTypes.EVENT_PLANNERS
     }];
     options: google.maps.MapOptions = {
-        // zoomControl: false,
-        // streetViewControl: false,
-        // maxZoom: 12,
-        // minZoom: 12,
-        // disableDoubleClickZoom: true,
         gestureHandling: 'none',
-        // keyboardShortcuts: false,
         disableDefaultUI: true,
     };
+    amenitiesOptions: CheckboxConfig<string>[] = [{
+        title: "Audio Visual Equipment",
+        value: "Audio Visual Equipment"
+    }, {
+        title: "General Services",
+        value: "General Services"
+    }, {
+        title: "Internet Services",
+        value: "Internet Services"
+    }, {
+        title: "Electricity Arrangements (generator)",
+        value: "Electricity Arrangements (generator)"
+    }, {
+        title: "Wedding Planners",
+        value: "Wedding Planners"
+    }, {
+        title: "Corporate Event Planners",
+        value: "Corporate Event Planners"
+    }, {
+        title: "Decorators",
+        value: "Decorators"
+    }, {
+        title: "Catering Services",
+        value: "Catering Services"
+    }, {
+        title: "Bar Services",
+        value: "Bar Services"
+    }, {
+        title: "Artist Management Services",
+        value: "Artist Management Services"
+    }, {
+        title: "Changing Rooms",
+        value: "Changing Rooms"
+    }, {
+        title: "Rooms",
+        value: "Rooms"
+    }];
+    guestsMustProvideOptions: CheckboxConfig<string>[] = [{
+        title: 'Email Address',
+        disabled: true,
+        value: "Email Address",
+        selected: true,
+    }, {
+        title: 'Valid Phone Number',
+        disabled: true,
+        value: "Valid Phone Number",
+        selected: true,
+    }, {
+        title: 'Payment Information',
+        disabled: true,
+        value: "Payment Information",
+        selected: true,
+    },]
+
+    bookingPropertyEachGuestMustOptions: CheckboxConfig<string>[] = [{
+        title: 'Agree with property rules',
+        disabled: true,
+        value: 'Agree with property rules',
+        selected: true,
+    }, {
+        title: 'Agree with payment terms',
+        disabled: true,
+        value: 'Agree with payment terms',
+        selected: true,
+    }, {
+        title: 'Submit vendor details',
+        disabled: true,
+        value: 'Submit vendor details',
+        selected: true,
+    }, {
+        title: 'Agree with vendor rules',
+        disabled: true,
+        value: 'Agree with vendor rules',
+        selected: true,
+    }, {
+        title: `Confirm visit related details 2 days prior to ${APP_NAME}`,
+        disabled: true,
+        value: 'Confirm visit related details 2 days prior to ${APP_NAME}',
+        selected: true,
+    }]
+    bookingAdditionalRequirements: CheckboxConfig<string>[] = [{
+        title: 'Submit Government-issued ID',
+        value: 'Submit Government-issued ID'
+    }, {
+        title: 'Recommended by other hosts and have no negative reviews',
+        value: 'Recommended by other hosts and have no negative reviews'
+    }, {
+        title: 'Submit required licenses in case of playing music',
+        value: 'Submit required licenses in case of playing music'
+    }]
+    protected readonly APP_NAME = APP_NAME;
 
     constructor(private dialogConfig: DynamicDialogConfig<Venue>,
                 private venueService: VenueService,
@@ -155,6 +243,24 @@ export class AddVenueComponent implements OnInit {
     ) {
         if (dialogConfig && dialogConfig.data) {
             this.venue = dialogConfig.data;
+        }
+    }
+
+    triggerFileInput() {
+        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+        fileInput.click();
+    }
+
+    onFileSelected(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (e: any) => {
+                this.imagePreview = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
         }
     }
 
@@ -271,9 +377,11 @@ export class AddVenueComponent implements OnInit {
 
     next() {
         this.stepIndex = this.stepIndex + 1;
+        this.dialogConfig.header = this.steps[this.stepIndex - 1].label;
     }
 
     previous() {
         this.stepIndex = this.stepIndex - 1;
+        this.dialogConfig.header = this.steps[this.stepIndex - 1].label;
     }
 }

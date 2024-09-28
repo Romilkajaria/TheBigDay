@@ -1,16 +1,17 @@
 <div class="flex flex-column">
     <label>{{ label }}</label>
     <small *ngIf="subLabel" class="mb-1">{{ subLabel }}</small>
-    <div *ngFor="let item of items" class="field-checkbox">
-        <p-radioButton
-            (ngModelChange)="onSelectionChanged()"
-            [(ngModel)]="selectedItem"
-            [inputId]="item.title"
-            [value]="item"/>
-        <div class="flex flex-column ml-2">
-            <label [for]="item.title">{{ item.title }}</label>
-            <small>{{ item.description }}</small>
+    <div [ngStyle]="{'grid-template-columns': getGridTemplateColumns(this.numberOfColumns)}" class="container">
+        <div *ngFor="let item of items" class="field-checkbox">
+            <p-radioButton
+                (ngModelChange)="onSelectionChanged()"
+                [(ngModel)]="selectedItem"
+                [inputId]="item.title"
+                [value]="item"/>
+            <div class="flex flex-column ml-2">
+                <label [for]="item.title">{{ item.title }}</label>
+                <small>{{ item.description }}</small>
+            </div>
         </div>
-
     </div>
 </div>

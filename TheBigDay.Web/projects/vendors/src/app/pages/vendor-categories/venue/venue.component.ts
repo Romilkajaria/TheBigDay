@@ -70,7 +70,7 @@ export class VenueComponent implements OnInit {
     }
 
     private updateData() {
-        this.loading = true;
+        this.loading = false;
         // this.venueService.getVenues().subscribe({
         //   next: (p: Venue[]) => {
         //     this.loading = false
