@@ -50,6 +50,8 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "~2.1.0",
         "ng-packagr": "^18.2.1",
-        "typescript": "^5.4.0"
+        "typescript": "^5.4.0",
+        "tslib": "^2.3.0",
+        "primeflex": "^3.3.1"
     }
 }

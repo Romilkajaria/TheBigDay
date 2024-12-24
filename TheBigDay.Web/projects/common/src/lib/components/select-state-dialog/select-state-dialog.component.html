@@ -1,0 +1,18 @@
+<p>Select the state where you are planning to have the event</p>
+
+<p-dropdown
+    (ngModelChange)="onStateChanged($event)"
+    [filter]="true"
+    [ngModel]="selectedState"
+    [options]="States"
+    [showClear]="true"
+    placeholder="Select a Country"
+    styleClass="w-full">
+</p-dropdown>
+<p-button (click)="startBrowsing()"
+          [disabled]="!selectedState"
+          class="flex justify-content-end"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          label="Let's go!"
+          styleClass="mt-2"></p-button>

@@ -22,6 +22,10 @@ import {OverlayPanelModule} from "primeng/overlaypanel";
 import {ListboxModule} from "primeng/listbox";
 import {TooltipModule} from "primeng/tooltip";
 import {StyleClassModule} from "primeng/styleclass";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {GoogleMap, MapMarker} from "@angular/google-maps";
 
 @NgModule({
     declarations: [
@@ -49,6 +53,12 @@ import {StyleClassModule} from "primeng/styleclass";
         ListboxModule,
         TooltipModule,
         StyleClassModule,
+        IconFieldModule,
+        InputIconModule,
+        AutoCompleteModule,
+        GoogleMap,
+        AutoCompleteModule,
+        MapMarker
     ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},

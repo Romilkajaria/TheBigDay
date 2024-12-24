@@ -1,52 +1,29 @@
-<div class="flex justify-content-center position-absolute w-full" style="position: absolute">
-    <img src="favicon.ico" width="7%" alt="logo">
-</div>
-
-<div class="flex justify-content-end position-absolute w-full p-4" style="position: absolute">
-    <div class="grid gap-2">
-        <p-button (click)="loginSignupClicked('Log in')" [style]="{background: 'black', color: 'white'}" label="Log in"></p-button>
-        <p-button (click)="loginSignupClicked('Sign up')" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Sign up"></p-button>
+<div class="flex justify-content-between align-items-center ps-1 pr-3" style="position: absolute">
+    <img alt="logo" src="favicon.ico" width="15%">
+    <div class="flex gap-2">
+        <p-button (click)="loginSignupClicked('Log in')" [style]="{background: 'black', color: 'white'}"
+                  label="Log in"></p-button>
+        <p-button (click)="loginSignupClicked('Sign up')" [style]="{background: 'white', color: 'var(--primary-color)'}"
+                  label="Sign up"></p-button>
     </div>
 </div>
 
 <div class="d-sm-block landing">
-    <div class="create-event landing-background flex align-items-center justify-content-center">
-        <div class="container p-4" style="background: white">
-            <h2>Browse by entering your address</h2>
-            <span class="flex flex-column gap-2 text-color-primary w-full">
-                <label for="username">Enter event address</label>
-                <input pInputText id="username" [(ngModel)]="browsingAddress"/>
-            </span>
-            <p-button (click)="startBrowsing()" [disabled]="!browsingAddress" label="Browse" icon="pi pi-arrow-right" iconPos="right"></p-button>
-        </div>
-    </div>
-
-    <div class="continue-with-address flex align-items-center justify-content-center">
-        <div class="container p-4 landing-background">
-            <h2 style="color: white">Get started by creating an event</h2>
-            <div class="w-full">
-                <span class="flex flex-column gap-2 text-color-white mb-2">
-                    <label>Event name</label>
-                    <input pInputText [(ngModel)]="event.name"/>
-                </span>
-                <div class="date-fields">
-                    <span class="flex flex-column gap-2 text-color-white mb-2">
-                        <label>Event start date</label>
-                        <p-calendar [showIcon]="true" icondisplay="true" [showTime]="true" [hourFormat]="'12'" [(ngModel)]="event.startDateTime"></p-calendar>
-                    </span>
-                    <span class="flex flex-column gap-2 text-color-white mb-2">
-                        <label>Event end date</label>
-                        <p-calendar [showIcon]="true" icondisplay="true" [showTime]="true" [hourFormat]="'12'" [(ngModel)]="event.endDateTime"></p-calendar>
-                    </span>
-                </div>
-
-                <span class="flex flex-column gap-2 text-color-white w-full">
-                    <label>Event address</label>
-                    <input pInputText [(ngModel)]="event.addressLine1"/>
-                </span>
-            </div>
-
-            <p-button (click)="startEvent()" [disabled]="isEventButtonDisabled()" [style]="{background: 'white', color: 'var(--primary-color)'}" label="Get Started" icon="pi pi-arrow-right" iconPos="right"></p-button>
+    <div class="continue-with-address flex justify-content-center flex-column">
+        <div class="p-4">
+            <h2 class="heading">Where's the party?</h2>
+            <p-iconField>
+                <p-autoComplete (completeMethod)="searchAddresses($event)"
+                                (ngModelChange)="startBrowsing($event)"
+                                [forceSelection]="true"
+                                [ngModel]="browsingAddress"
+                                [suggestions]="filteredAddresses"
+                                inputStyleClass="w-full"
+                                placeholder="Search for an address..."
+                                styleClass="w-full">
+                </p-autoComplete>
+                <a (click)="openSelectStateDialog()" class="w-full flex justify-content-end pt-2">not sure yet?</a>
+            </p-iconField>
         </div>
     </div>
 </div>
