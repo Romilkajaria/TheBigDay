@@ -4,28 +4,29 @@ import {environment} from "../../environments/environment";
 import {FormEntry} from "../../common-rest-models/form-entry";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CommonProductsService extends BaseCommonRestService {
 
-  private readonly productUrl = environment.apiUrl + "product";
-  constructor(injector: Injector) {
-    super(injector);
-  }
+    private readonly productUrl = environment.apiUrl + "product";
 
-  public getProducts() {
-    return this.get<FormEntry[]>(this.productUrl);
-  }
+    constructor(injector: Injector) {
+        super(injector);
+    }
 
-  public addProduct(product: FormEntry) {
-    return this.post<FormEntry>(this.productUrl + '/add', product);
-  }
+    public getProducts() {
+        return this.http.get<FormEntry[]>(this.productUrl);
+    }
 
-  public updateProduct(product: FormEntry) {
-    return this.put<FormEntry>(`${this.productUrl}/${product.id}`, product);
-  }
+    public addProduct(product: FormEntry) {
+        return this.http.post<FormEntry>(this.productUrl + '/add', product);
+    }
 
-  public deleteProduct(id: string) {
-    return this.delete<FormEntry>(`${this.productUrl}/${id}`)
-  }
+    public updateProduct(product: FormEntry) {
+        return this.http.put<FormEntry>(`${this.productUrl}/${product.id}`, product);
+    }
+
+    public deleteProduct(id: string) {
+        return this.http.delete<FormEntry>(`${this.productUrl}/${id}`)
+    }
 }

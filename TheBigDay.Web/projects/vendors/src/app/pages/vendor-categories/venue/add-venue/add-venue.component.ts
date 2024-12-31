@@ -1,9 +1,15 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DialogConfig} from "@angular/cdk/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ConfirmationService, MenuItem, Message, MessageService} from "primeng/api";
 import {AuthorizeService} from "../../../../../../../common/src/lib/components/auth/login/authorize.service";
-import {SpaceType, Venue} from "../../../../../../../common/src/lib/common-rest-models/venue";
+import {
+    newVenue,
+    PropertyType,
+    PropertyTypeLabelMap,
+    SpaceType,
+    VendorTypes,
+    Venue
+} from "../../../../../../../common/src/lib/common-rest-models/venue";
 import {VenueService} from "../../../../../../../common/src/lib/common-rest-services/venue/venue.service";
 import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 import {
@@ -14,6 +20,7 @@ import {EventCategoryService} from "../../../../../../../common/src/lib/common-r
 import {CheckboxConfig} from 'projects/common/src/lib/components/uikit/checkbox/checkbox.component';
 import {EventCategory} from "../../../../../../../common/src/lib/common-rest-models/event.category";
 import {APP_NAME} from "../../../../../../../common/src/lib/common.service";
+import {IDropdownItem} from "../../../../../../../common/src/lib/components/uikit/dropdown/dropdown.component";
 
 
 const steps: MenuItem[] = [{
@@ -38,22 +45,14 @@ const steps: MenuItem[] = [{
     label: 'Review'
 }]
 
-export enum VendorTypes {
-    VENUE = 'Venue',
-    CATERER = 'Caterer',
-    EVENT_STYLIST = 'Event Stylist',
-    EVENT_PLANNERS = 'Event Planner',
-}
-
 @Component({
     selector: 'app-add-venue',
     templateUrl: './add-venue.component.html',
     styleUrls: ['./add-venue.component.scss'],
-    providers: [DialogConfig, MessageService, ConfirmationService]
 })
 export class AddVenueComponent implements OnInit {
     @Output() onClose = new EventEmitter<void>();
-    venue?: Venue;
+    venue: Venue = newVenue;
     loading = false;
     steps = steps;
     stepIndex = 0;
@@ -62,12 +61,20 @@ export class AddVenueComponent implements OnInit {
     filteredAddresses!: string[];
     autocompleteService!: google.maps.places.AutocompleteService;
     geocoder!: google.maps.Geocoder;
-    center: google.maps.LatLngLiteral = {lat: 40.730610, lng: -73.935242}; // Default location (NYC)
+    center: google.maps.LatLngLiteral = {lat: 19.054135472854046, lng: 72.85170271349183}; // Default location (Mumbai)
     zoom = 12;
     imagePreview: string = 'https://via.placeholder.com/150';
 
     readonly maxSteps = steps.length
     eventTypes: CheckboxConfig<EventCategory>[] = [];
+    propertyTypeOptions: IDropdownItem<PropertyType>[] = [
+        {name: PropertyTypeLabelMap[PropertyType.FLAT], value: PropertyType.FLAT},
+        {name: PropertyTypeLabelMap[PropertyType.VILLA], value: PropertyType.VILLA},
+        {name: PropertyTypeLabelMap[PropertyType.RESTAURANT], value: PropertyType.RESTAURANT},
+        {name: PropertyTypeLabelMap[PropertyType.BOUTIQUE_HOTEL], value: PropertyType.BOUTIQUE_HOTEL},
+        {name: PropertyTypeLabelMap[PropertyType.INSTITUTION], value: PropertyType.INSTITUTION},
+        {name: PropertyTypeLabelMap[PropertyType.EXCLUSIVE], value: PropertyType.EXCLUSIVE},
+    ]
     guestHaveOptions: RadioButtonConfig<SpaceType>[] = [{
         title: "Entire Space",
         description: "Guests have the whole place to themselves. This usually includes a bedroom, a bathroom, and a kitchen.",
@@ -102,7 +109,7 @@ export class AddVenueComponent implements OnInit {
         value: 24,
     }];
 
-    visitsAllowedOptions: CheckboxConfig<number>[] = [{
+    visitsAllowedOptions: RadioButtonConfig<number>[] = [{
         title: "One",
         value: 1,
     }, {
@@ -113,15 +120,15 @@ export class AddVenueComponent implements OnInit {
         value: 3,
     }];
 
-    restrictionRelatedToSetupOptions: CheckboxConfig<number>[] = [{
+    restrictionRelatedToSetupOptions: CheckboxConfig<string>[] = [{
         title: "Guests or their vendors should not use any form of adhesives on the walls",
-        value: 1,
+        value: "Guests or their vendors should not use any form of adhesives on the walls",
     }, {
         title: "Guests or their vendors cannot bring combustible / hazardous items - gas cylinders, generators, etc",
-        value: 2,
+        value: "Guests or their vendors cannot bring combustible / hazardous items - gas cylinders, generators, etc",
     }, {
         title: "Drug abuse is an offense - any type of drugs are strictly prohibited in the premises.",
-        value: 3,
+        value: "Drug abuse is an offense - any type of drugs are strictly prohibited in the premises.",
     }];
 
     vendorTypeOptions: CheckboxConfig<VendorTypes>[] = [{
@@ -231,6 +238,7 @@ export class AddVenueComponent implements OnInit {
         title: 'Submit required licenses in case of playing music',
         value: 'Submit required licenses in case of playing music'
     }]
+    venueRestrictionsRelatedToSetup: string[] | undefined;
     protected readonly APP_NAME = APP_NAME;
 
     constructor(private dialogConfig: DynamicDialogConfig<Venue>,
@@ -298,9 +306,10 @@ export class AddVenueComponent implements OnInit {
         }
     }
 
-    onAddressSelect(event: any) {
+    onAddressSelect(address: any) {
+        this.venue.location = address;
         // Geocode the selected address to get its latitude and longitude
-        this.geocoder.geocode({address: event}, (results, status) => {
+        this.geocoder.geocode({address: address}, (results, status) => {
             if (status === google.maps.GeocoderStatus.OK && results && results[0].geometry) {
                 const location = results[0].geometry.location;
 
@@ -331,7 +340,7 @@ export class AddVenueComponent implements OnInit {
                 next: () => {
                     this.confirmation("Venue added");
                 },
-                error: (er) => {
+                error: (er: Error) => {
                     this.confirmation("Failed to add venue", er.message);
                 },
             })
@@ -353,14 +362,15 @@ export class AddVenueComponent implements OnInit {
 
     delete() {
         this.loading = true;
-        this.venueService.deleteVenue(this.venue!.id).subscribe({
-            next: () => {
-                this.confirmation("Venue deleted");
-            },
-            error: (er) => {
-                this.confirmation("failed to delete venue", er.message);
-            },
-        })
+        if (this.venue.id)
+            this.venueService.deleteVenue(this.venue.id).subscribe({
+                next: () => {
+                    this.confirmation("Venue deleted");
+                },
+                error: (er: Error) => {
+                    this.confirmation("failed to delete venue", er.message);
+                },
+            })
     }
 
     deleteConfirmation() {
@@ -376,12 +386,18 @@ export class AddVenueComponent implements OnInit {
     }
 
     next() {
-        this.stepIndex = this.stepIndex + 1;
-        this.dialogConfig.header = this.steps[this.stepIndex - 1].label;
+        this.venue.id
+            ? this.venueService.updateVenue(this.venue).subscribe(() => this.nextFormStep())
+            : this.venueService.addVenue(this.venue!).subscribe(() => this.nextFormStep());
     }
 
     previous() {
         this.stepIndex = this.stepIndex - 1;
+        this.dialogConfig.header = this.steps[this.stepIndex - 1].label;
+    }
+
+    nextFormStep() {
+        this.stepIndex = this.stepIndex + 1;
         this.dialogConfig.header = this.steps[this.stepIndex - 1].label;
     }
 }

@@ -10,20 +10,19 @@ export class CheckboxComponent<T> implements OnInit {
     @Input() subLabel?: string;
     @Input() options?: CheckboxConfig<T>[];
     @Input() numberOfColumns = 1;
-    @Output() optionsChanged = new EventEmitter<CheckboxConfig<T>[]>();
+    @Input() selectedOptions?: T[] = [];
+    @Output() selectedOptionsChange = new EventEmitter<T[]>();
 
     getGridTemplateColumns = getGridTemplateColumns;
 
-    selectedOptions: CheckboxConfig<any>[] = [];
-
     onOptionChanged() {
-        this.optionsChanged.emit(this.selectedOptions);
+        this.selectedOptionsChange.emit(this.selectedOptions);
     }
 
     ngOnInit(): void {
         this.options!.forEach((option) => {
             if (option.selected) {
-                this.selectedOptions.push(option);
+                this.selectedOptions!.push(option.value);
             }
         })
     }

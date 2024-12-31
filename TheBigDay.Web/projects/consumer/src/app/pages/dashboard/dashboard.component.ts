@@ -12,11 +12,9 @@ import {Store} from "../../../../../common/src/lib/common-rest-models/store";
 import {
     CommonServicesService
 } from "../../../../../common/src/lib/common-rest-services/services/common-services-service.service";
-import {
-    StoreService
-} from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
-import {KeyValue} from "@angular/common";
+import {StoreService} from "../../../../../common/src/lib/common-rest-services/store/store-service.service";
 import {FormEntry} from "../../../../../common/src/lib/common-rest-models/form-entry";
+import {VenueService} from "../../../../../common/src/lib/common-rest-services/venue/venue.service";
 
 export interface Category {
     url: string;
@@ -93,16 +91,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         {
             breakpoint: '767px',
-            numVisible: 3,
-            numScroll: 3
+            numVisible: 6,
+            numScroll: 6
         }
     ];
 
-    constructor( public layoutService: LayoutService,
-                 private productsService: CommonProductsService,
-                 private servicesService: CommonServicesService,
-                 private vendorService: StoreService,
-                 private router: Router) {
+    constructor(public layoutService: LayoutService,
+                private productsService: CommonProductsService,
+                private servicesService: CommonServicesService,
+                private vendorService: StoreService,
+                private venueService: VenueService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -133,16 +132,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         })
     }
 
-    private mapToDashboardElement<T extends FormEntry>(items: T[]): IDashboardCard<T>[] {
-        return items.map((p) => ({
-            heading: '',
-            maxWidth: '360px',
-            subheading: 'popular',
-            metadata: p
-        } as IDashboardCard<T>))
-    }
-
-
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -152,10 +141,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     async navigateToVendorPage(vendorId: string, product?: FormEntry, service?: FormEntry) {
         const route = `app/store`;
 
-        if(product) {
+        if (product) {
             await this.router.navigate([route], {queryParams: {product: product.id, vendor: vendorId}})
-        } else if(service) {
-            await this.router.navigate([route], {queryParams: {product: service.id,  vendor: vendorId}})
+        } else if (service) {
+            await this.router.navigate([route], {queryParams: {product: service.id, vendor: vendorId}})
         }
+    }
+
+    private mapToDashboardElement<T extends FormEntry>(items: T[]): IDashboardCard<T>[] {
+        return items.map((p) => ({
+            heading: '',
+            maxWidth: '360px',
+            subheading: 'popular',
+            metadata: p
+        } as IDashboardCard<T>))
     }
 }

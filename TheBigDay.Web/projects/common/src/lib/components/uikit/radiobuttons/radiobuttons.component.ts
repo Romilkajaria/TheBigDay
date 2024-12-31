@@ -11,14 +11,9 @@ export class RadioButtonsComponent<T> {
     @Input() subLabel?: string;
     @Input() items: RadioButtonConfig<T>[] = [];
     @Input() numberOfColumns = 1;
-
-    @Output() selectedItemChanged = new EventEmitter<RadioButtonConfig<T> | undefined>();
-    selectedItem?: RadioButtonConfig<T>;
+    @Input() selectedItem?: T;
+    @Output() selectedItemChange = new EventEmitter<T | undefined>();
     getGridTemplateColumns = getGridTemplateColumns;
-
-    onSelectionChanged() {
-        this.selectedItemChanged.emit(this.selectedItem);
-    }
 }
 
 export interface RadioButtonConfig<T> {

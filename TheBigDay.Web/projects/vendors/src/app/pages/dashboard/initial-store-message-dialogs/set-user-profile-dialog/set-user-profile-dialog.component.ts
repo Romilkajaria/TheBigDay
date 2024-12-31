@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import { DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
 import {DialogConfig} from "@angular/cdk/dialog";
-import { StoreType} from "../../../../../../../common/src/lib/common-rest-models/store";
+import {StoreType} from "../../../../../../../common/src/lib/common-rest-models/store";
 import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {getToastMessage, ToastMessageType} from "../../../../../../../common/src/lib/helpers/toastMessages";
 import {User} from "../../../../../../../common/src/lib/common-rest-models/user";
@@ -14,8 +14,8 @@ import {CalendarModule} from "primeng/calendar";
 import {RippleModule} from "primeng/ripple";
 
 @Component({
-  selector: 'store-set-user-profile-dialog',
-  templateUrl: './set-user-profile-dialog.component.html',
+    selector: 'store-set-user-profile-dialog',
+    templateUrl: './set-user-profile-dialog.component.html',
     standalone: true,
     imports: [
         FormsModule,
@@ -29,16 +29,15 @@ import {RippleModule} from "primeng/ripple";
 export class SetUserProfileDialogComponent {
     public loading = false;
     public user: User
+    protected readonly StoreType = StoreType;
 
     constructor(
-                private messageService: MessageService,
-                private ref: DynamicDialogRef,
-                private userService: UserService,
-                auth: AuthorizeService) {
+        private messageService: MessageService,
+        private ref: DynamicDialogRef,
+        private userService: UserService,
+        auth: AuthorizeService) {
         this.user = auth.current!;
     }
-
-    protected readonly StoreType = StoreType;
 
     save() {
         this.loading = true;
@@ -46,7 +45,7 @@ export class SetUserProfileDialogComponent {
             next: () => {
                 this.confirmation("user details updated");
             },
-            error: (er) => {
+            error: (er: Error) => {
                 this.confirmation("Failed to update user details", er.message);
             }
         })
@@ -54,7 +53,7 @@ export class SetUserProfileDialogComponent {
 
     confirmation(toastMessage: string, errorMessage?: string) {
         this.loading = false;
-        if(errorMessage) {
+        if (errorMessage) {
             this.messageService.add(getToastMessage(ToastMessageType.ERROR, toastMessage + errorMessage));
         } else {
             this.close(getToastMessage(ToastMessageType.SUCCESS, toastMessage));

@@ -16,19 +16,19 @@ export class EventCategoryService extends BaseCommonRestService {
     }
 
     public getEventCategories() {
-        return this.get<EventCategory[]>(this.baseUrl);
+        return this.http.get<EventCategory[]>(this.baseUrl);
     }
 
     public add(category: EventCategory) {
-        return this.post<EventCategory>(`${this.baseUrl}/add`, category);
+        return this.http.post<EventCategory>(`${this.baseUrl}/add`, category);
     }
 
     public update(category: ItemCategory) {
-        return this.put<EventCategory>(`${this.baseUrl}/${category.id}`, category);
+        return this.http.put<EventCategory>(`${this.baseUrl}/${category.id}`, category);
     }
 
     public deleteCategory(id: string) {
-        return this.delete<EventCategory>(`${this.baseUrl}/${id}`)
+        return this.http.delete<EventCategory>(`${this.baseUrl}/${id}`)
     }
 
 }

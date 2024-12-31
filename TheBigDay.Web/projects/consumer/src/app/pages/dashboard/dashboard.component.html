@@ -1,42 +1,12 @@
 <div>
-    <div class="category-container">
-        <p-carousel [value]="mockCategoryList" contentClass="content-class" [circular]="true" [autoplayInterval]="2000" [numVisible]="15" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="categoryResponsiveOptions" >>
-            <ng-template let-mockCategory pTemplate="item">
-                <div class="m-1">
-                    <img class="text-center" [src]="mockCategory.url" alt=""/>
-                </div>
-            </ng-template>
-        </p-carousel>
+    <div class="category-container flex gap-2 overflow-auto">
+
+        <div *ngFor="let category of mockCategoryList" class="p-1">
+            <img [src]="category.url" alt="" class="text-center" size="50px"/>
+        </div>
     </div>
-    <h2>Popular products</h2>
-    <p-carousel [value]="products" [numVisible]="6" [numScroll]="2" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
-        <ng-template let-product pTemplate="item">
-            <div class="m-2">
-                <lib-dashboard-card [cardConfig]="product" class="mx-2" (onSelect)="navigateToVendorPage(product.metadata.vendorID, product.metadata)"></lib-dashboard-card>
-            </div>
-        </ng-template>
-    </p-carousel>
-
-    <h2>Popular services</h2>
-    <p-carousel [value]="services" [numVisible]="6" [numScroll]="2" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
-        <ng-template let-service pTemplate="item">
-            <div class="m-2">
-                <lib-dashboard-card [cardConfig]="service" class="mx-2" (onSelect)="navigateToVendorPage(service.metadata.vendorID, undefined, service.metadata)"></lib-dashboard-card>
-            </div>
-        </ng-template>
-    </p-carousel>
-
-    <h2>Popular vendors</h2>
-    <p-carousel [value]="vendors" [numVisible]="6" [numScroll]="2" [showIndicators]="false" [responsiveOptions]="responsiveOptions" >
-        <ng-template let-vendor pTemplate="item">
-            <div class="m-2">
-                <lib-dashboard-card [cardConfig]="vendor" class="mx-2" (onSelect)="navigateToVendorPage(vendor)"></lib-dashboard-card>
-            </div>
-        </ng-template>
-    </p-carousel>
+    <div class="grid venues gap-2"></div>
 </div>
-
-
 
 <div *ngIf="loading" class="flex justify-content-center">
     <app-loading [showLoading]="loading"></app-loading>

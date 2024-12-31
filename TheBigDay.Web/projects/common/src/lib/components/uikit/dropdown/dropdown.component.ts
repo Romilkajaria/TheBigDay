@@ -7,9 +7,14 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class DropdownComponent<T> {
     @Input() label?: string
-    @Input() options!: T[];
+    @Input() options!: IDropdownItem<T>[];
     @Input() optionLabel?: string;
     @Input() placeholder?: string;
     @Input() selectedValue?: T;
-    @Output() selectedValueChanged = new EventEmitter<T>();
+    @Output() selectedValueChange = new EventEmitter<T>();
+}
+
+export interface IDropdownItem<T> {
+    name: string,
+    value: T,
 }

@@ -1,9 +1,8 @@
-import {
-    BaseCommonRestService
-} from "../../common-rest-services/base-common-rest-service.service";
+import {BaseCommonRestService} from "../../common-rest-services/base-common-rest-service.service";
 import {environment} from "../../environments/environment";
 import {Injectable, Injector} from "@angular/core";
 import {Form} from './form';
+import {HttpParams} from "@angular/common/http";
 
 @Injectable({
     providedIn: "root"
@@ -11,35 +10,41 @@ import {Form} from './form';
 export class FormService extends BaseCommonRestService {
 
     private readonly baseUrl = environment.apiUrl + "form";
+
     constructor(injector: Injector) {
         super(injector);
     }
 
     public getForms() {
-        return this.get<Form[]>(this.baseUrl);
+        return this.http.get<Form[]>(this.baseUrl);
     }
 
     public getStoreForms(itemCategoryIds: string[]) {
-        return this.post<Form[]>(`${this.baseUrl}/storeforms`, itemCategoryIds)
+        return this.http.post<Form[]>(`${this.baseUrl}/storeforms`, itemCategoryIds)
     }
 
     public getProductForms(itemCategoryId: string) {
-        return this.get<Form[]>(`${this.baseUrl}/productForms`, {itemCategoryId: itemCategoryId})
+        const params = new HttpParams()
+            .set('itemCategoryId', itemCategoryId);
+        return this.http.get<Form[]>(`${this.baseUrl}/productForms`, {params})
     }
+
     public getServiceForms(itemCategoryId: string) {
-        return this.get<Form[]>(`${this.baseUrl}/serviceForms`, {itemCategoryId: itemCategoryId})
+        const params = new HttpParams()
+            .set('itemCategoryId', itemCategoryId);
+        return this.http.get<Form[]>(`${this.baseUrl}/serviceForms`, {params})
     }
 
     public add(form: Form) {
-        return this.post<Form>(this.baseUrl, form);
+        return this.http.post<Form>(this.baseUrl, form);
     }
 
     public update(form: Form) {
-        return this.put<Form>(this.baseUrl, form);
+        return this.http.put<Form>(this.baseUrl, form);
     }
 
     public deleteForm(id: string) {
-        return this.delete<Form>(`${this.baseUrl}/${id}`)
+        return this.http.delete<Form>(`${this.baseUrl}/${id}`)
     }
 
 }

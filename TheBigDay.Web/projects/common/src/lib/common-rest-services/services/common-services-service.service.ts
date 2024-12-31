@@ -4,28 +4,29 @@ import {BaseCommonRestService} from "../base-common-rest-service.service";
 import {FormEntry} from "../../common-rest-models/form-entry";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CommonServicesService extends BaseCommonRestService {
 
-  private readonly serviceUrl = environment.apiUrl + "service";
-  constructor(injector: Injector) {
-    super(injector);
-  }
+    private readonly serviceUrl = environment.apiUrl + "service";
 
-  public getServices() {
-    return this.get<FormEntry[]>(this.serviceUrl);
-  }
+    constructor(injector: Injector) {
+        super(injector);
+    }
 
-  public addService(service: FormEntry) {
-    return this.post<FormEntry>(this.serviceUrl + '/add', service);
-  }
+    public getServices() {
+        return this.http.get<FormEntry[]>(this.serviceUrl);
+    }
 
-  public updateService(service: FormEntry) {
-    return this.put<FormEntry>(`${this.serviceUrl}/${service.id}`, service);
-  }
+    public addService(service: FormEntry) {
+        return this.http.post<FormEntry>(this.serviceUrl + '/add', service);
+    }
 
-  public deleteService(id: string) {
-    return this.delete<FormEntry>(`${this.serviceUrl}/${id}`)
-  }
+    public updateService(service: FormEntry) {
+        return this.http.put<FormEntry>(`${this.serviceUrl}/${service.id}`, service);
+    }
+
+    public deleteService(id: string) {
+        return this.http.delete<FormEntry>(`${this.serviceUrl}/${id}`)
+    }
 }

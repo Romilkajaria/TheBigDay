@@ -8,9 +8,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class NumberInputComponent<T> {
     @Input() label?: string;
     @Input() subLabel?: string;
-    @Input() value!: T;
+    @Input() value?: T;
     @Input() advisoryText?: string;
-    @Output() valueChanged = new EventEmitter<T>();
+    @Output() valueChange = new EventEmitter<T>();
     maxFractionDigits = 5;
     minFractionDigits = 0;
 

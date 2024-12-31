@@ -4,7 +4,6 @@
     <div [ngStyle]="{'grid-template-columns': getGridTemplateColumns(this.numberOfColumns)}" class="container">
         <div *ngFor="let item of items" class="field-checkbox">
             <p-radioButton
-                (ngModelChange)="onSelectionChanged()"
                 [(ngModel)]="selectedItem"
                 [inputId]="item.title"
                 [value]="item"/>

@@ -3,7 +3,6 @@
 <div [ngStyle]="{'grid-template-columns': getGridTemplateColumns(numberOfColumns)}" class="container">
     <div *ngFor="let option of options" class="field-checkbox">
         <p-checkbox
-            (ngModelChange)="onOptionChanged()"
             [(ngModel)]="selectedOptions"
             [disabled]="option.disabled ?? false"
             [label]="option.title"

@@ -40,8 +40,9 @@
 <div [ngClass]="stepIndex > 0 ? 'justify-content-between' : 'justify-content-end'"
      class="flex w-100 mt-5">
     <p-button (click)="previous()" *ngIf="stepIndex > 0" label="Back"></p-button>
-    <p-button (click)="next()" *ngIf="stepIndex < maxSteps" label="Next"></p-button>
-    <p-button (click)="confirmation('New venue saved:' + venue?.title)" *ngIf="stepIndex == maxSteps"
+    <p-button (click)="nextFormStep()" *ngIf="!stepIndex" label="Start"></p-button>
+    <p-button (click)="nextFormStep()" *ngIf="stepIndex < maxSteps && stepIndex" label="Save & continue"></p-button>
+    <p-button (click)="confirmation('New venue saved:' + venue.title)" *ngIf="stepIndex == maxSteps"
               label="finish"></p-button>
 </div>
 
@@ -58,43 +59,62 @@
 </ng-template>
 <ng-template #step1 class="">
     <div class="flex flex-column gap-3 p-2">
-        <lib-dropdown class="w-75" label="Choose the property type" placeholder="Select property type"></lib-dropdown>
-        <lib-radioButtons [items]="guestHaveOptions" label="What will guests have?"></lib-radioButtons>
+        <lib-dropdown [(selectedValue)]="venue.propertyType"
+                      [optionLabel]="'name'"
+                      [options]="propertyTypeOptions"
+                      class="w-75"
+                      label="Choose the property type"
+                      placeholder="Select property type"></lib-dropdown>
+        <lib-radioButtons [(selectedItem)]="venue.spaceType" [items]="guestHaveOptions"
+                          label="What will guests have?"></lib-radioButtons>
         <!--                <lib-radioButtons [items]="setupDedicatedOptions" label="Is this set up as a dedicated"></lib-radioButtons>-->
-        <lib-number-input advisoryText="square" label="Approximate size"></lib-number-input>
-        <lib-number-input advisoryText="PAX"
+        <lib-number-input [(value)]="venue.size"
+                          advisoryText="square"
+                          label="Approximate size"></lib-number-input>
+        <lib-number-input [(value)]="venue.maxNumOfGuests"
+                          advisoryText="PAX"
                           label="How many people can this venue comforatbly accomodate"
                           subLabel="Based on seating arrangements"></lib-number-input>
-        <lib-radioButtons [items]="listingPartOfCompanyOptions" label="Are you listing as part of a company?"
+        <lib-radioButtons [(selectedItem)]="venue.listingAsCompany"
+                          [items]="listingPartOfCompanyOptions"
+                          label="Are you listing as part of a company?"
                           subLabel="This helps you get the right features for how you host – it won’t show up to guests or affect how you show up in search."></lib-radioButtons>
     </div>
 </ng-template>
 <ng-template #step2>
-    <lib-checkbox [numberOfColumns]="2"
+    <lib-checkbox [(selectedOptions)]="venue.eventRequirements.approvedEventTypes"
+                  [numberOfColumns]="2"
                   [options]="eventTypes"
                   label="What type of events are the guests permitted to conduct in this space?"></lib-checkbox>
-    <lib-radioButtons [items]="defaultYesNoOptions"
+    <lib-radioButtons [(selectedItem)]="venue.eventRequirements.externalVendorsApproved"
+                      [items]="defaultYesNoOptions"
                       label="In case of Pre-event setups arrangements, Are other vendors/service providers allowed at your venue?"></lib-radioButtons>
-    <lib-checkbox [numberOfColumns]="2"
+    <lib-checkbox [(selectedOptions)]="venue.eventRequirements.typesOfExternalVendors"
+                  [numberOfColumns]="2"
                   [options]="vendorTypeOptions"
                   label="What type of vendors can enter your space?"></lib-checkbox>
-    <lib-checkbox [numberOfColumns]="3"
-                  [options]="visitsAllowedOptions"
-                  label="How many visits can you allow?"></lib-checkbox>
-    <lib-number-input advisoryText="PAX"
+    <lib-radioButtons [(selectedItem)]="venue.venueVisitsOptions"
+                      [items]="visitsAllowedOptions"
+                      [numberOfColumns]="3"
+                      label="How many visits can you allow?"></lib-radioButtons>
+    <lib-number-input [(value)]="venue.numOfPeopleInVisit"
+                      advisoryText="PAX"
                       label="How many people can visit for set-up?"></lib-number-input>
-    <lib-radioButtons [items]="priorCheckinTimeOptions"
+    <lib-radioButtons [(selectedItem)]="venue.hoursPriorToVendorCheckin"
+                      [items]="priorCheckinTimeOptions"
                       label="How much time prior to the event can the vendor check-in for the set up?"></lib-radioButtons>
-    <lib-radioButtons [items]="defaultYesNoOptions"
+    <lib-radioButtons [(selectedItem)]="venue.additionalPermissionsRequiredWhenCheckin"
+                      [items]="defaultYesNoOptions"
                       label="Are additional permissions required for early vendor check-in?"></lib-radioButtons>
-    <lib-checkbox [options]="restrictionRelatedToSetupOptions"
-                  label="Restrictions related to set-up"></lib-checkbox>
+    <lib-checkbox
+        [options]="restrictionRelatedToSetupOptions"
+        label="Restrictions related to set-up"></lib-checkbox>
 </ng-template>
 <ng-template #step3>
     <div class="flex justify-content-center flex-column gap-3">
         <p-autoComplete (completeMethod)="searchAddresses($event)" (ngModelChange)="onAddressSelect($event)"
                         [forceSelection]="true"
-                        [ngModel]="address"
+                        [ngModel]="venue.location"
                         [suggestions]="filteredAddresses"
                         inputStyleClass="w-full"
                         placeholder="Search for an address"
@@ -111,38 +131,25 @@
     </div>
 </ng-template>
 <ng-template #step4>
-    <lib-checkbox [options]="amenitiesOptions"></lib-checkbox>
-    <lib-radioButtons [items]="defaultYesNoOptions"
+    <lib-checkbox (selectedOptionsChange)="venue.amenities = $event.join(', ')"
+                  [options]="amenitiesOptions"></lib-checkbox>
+    <lib-radioButtons [(selectedItem)]="venue.soundRestrictions"
+                      [items]="defaultYesNoOptions"
                       label="Do you have any sound, boof or alcohol restrictions?"></lib-radioButtons>
 </ng-template>
 <ng-template #step5>
-    <label>Add Photos</label>
+    <p>Add photos so the users can see what the the venue looks like. You can upload up to 5 photos per listing, so
+        make they are meaningful shots. Remember, a picture tells a thousand words.</p>
     <div class="flex gap-3 w-100">
         <p-image
-            [imageStyle]="{'border-radius': '10px'}"
-            alt="Image"
-            height="200"
-            src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
-            width="130"/>
-        <p-image
-            [imageStyle]="{'border-radius': '10px'}"
-            alt="Image"
-            height="200" src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
-            width="130"/>
-        <p-image
-            [imageStyle]="{'border-radius': '10px'}"
-            alt="Image"
-            height="200"
-            src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
-            width="130"/>
-        <p-image
             (click)="triggerFileInput()"
-            [imageStyle]="{'border-radius': '10px'}"
+            [imageStyle]="{'border-radius': '5px'}"
             alt="Image"
             height="200"
             src="../../../../assets/addPhotobutton.png"
             width="130"/>
-        <input #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;" type="file"/>
+        <input #fileInput (change)="onFileSelected($event)" accept="image/png, image/jpeg" size="5e+6"
+               style="display: none;" type="file"/>
     </div>
 </ng-template>
 <ng-template #step6>
@@ -176,18 +183,24 @@
 </ng-template>
 <ng-template #step9>
     <h6>Price your space</h6>
-    <lib-number-input label="Base price" subLabel="the average price for your property"></lib-number-input>
-    <lib-number-input label="Minimum price" subLabel="price when demand is low"></lib-number-input>
-    <lib-number-input label="Maximum price" subLabel="price when demand is high"></lib-number-input>
+    <lib-number-input [(value)]="venue.pricingDetails.basePrice"
+                      label="Base price"
+                      subLabel="the average price for your property"></lib-number-input>
+    <lib-number-input [(value)]="venue.pricingDetails.minimumPrice"
+                      label="Minimum price"
+                      subLabel="price when demand is low"></lib-number-input>
+    <lib-number-input [(value)]="venue.pricingDetails.maximumPrice"
+                      label="Maximum price"
+                      subLabel="price when demand is high"></lib-number-input>
     <br/>
     <h6>Additional options</h6>
     <label>Add discounts and offers to attract guests</label>
-    <lib-number-input advisoryText="PAX" label="Bulk bookings"></lib-number-input>
-    <lib-number-input advisoryText="Days" label="Extended stays"></lib-number-input>
-    <lib-number-input
-        [subLabel]="'Do you require security deposits? <br/> Charging security deposits can lower the chances of getting bookings.'"
-        advisoryText="INR"
-        label="Security deposit"></lib-number-input>
+    <lib-number-input [(value)]="venue.pricingDetails.numOfGuestsToQualifyAsBulkBooking"
+                      advisoryText="PAX"
+                      label="Bulk bookings"></lib-number-input>
+    <lib-number-input [(value)]="venue.numOfGuestsToQualifyAsExtendedStay"
+                      advisoryText="Days"
+                      label="Extended stays"></lib-number-input>
 </ng-template>
 <ng-template #step10>
 </ng-template>

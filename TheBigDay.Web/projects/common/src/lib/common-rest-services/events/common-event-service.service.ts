@@ -4,27 +4,28 @@ import {environment} from "../../environments/environment";
 import {Event} from "../../common-rest-models/event";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CommonEventServiceService extends BaseCommonRestService {
     private readonly eventUrl = environment.apiUrl + "event";
-  constructor(injector: Injector) {
-      super(injector);
-  }
 
-  public getTBDEvent() {
-          return this.get<Event[]>(this.eventUrl);
-      }
+    constructor(injector: Injector) {
+        super(injector);
+    }
 
-  public addTBDEvent(tbdEvent: Event) {
-          return this.post<Event>(this.eventUrl, tbdEvent);
-      }
+    public getTBDEvent() {
+        return this.http.get<Event[]>(this.eventUrl);
+    }
 
-  public updateTBDEvent(tbdEvent: Event) {
-          return this.put<Event>(`${this.eventUrl}/${tbdEvent.id}`, tbdEvent);
-      }
+    public addTBDEvent(tbdEvent: Event) {
+        return this.http.post<Event>(this.eventUrl, tbdEvent);
+    }
 
-  public deleteTBDEvent(id: string) {
-          return this.delete<Event>(`${this.eventUrl}/${id}`)
-      }
+    public updateTBDEvent(tbdEvent: Event) {
+        return this.http.put<Event>(`${this.eventUrl}/${tbdEvent.id}`, tbdEvent);
+    }
+
+    public deleteTBDEvent(id: string) {
+        return this.http.delete<Event>(`${this.eventUrl}/${id}`)
+    }
 }

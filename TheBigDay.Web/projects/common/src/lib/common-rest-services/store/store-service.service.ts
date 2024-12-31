@@ -5,32 +5,33 @@ import {Store} from "../../common-rest-models/store";
 import {RegisterVendor} from "../../common-rest-models/authentication-models";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StoreService extends BaseCommonRestService {
 
     private readonly vendorUrl = environment.apiUrl + "store";
+
     constructor(injector: Injector) {
         super(injector);
     }
 
     public getVendors() {
-        return this.get<Store[]>(this.vendorUrl);
+        return this.http.get<Store[]>(this.vendorUrl);
     }
 
     public getVendor(vendorId: string) {
-        return this.get<Store>(`${this.vendorUrl}/${vendorId}`)
+        return this.http.get<Store>(`${this.vendorUrl}/${vendorId}`)
     }
 
     public addVendor(vendor: RegisterVendor) {
-        return this.post<RegisterVendor>(this.vendorUrl, vendor);
+        return this.http.post<RegisterVendor>(this.vendorUrl, vendor);
     }
 
     public updateVendor(vendor: Store) {
-        return this.put<Store>(`${this.vendorUrl}/${vendor.id}`, vendor);
+        return this.http.put<Store>(`${this.vendorUrl}/${vendor.id}`, vendor);
     }
 
     public deleteVendor(id: string) {
-        return this.delete<Store>(`${this.vendorUrl}/${id}`)
+        return this.http.delete<Store>(`${this.vendorUrl}/${id}`)
     }
 }

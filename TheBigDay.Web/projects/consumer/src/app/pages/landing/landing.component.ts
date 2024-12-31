@@ -14,7 +14,6 @@ import {
     selector: 'consumer-landing',
     templateUrl: './landing.component.html',
     styleUrls: ['./landing.component.scss'],
-    providers: [DialogService],
 })
 export class LandingComponent implements OnInit {
     public static readonly eventKey = "event"
