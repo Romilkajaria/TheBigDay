@@ -1,6 +1,6 @@
 import {Store} from "./store";
 import {FormField} from "./Form/form-field";
-import {EventItem} from "./event";
+import {EventItem} from "./TBDEvent";
 import {Form} from "./Form/form";
 
 export class FormEntry {

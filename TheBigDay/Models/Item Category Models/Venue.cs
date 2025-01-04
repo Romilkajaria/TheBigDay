@@ -12,6 +12,7 @@ namespace TheBigDay.Models.ItemCategoryModels
             PricingDetails = new PricingDetail();
             AvailablityDateRanges = new List<AvailabilityDateRange>();
             EventRequirements = new EventRequirements();
+            IsDeleted = false;
         }
 
         [Key]
@@ -24,12 +25,16 @@ namespace TheBigDay.Models.ItemCategoryModels
         public double Size { get; set; } // in square meters
         public int MaxNumOfGuests { get; set; }
         public bool ListingAsCompany { get; set; }
-        public string? Location { get; set; }
         public string? LocationLandmark { get; set; }
         public string? Amenities { get; set; }
         public bool SoundRestrictions { get; set; }
         public string? WhatIsAround { get; set; }
         public int DaysNoticeNeededBeforeGuestArrives { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string Suburb { get; set; }
+        public string State { get; set; }
+        public string Postcode { get; set; }
         public int DaysInAdvanceCanGuestsBook { get; set; } // 0 is same day onwards
         public string? CheckinTime { get; set; }
         public string? CheckoutTime { get; set; }
@@ -43,6 +48,7 @@ namespace TheBigDay.Models.ItemCategoryModels
         public BookingRequirements BookingRequirements { get; set; }
         public PricingDetail PricingDetails { get; set; }
         public List<AvailabilityDateRange> AvailablityDateRanges { get; set; }
+        public bool IsDeleted { get; set; }
 
         #region navigation
         public Guid StoreId { get; set; }

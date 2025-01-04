@@ -1,4 +1,4 @@
-import {Event} from "./event";
+import {TBDEvent} from "./TBDEvent";
 
 export interface EventCategory {
     id?: string;
@@ -6,5 +6,5 @@ export interface EventCategory {
     description?: string;
 
     //
-    events?: Event[];
+    events?: TBDEvent[];
 }

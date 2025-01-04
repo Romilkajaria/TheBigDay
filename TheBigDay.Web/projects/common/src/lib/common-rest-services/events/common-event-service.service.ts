@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {BaseCommonRestService} from "../base-common-rest-service.service";
 import {environment} from "../../environments/environment";
-import {Event} from "../../common-rest-models/event";
+import {TBDEvent} from "../../common-rest-models/TBDEvent";
 
 @Injectable({
     providedIn: 'root'
@@ -14,18 +14,18 @@ export class CommonEventServiceService extends BaseCommonRestService {
     }
 
     public getTBDEvent() {
-        return this.http.get<Event[]>(this.eventUrl);
+        return this.http.get<TBDEvent[]>(this.eventUrl);
     }
 
-    public addTBDEvent(tbdEvent: Event) {
-        return this.http.post<Event>(this.eventUrl, tbdEvent);
+    public addTBDEvent(tbdEvent: TBDEvent) {
+        return this.http.post<TBDEvent>(this.eventUrl, tbdEvent);
     }
 
-    public updateTBDEvent(tbdEvent: Event) {
-        return this.http.put<Event>(`${this.eventUrl}/${tbdEvent.id}`, tbdEvent);
+    public updateTBDEvent(tbdEvent: TBDEvent) {
+        return this.http.put<TBDEvent>(`${this.eventUrl}/${tbdEvent.id}`, tbdEvent);
     }
 
     public deleteTBDEvent(id: string) {
-        return this.http.delete<Event>(`${this.eventUrl}/${id}`)
+        return this.http.delete<TBDEvent>(`${this.eventUrl}/${id}`)
     }
 }

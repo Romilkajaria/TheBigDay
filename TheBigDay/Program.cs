@@ -19,7 +19,6 @@ public class Program
 
         // Configure services
         builder.Services.AddControllers();
-        builder.Services.AddSingleton<BlobStorageService>();
 
         builder.Services.AddAuthentication(options =>
         {

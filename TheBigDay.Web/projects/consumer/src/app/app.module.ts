@@ -26,6 +26,7 @@ import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {GoogleMap, MapMarker} from "@angular/google-maps";
+import {DialogService} from "primeng/dynamicdialog";
 
 @NgModule({
     declarations: [
@@ -62,6 +63,7 @@ import {GoogleMap, MapMarker} from "@angular/google-maps";
     ],
     providers: [
         {provide: LocationStrategy, useClass: PathLocationStrategy},
+        {provide: DialogService, useClass: DialogService}
     ],
     bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 import {FormEntry} from "./form-entry";
 import {User} from "./user";
 
-export interface Event {
+export interface TBDEvent {
     id?: string
     name: string;
     description: string;
@@ -38,7 +38,7 @@ export interface EventCustomer {
 
     // navigation
     customer: User;
-    event: Event;
+    event: TBDEvent;
 }
 
 export interface EventItem {
@@ -50,11 +50,11 @@ export interface EventItem {
     finalPriceByStore: number;
 
     // navigation
-    event: Event;
+    event: TBDEvent;
     formEntry: FormEntry;
 }
 
-export const defaultEvent: Event = {
+export const defaultEvent: TBDEvent = {
     addressLine1: "",
     country: "",
     description: "",

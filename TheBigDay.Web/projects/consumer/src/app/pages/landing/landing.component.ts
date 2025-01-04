@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DialogService} from "primeng/dynamicdialog";
 import {LoginSignupDialogComponent} from "./login-signup-dialog/login-signup-dialog.component";
-import {defaultEvent, Event} from "../../../../../common/src/lib/common-rest-models/event";
+import {defaultEvent, TBDEvent} from "../../../../../common/src/lib/common-rest-models/TBDEvent";
 import {Router} from "@angular/router";
 import {
     LocalStorageService
@@ -17,7 +17,7 @@ import {
 })
 export class LandingComponent implements OnInit {
     public static readonly eventKey = "event"
-    public event: Event = defaultEvent;
+    public event: TBDEvent = defaultEvent;
     public browsingAddress?: string;
     geocoder!: google.maps.Geocoder;
     filteredAddresses!: string[];
@@ -57,7 +57,7 @@ export class LandingComponent implements OnInit {
     }
 
     public openSelectStateDialog() {
-        const dialogRef = this.dialogService.open(SelectStateDialogComponent, {header: "Select State", height: '80%'});
+        this.dialogService.open(SelectStateDialogComponent, {header: "Select State", height: '80%'});
     }
 
     searchAddresses(event: any) {

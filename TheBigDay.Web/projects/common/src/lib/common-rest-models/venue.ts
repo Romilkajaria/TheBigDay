@@ -1,4 +1,4 @@
-import {EventType} from "./event";
+import {EventType} from "./TBDEvent";
 
 export interface AvailabilityDateRange {
     id: string;

@@ -1,12 +1,15 @@
 <div>
-    <div class="category-container flex gap-2 overflow-auto">
-
-        <div *ngFor="let category of mockCategoryList" class="p-1">
-            <img [src]="category.url" alt="" class="text-center" size="50px"/>
+    <h5>Venues in {{ event ? event.state : 'your area' }}</h5>
+    <ng-container *ngIf="(venues && venues.length > 0) else noNearbyVenues">
+        <div *ngFor="let venue of venues">
+            {{ venue.title }}
         </div>
-    </div>
-    <div class="grid venues gap-2"></div>
+    </ng-container>
 </div>
+
+<ng-template #noNearbyVenues>
+    No nearby venues
+</ng-template>
 
 <div *ngIf="loading" class="flex justify-content-center">
     <app-loading [showLoading]="loading"></app-loading>

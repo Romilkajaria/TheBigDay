@@ -19,11 +19,10 @@ export class VenueService extends BaseCommonRestService {
         return this.http.get<Venue[]>(this.venueUrl);
     }
 
-    public searchNearbyVenues(eventAddress: string, isState: boolean) {
+    public searchNearbyVenues(eventState: string) {
         const params = new HttpParams()
-            .set('eventAddress', eventAddress)
-            .set('isState', isState.toString());
-        return this.http.get<Venue[]>(this.venueUrl, {params})
+            .set('eventState', eventState)
+        return this.http.get<Venue[]>(this.venueUrl + '/nearby', {params})
     }
 
     public addVenue(venue: Venue) {

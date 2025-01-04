@@ -2,11 +2,12 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
-import {defaultEvent} from "../../common-rest-models/event";
+import {defaultEvent} from "../../common-rest-models/TBDEvent";
 import {LocalStorageService} from "../../common-services/local-storage-service/local-storage.service";
 import {LandingComponent} from "../../../../../consumer/src/app/pages/landing/landing.component";
 import {Router} from "@angular/router";
 import {Button} from "primeng/button";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
 
 export const States: string[] = [
     'Andhra Pradesh',
@@ -60,7 +61,8 @@ export class SelectStateDialogComponent {
     @Output() stateOutput = new EventEmitter<string>();
 
     constructor(private localStorageService: LocalStorageService,
-                private router: Router) {
+                private router: Router,
+                private ref: DynamicDialogRef) {
     }
 
     onStateChanged($event: string) {
@@ -71,9 +73,10 @@ export class SelectStateDialogComponent {
     public async startBrowsing() {
         if (this.selectedState) {
             const tbdEvent = defaultEvent;
-            tbdEvent.addressLine1 = this.selectedState!;
+            tbdEvent.state = this.selectedState!;
             tbdEvent.name = "new Event"
             this.localStorageService.setItem(LandingComponent.eventKey, JSON.stringify(tbdEvent));
+            this.ref.close();
             await this.router.navigate(["app/dashboard"]);
         }
     }
